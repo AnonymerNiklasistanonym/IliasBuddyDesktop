@@ -1,0 +1,10 @@
+<li class="ilias-entry ilias-entry-post">
+    <p class="ilias-entry-course">{{course}}</p>
+    <p class="ilias-entry-course-directory">{{#each courseDirectory}}{{this}}{{#unless @last}} >> {{/unless}}{{/each}}</p>
+
+    <div class="ilias-entry-description">{{{description}}}</div>
+    <div class="container-link-date">
+    <button class="ilias-entry-link-button" onclick="openExternal('{{link}}')">Link</button>
+    <p class="ilias-entry-date"><time datetime="{{date.unix}}">{{date.humanReadable}}</time></p>
+    </div>
+</li>

@@ -74,3 +74,21 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# Electron builder
+dist
+
+
+
+
+# Ignore credentials file because there is no good solution right now (remove later)
+iliasPrivateRssFeedLogin.json
+
+# Ignore debug files (remove later)
+lastParsedJsonRss.json
+lastParsedRss.json
+indexTemp.html
+lastRss.xml
+
+# Ignore this because I have no use for this file
+package-lock.json

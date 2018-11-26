@@ -1,0 +1,126 @@
+:root {
+    --title-bar-width-resize-area: 3px;
+    --title-bar-height: 2em;
+    --title-bar-bg-color: #434343;
+    --title-bar-fg-color: white;
+    --title-bar-width-action: 2.5em;
+    --title-bar-width-height-action-icon: 10px;
+}
+
+div#title-bar {
+    /* Height of title bar*/
+    height: var(--title-bar-height);
+    /* Width of title bar */
+    width: 100vw;
+    /* Transparent overlay of title bar bg color as title bar bg */
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)) var(--title-bar-bg-color);
+    /* Font color of title bar */
+    color: var(--title-bar-fg-color);
+    /* Title bar can be clicked and drags the whole window */
+    -webkit-app-region: drag;
+}
+
+div#title-bar.title-bar-full-screen {
+    display: none;
+}
+
+/*----------  << Invisible resize areas >> ----------*/
+
+div#title-bar > div.title-bar-resize-handle {
+    /* Make the area absolute to the whole window */
+    position: absolute;
+    /* Enable window resizing by disabling drag */
+    -webkit-app-region: no-drag;
+}
+
+div#title-bar > div.title-bar-resize-handle.title-bar-resize-handle-top {
+    /* Make the top handle as big as the window width */
+    width: 100%;
+    /* And as height as defined */
+    height: var(--title-bar-width-resize-area);
+}
+
+div#title-bar > div.title-bar-resize-handle.title-bar-resize-handle-left {
+    /* Make the left handle as big as defined */
+    width: var(--title-bar-width-resize-area);
+    /* And as high as the title bar is */
+    height: var(--title-bar-height);
+}
+
+/*---------- >> Invisible resize areas << ----------*/
+
+
+div#title-bar>div#title-bar-icon {
+    float: left;
+}
+div#title-bar>div#title-bar-icon>svg {
+    padding: calc(var(--title-bar-height) / 6);
+    height: calc(var(--title-bar-height) /6 * 4);
+    width: auto;
+}
+
+div#title-bar>div#title-bar-title {
+    float: left;
+    font-family: 'Local Roboto';
+    font-size: calc(var(--title-bar-height) / 2);
+    padding: calc(var(--title-bar-height) / 4 - 1px);
+}
+
+div#title-bar>div#title-bar-actions {
+    /* Position all action buttons on the right*/
+    float: right;
+    /* Disable drag in this region */
+    -webkit-app-region: no-drag;
+}
+
+div#title-bar>div#title-bar-actions>div {
+    /* Position each action left next to each other on the same line */
+    float: left;
+    /* Each button should have this width */
+    width: var(--title-bar-width-action);
+    /* Each button should have this height */
+    height: var(--title-bar-height);
+    /* Center text in each button */
+    text-align: center;
+    /* Set line height to title bar height for vertically centering content */
+    line-height: var(--title-bar-height);
+}
+
+div#title-bar>div#title-bar-actions>div > svg {
+    /* Set width and height of svg icon */
+    width: var(--title-bar-width-height-action-icon);
+    height: var(--title-bar-width-height-action-icon);
+    /* Render svg edges exactly (only looks good if everything is a rectangle) */
+    shape-rendering: crispEdges;
+    /* Fill all action icons with this color */
+    fill: var(--title-bar-fg-color);
+    margin: calc((var(--title-bar-height) - var(--title-bar-width-height-action-icon)) / 2) calc((var(--title-bar-width-action) - var(--title-bar-width-height-action-icon)) / 2);
+
+}
+
+
+div#title-bar>div#title-bar-actions>div#title-bar-action-close:hover {
+    /* Make background red for the close action */
+    background-color: rgb(255, 0, 0);
+}
+
+
+div#title-bar>div#title-bar-actions>div:not(#title-bar-action-close):hover {
+    /* Make background dark when any action is hovered except close */
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+div#title-bar>div#title-bar-actions>div#title-bar-action-resize.title-bar-action-resize-maximized>svg#title-bar-action-resize-restore-icon,
+div#title-bar>div#title-bar-actions>div#title-bar-action-resize:not(.title-bar-action-resize-maximized)>svg#title-bar-action-resize-maximize-icon {
+    /* If window is maximized display the restore icon */
+    /* If window is NOT maximized display the maximize icon */
+    display: block;
+}
+
+div#title-bar>div#title-bar-actions>div#title-bar-action-resize:not(.title-bar-action-resize-maximized)>svg#title-bar-action-resize-restore-icon,
+div#title-bar>div#title-bar-actions>div#title-bar-action-resize.title-bar-action-resize-maximized>svg#title-bar-action-resize-maximize-icon {
+    /* If window is maximized don't display the maximize icon */
+    /* If window is NOT maximized don't display the restore icon */
+    display: none;
+}

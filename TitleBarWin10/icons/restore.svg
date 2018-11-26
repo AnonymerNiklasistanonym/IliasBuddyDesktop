@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- M = Move to -->
+    <!-- L = Line to -->
+    <!-- Z = close path -->
+    <path d="M  0 30 L  0 100 L 70 100 L 70  30 L  30  30 Z
+             M 10 40 L 60  40 L 60  90 L 10  90 L  10  40 Z" />
+    <!-- Made with inkscape - check later /simplify later -->
+    <path d="m30 0v40h30v30h40v-70h-70zm10 10h50v50h-20v-30h-30z" />
+</svg>

@@ -1,0 +1,15 @@
+:root {
+    --title-bar-height: 32px;
+}
+
+/* Make each screen as wide as all the available space */
+ul#screens > li {
+    width: 100vw;
+    height: calc(100vh - var(--title-bar-height));
+    /*background-color: blue;
+    /* Create automatically scroll bars if content is longer than there is space */
+    overflow-y: auto;
+    /* Make position absolute to be able to animate each screen (move animation) */
+    position: absolute;
+    /* Display each screen at the top */
+}
