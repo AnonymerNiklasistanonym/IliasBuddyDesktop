@@ -3,7 +3,7 @@
 }
 
 /* Make each screen as wide as all the available space */
-ul#screens > li {
+ul#screens>li {
     width: 100vw;
     height: calc(100vh - var(--title-bar-height));
     /*background-color: blue;
@@ -12,4 +12,58 @@ ul#screens > li {
     /* Make position absolute to be able to animate each screen (move animation) */
     position: absolute;
     /* Display each screen at the top */
+}
+
+
+@keyframes moveScreenLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+@keyframes moveScreenLeftOut {
+    100% {
+        transform: translateX(-100%);
+    }
+    0% {
+        transform: translateX(0);
+    }
+}
+
+#main {
+    background-color: red;
+}
+
+#settings {
+    background-color: blue;
+}
+
+#info {
+    background-color: green;
+}
+
+.window-manager-screen-transition-in {
+    display: block;
+}
+
+.window-manager-screen-transition-in {
+    display: block;
+    left: 0;
+    animation: moveScreenLeft 0.5s linear 1;
+}
+
+.window-manager-screen-transition-out {
+    display: block;
+    left: 100%;
+    animation: moveScreenLeftOut 0.5s linear 1;
+}
+
+.window-manager-screen-hide {
+    display: none;
+}
+
+body {
+    overflow-x: hidden;
 }

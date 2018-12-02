@@ -7,13 +7,14 @@
 
 /* =====  Imports  ====== */
 
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
 const VersionChecker = require('./IliasBuddy/Other/VersionChecker')
 const Settings = require('./IliasBuddy/Other/Settings')
 const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
+const AutoLaunch = require('auto-launch')
 
 // TODO: Update checker
 // TODO: Settings IPC listener
@@ -49,6 +50,18 @@ ipcMain
  * Create the main window
  */
 function createWindow () {
+  dialog.showMessageBox({ message: 'We are ready to take off! :-)"', buttons: ['OK'] })
+  let autoLaunch = new AutoLaunch({
+    name: 'test',
+    isHidden: true
+    // path: app.getPath("exe")
+  })
+  autoLaunch.isEnabled().then((isEnabled) => {
+    if (!isEnabled) {
+      autoLaunch.enable()
+      dialog.showMessageBox({ message: 'AutoLaunch enabled.', buttons: ['OK'] })
+    } else dialog.showMessageBox({ message: 'AutoLaunch already enabled.', buttons: ['OK'] })
+  })
   // get settings
   const settingsWindowBounds = Settings.get('windowBounds')
   const settingsFrame = Settings.get('frame')

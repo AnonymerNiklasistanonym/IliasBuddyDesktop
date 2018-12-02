@@ -1,12 +1,12 @@
 {
   "name": "ilias-buddy-desktop",
   "version": "0.0.1",
-  "url": "https://github.com/AnonymerNiklasistanonym/ilias-buddy-desktop",
+  "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop",
   "description": "Ilias desktop client",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AnonymerNiklasistanonym/ilias-buddy-desktop.git"
+    "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop.git"
   },
   "main": "main.js",
   "scripts": {
@@ -15,9 +15,10 @@
   },
   "devDependencies": {
     "electron": "^3.0.10",
-    "electron-builder": "^20.36.2"
+    "electron-builder": "^20.38.2"
   },
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "dialogs": "^1.1.20",
     "hammerjs": "^2.0.8",
     "handlebars": "^4.0.12",

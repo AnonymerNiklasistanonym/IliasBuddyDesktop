@@ -1,9 +1,23 @@
 const { ipcRenderer, remote, shell } = require('electron')
 const TitleBarWin10 = require('./TitleBarWin10/API/TitleBarWin10')
+const WindowManager = require('./WindowManager/API/WindowManager')
+
 const path = require('path')
 const Hammer = require('hammerjs')
 const Dialogs = require('./Dialogs/API/Dialogs')
 const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
+
+/**
+ * Create Window manager
+ */
+const windowManager = new WindowManager(
+  [
+    { documentId: 'main', id: 'main' },
+    { documentId: 'info', id: 'info' },
+    { documentId: 'settings', id: 'settings' }
+  ],
+  'main'
+)
 
 /**
  * Create title bar
@@ -12,12 +26,12 @@ const titleBarWin10 = new TitleBarWin10({ actions: [{
   alt: 'settings',
   id: 'title-bar-action-settings',
   svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'settings.svg') }],
-  callback: () => { console.log('settings') }
+  callback: () => toggleScreen('settings')
 }, {
   alt: 'info',
   id: 'title-bar-action-info',
   svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'info.svg') }],
-  callback: () => { console.log('info') }
+  callback: () => toggleScreen('info')
 }],
 defaultCallbacks: {
   minimize: () => { console.log('minimize') },
@@ -26,6 +40,32 @@ defaultCallbacks: {
   close: () => { console.log('close') }
 } })
 titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
+
+let infoToggled = false
+let settingsToggled = false
+/**
+ * @param {string} screen
+ */
+function toggleScreen (screen) {
+  if (screen === 'settings') {
+    if (settingsToggled) {
+      settingsToggled = false
+      return windowManager.showPreviousWindow({ removeFromHistory: true })
+    } else {
+      settingsToggled = true
+    }
+  } else if (screen === 'info') {
+    if (infoToggled) {
+      infoToggled = false
+      return windowManager.showPreviousWindow({ removeFromHistory: true })
+    } else {
+      infoToggled = true
+    }
+  } else {
+    throw Error('WTF')
+  }
+  windowManager.showWindow(screen)
+}
 
 /**
  * Dialog object - controls popup dialogs
@@ -82,12 +122,6 @@ document.addEventListener('keypress', e => {
     case 122: // F11 - Fullscreen
       mainWindow.setFullScreen(!mainWindow.isFullScreen())
       break
-    case 37: // <-  - Screen switch left
-      leftAnimation()
-      break
-    case 39: // -> - Screen switch right
-      rightAnimation()
-      break
   }
 })
 document.addEventListener('keydown', e => {
@@ -98,8 +132,28 @@ document.addEventListener('keydown', e => {
     case 123: // F12 - open dev tools
       mainWindow.webContents.isDevToolsOpened() ? mainWindow.webContents.closeDevTools() : mainWindow.webContents.openDevTools()
       break
+    case 37: // <-  - Screen switch left
+      leftAnimation()
+      // windowManager.showLeftWindow()
+      break
+    case 39: // -> - Screen switch right
+      rightAnimation()
+      // windowManager.showRightWindow()
+      break
   }
 })
-
-function leftAnimation () {}
-function rightAnimation () {}
+let slideAnimationActive = false
+function hammerGestureHelper (callback) {
+  if (slideAnimationActive) {
+    return
+  }
+  slideAnimationActive = true
+  callback()
+  setTimeout(() => { slideAnimationActive = false }, 1000)
+}
+function leftAnimation () {
+  hammerGestureHelper(() => toggleScreen('info'))
+}
+function rightAnimation () {
+  hammerGestureHelper(() => toggleScreen('settings'))
+}

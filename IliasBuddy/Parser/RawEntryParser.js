@@ -7,8 +7,9 @@ class RawEntryParser {
    * - 2. Course directory
    * - 3. Forum
    * - 4. Title
+   *
    * Examples:
-   * - ["Course_title" > "directory_1 > directory_2"] "forum": "title"
+   * - ["Course_title" > "directory_1 > directory_2"] "forum": "title" (https://regex101.com/r/TZTADg/1/)
    */
   static getRegex01 () {
     return /^\[(.*?)\s>\s(.*)\]\s(.*):\s(.*)$/
@@ -18,8 +19,9 @@ class RawEntryParser {
    * - 1. Course title
    * - 2. Forum
    * - 3. Title
+   *
    * Example:
-   * - ["Course_title"] "forum": "title"
+   * - ["Course_title"] "forum": "title" (https://regex101.com/r/YSiMVU/1)
    */
   static getRegex02 () {
     return /^\[(.*)\]\s(.*):\s(.*)$/
