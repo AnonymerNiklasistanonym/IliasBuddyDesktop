@@ -1,88 +1,40 @@
 /* ===== << Imports >> ====== */
 
-const { net } = require('electron')
-const convert = require('xml-js')
-const fs = require('fs')
-const RawEntryParser = require('../Parser/RawEntryParser')
-const Renderer = require('../GUI/Renderer')
+const RendererEntries = require('../GUI/RendererEntriesApi')
+const FetchEntries = require('../FETCH/FetchEntriesApi')
+const ManageEntries = require('../MANAGER/ManageEntriesApi')
 
 /* ===== >> Imports << ====== */
 
 class IliasBuddyApi {
   /**
-   * Creates an instance of IliasBuddyApi.
-   * @param {string} url
-   * @param {string} userName
-   * @param {string} password
+   * Creates an instance of IliasBuddyApi
+   * @param {string} url Private Ilias RSS feed url
+   * @param {string} userName Private Ilias RSS feed username
+   * @param {string} password Private Ilias RSS feed password
+   * @param {function(*[]): void} newEntriesFoundCallback
    */
-  constructor (url, userName, password) {
-    this.url = url
-    this.userName = userName
-    this.password = password
-  }
-  /**
-   * @returns {Promise<import('./IliasPrivateRssFeedTypes').IliasPrivateRssFeed.WholeThing>}
-   */
-  getCurrentEntriesRaw () {
-    return new Promise((resolve, reject) => {
-      net.request(this.url)
-        .on('response', response => {
-          const responseDataBuffer = []
-          response
-            .on('data', chunk => {
-              responseDataBuffer.push(chunk)
-            })
-            .on('error', reject)
-            .on('end', () => {
-              const rssString = Buffer.concat(responseDataBuffer).toString()
-              fs.writeFile('lastRss.xml', rssString, err => {
-                if (err) reject(err)
-              })
-              // Parse raw feed
-              const result = JSON.parse(convert.xml2json(rssString, {
-                compact: true
-              }))
-              fs.writeFile('lastParsedRss.json', JSON.stringify(result, null, 4), err => {
-                if (err) reject(err)
-              })
-              // Return parsed feed raw
-              resolve(result)
-            })
-        })
-        .on('login', (authInfo, callback) => {
-          callback(this.userName, this.password)
-        })
-        .on('error', reject)
-        .end()
-    })
+  constructor (url, userName, password, newEntriesFoundCallback) {
+    this.manageEntries = new ManageEntries(url, userName, password,
+      newEntriesFoundCallback)
   }
   /**
    * Get the current Ilias entries
-   * @returns {Promise<import('./IliasBuddyApiTypes').IliasBuddyApi.Entry[]>}
+   * @returns {Promise<import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]>}
    */
   getCurrentEntries () {
-    return new Promise((resolve, reject) => {
-      this.getCurrentEntriesRaw()
-        .then(entries => entries.rss.channel.item.map(RawEntryParser.parseRawEntry))
-        .then(entries => entries.map(RawEntryParser.parseToIliasEntry.bind(RawEntryParser)))
-        .then(result => {
-          fs.writeFile('lastParsedJsonRss.json', JSON.stringify(result, null, 4), err => {
-            if (err) reject(err)
-          })
-
-          return result
-        })
-        .then(resolve)
-        .catch(reject)
-    })
+    return this.manageEntries.getCurrentEntries()
+  }
+  getCache () {
+    return this.manageEntries.currentEntries
   }
   /**
    * Get the current Ilias entries as HTML elements
-   * @param {import('./IliasBuddyApiTypes').IliasBuddyApi.Entry[]} entries
+   * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]} entries
    * @returns {HTMLLIElement[]}
    */
   static renderEntriesHtml (entries) {
-    return entries.map(Renderer.render.bind(Renderer))
+    return entries.map(RendererEntries.render.bind(RendererEntries))
   }
 }
 

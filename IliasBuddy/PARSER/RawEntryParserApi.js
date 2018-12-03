@@ -10,6 +10,8 @@ class RawEntryParser {
    *
    * Examples:
    * - ["Course_title" > "directory_1 > directory_2"] "forum": "title" (https://regex101.com/r/TZTADg/1/)
+   *
+   * @returns {RegExp} Regular expression to recognize groups
    */
   static getRegex01 () {
     return /^\[(.*?)\s>\s(.*)\]\s(.*):\s(.*)$/
@@ -22,14 +24,16 @@ class RawEntryParser {
    *
    * Example:
    * - ["Course_title"] "forum": "title" (https://regex101.com/r/YSiMVU/1)
+   *
+   * @returns {RegExp} Regular expression to recognize groups
    */
   static getRegex02 () {
     return /^\[(.*)\]\s(.*):\s(.*)$/
   }
   /**
    * Function that converts raw entries to better ones
-   * @param {import('../API/IliasPrivateRssFeedTypes').IliasPrivateRssFeed.WholeThingRssChannelItem} rawEntry
-   * @returns {import('../API/IliasBuddyApiTypes').IliasBuddyApi.RawEntry} rawEntry
+   * @param {import('../FETCH/FetchEntriesTypes').IliasPrivateRssFeed.WholeThingRssChannelItem} rawEntry
+   * @returns {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries.RawEntry}
    */
   static parseRawEntry (rawEntry) {
     return {
@@ -41,10 +45,10 @@ class RawEntryParser {
     }
   }
   /**
-   * @param {import('../API/IliasBuddyApiTypes').IliasBuddyApi.RawEntry} rawEntry
-   * @returns {import('../API/IliasBuddyApiTypes').IliasBuddyApi.Entry} Entry
+   * @param {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries.RawEntry} rawEntry
+   * @returns {import('./RawEntryParserTypes').IliasBuddyRawEntryParser.Entry} Entry
    */
-  static parseToIliasEntry (rawEntry) {
+  static parseToIliasBuddyEntry (rawEntry) {
     let resultObject = {
       course: this.parseCourseTitle(rawEntry.title),
       date: this.parseDate(rawEntry.pubDate),

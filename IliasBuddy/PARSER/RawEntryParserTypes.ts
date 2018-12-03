@@ -1,15 +1,17 @@
-export namespace IliasBuddyApi {
+export namespace IliasBuddyRawEntryParser {
 
     export interface Entry {
         options?: EntryOptions;
         course: string;
-        date: {
-            unix: number;
-            humanReadable: string;
-        };
+        date: DateObject;
         link: string;
         courseDirectory: string[];
         description: string;
+    }
+
+    export interface DateObject {
+        unix: number;
+        humanReadable: string;
     }
 
     export interface EntryOptions {
@@ -30,11 +32,4 @@ export namespace IliasBuddyApi {
         fileName?: string;
     }
 
-    export interface RawEntry {
-        title: string;
-        link: string;
-        description: string;
-        pubDate: string;
-        guid: string;
-    }
 }

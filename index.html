@@ -16,8 +16,29 @@
 <body>
     <div id="title-bar"></div>
     <ul id="screens">
-        <li id="info"></li>
+        <li id="info">
+            <p>About this app</p>
+            <ul>
+                <!-- TODO Implement info class -->
+                <li>Authors:<ul id="app_authors"></ul>
+                </li>
+                <li>Name: <span id="app_name"></span></li>
+                <li>Version: <span id="app_version"></span></li>
+                <li>Source Code: <span id="app_repository"></span></li>
+            </ul>
+            <button>Check for update</button>
+        </li>
         <li id="settings">
+            <p>Settings</p>
+            <ul>
+                <!-- TODO Implement settings externally -->
+                <li>Use native window [TOGGLE]</li>
+                <li>Minimize to system tray [TOGGLE]</li>
+                <li>Automatically check for update [TOGGLE]</li>
+                <li>Start on login [TOGGLE]</li>
+                <li>Ilias RSS feed URL [INPUT]</li>
+                <li>Ilias RSS feed password [INPUT]</li>
+            </ul>
             <webview src="http://www.github.com/" style="width:640px; height:480px"></webview>
         </li>
         <li id="main"></li>

@@ -95,16 +95,36 @@ hammer
 /**
  * Inter-process-communication
  */
-ipcRenderer.send('test-send', 'sent from index.js to main.js')
-ipcRenderer.send('render-elements')
-ipcRenderer.on('render-elements-reply', (event, arg) => {
+ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
+ipcRenderer.on('new-entries', (event, arg) => {
+  updateIliasEntries(arg)
+})
+
+/**
+ * Create iliasEntries list
+ */
+createIliasEntries([])
+ipcRenderer.send('get-cache')
+ipcRenderer.on('cached-entries', (event, arg) => {
+  updateIliasEntries(arg, false)
+})
+
+function createIliasEntries (iliasEntries) {
+  console.log('Create Ilias Entries')
   const list = document.createElement('ul')
   list.id = 'ilias-entries'
-  IliasBuddyApi.renderEntriesHtml(arg).forEach(element => { list.appendChild(element) })
-
   document.getElementById('main').appendChild(list)
-  Dialogs.toast('Render successful', 'All entries were rendered', () => {})
-})
+}
+function updateIliasEntries (newEntries, notification = true) {
+  console.log('Update Ilias Entries', newEntries)
+
+  const list = document.getElementById('ilias-entries')
+  IliasBuddyApi.renderEntriesHtml(newEntries).map(element => { list.appendChild(element) })
+
+  if (notification) {
+    Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {})
+  }
+}
 
 /**
  * Open link in external browser (for now)
@@ -157,3 +177,6 @@ function leftAnimation () {
 function rightAnimation () {
   hammerGestureHelper(() => toggleScreen('settings'))
 }
+
+// TODO App info/settings manager
+// TODO Rss feed manager (bg checker with notifications)

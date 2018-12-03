@@ -38,11 +38,12 @@
     }
   ],
   "build": {
-    "appId": "ilias-buddy-desktop",
+    "appId": "ilias-buddy",
     "win": {
       "icon": "images/favicon/favicon.ico"
     },
     "nsis": {
+      "artifactName": "${productName}_installer_v${version}.${ext}",
       "oneClick": false,
       "perMachine": false,
       "license": "LICENSE",

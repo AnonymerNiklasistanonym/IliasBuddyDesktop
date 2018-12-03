@@ -26,23 +26,42 @@ if (!fs.existsSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json'))) {
 }
 
 // global variables
+/**
+ * @type {BrowserWindow}
+ */
 var mainWindow = null
 
 // Only one instance of the program should run
 if (!app.requestSingleInstanceLock()) app.quit()
 
+// IliasApi object hidden from GUI process
+const credentials = JSON.parse(fs.readFileSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json')).toString())
+const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials.password, newEntries => {
+  console.log('Main >> New entries >>', newEntries.length)
+  if (newEntries !== undefined && newEntries !== []) {
+    mainWindow.webContents.send('new-entries', newEntries)
+  }
+})
+// Start checking for updates
+api.manageEntries.startBackgroundChecks()
+
 // inter process communication listeners
 ipcMain
-  .on('test-send', (event, arg) => {
-    console.log('event:', event)
-    console.log('arg:', arg)
+  .on('render-process-to-main-message', (event, arg) => {
+    console.log('Message:', arg)
   })
   .on('render-elements', (event, arg) => {
-    const credentials = JSON.parse(fs.readFileSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json')).toString())
-    const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials.password)
-
     api.getCurrentEntries()
       .then(a => event.sender.send('render-elements-reply', a))
+      .catch(console.error)
+  })
+  .on('get-cache', (event, arg) => {
+    api.getCurrentEntries()
+      .then(a => {
+        const cache = api.getCache()
+        console.log('Main >> Cached entries >>', cache.length)
+        event.sender.send('cached-entries', cache)
+      })
       .catch(console.error)
   })
 
@@ -50,7 +69,6 @@ ipcMain
  * Create the main window
  */
 function createWindow () {
-  dialog.showMessageBox({ message: 'We are ready to take off! :-)"', buttons: ['OK'] })
   let autoLaunch = new AutoLaunch({
     name: 'test',
     isHidden: true
@@ -59,8 +77,12 @@ function createWindow () {
   autoLaunch.isEnabled().then((isEnabled) => {
     if (!isEnabled) {
       autoLaunch.enable()
-      dialog.showMessageBox({ message: 'AutoLaunch enabled.', buttons: ['OK'] })
-    } else dialog.showMessageBox({ message: 'AutoLaunch already enabled.', buttons: ['OK'] })
+      console.log('AutoLaunch enabled.')
+      // dialog.showMessageBox({ message: 'AutoLaunch enabled.', buttons: ['OK'] })
+    } else {
+      console.log('AutoLaunch already enabled.')
+      // dialog.showMessageBox({ message: 'AutoLaunch already enabled.', buttons: ['OK'] })
+    }
   })
   // get settings
   const settingsWindowBounds = Settings.get('windowBounds')
@@ -134,6 +156,7 @@ function createWindow () {
  * Save current settings (+ window size/position) in preferences file
  */
 function saveSettings () {
+  api.manageEntries.saveCacheFile()
   Settings.set('windowBounds', mainWindow.getBounds())
   Settings.save()
 }

@@ -92,3 +92,4 @@ lastRss.xml
 
 # Ignore this because I have no use for this file
 package-lock.json
+cache.json
