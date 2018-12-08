@@ -1,6 +1,6 @@
-import { IliasBuddyApi } from '../API/IliasBuddyTypes'
+import { IliasBuddyRawEntryParser } from '../PARSER/RawEntryParserTypes'
 
-export interface RenderEntry extends IliasBuddyApi.Entry {
+export interface RenderEntry extends IliasBuddyRawEntryParser.Entry {
     hasDescription: boolean;
     hasCourseDirectory: boolean;
 }

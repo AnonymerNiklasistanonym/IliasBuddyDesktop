@@ -15,6 +15,7 @@ const registerPartial = nameOfPartial => {
 
 /**
  * Compile a handlebars template in template directory
+ * @returns {Handlebars.TemplateDelegate}
  */
 const compileTemplate = nameOfTemplate => {
   const filePath = path.join(hbsTemplatePath, nameOfTemplate + '.hbs')
@@ -31,7 +32,7 @@ const templatePost = compileTemplate('templatePost')
 
 class Renderer {
   /**
-   * @param {import('../API/IliasBuddyTypes').IliasBuddyApi.Entry} entry
+   * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry} entry
    * @returns {HTMLLIElement}
    */
   static render (entry) {
@@ -39,7 +40,7 @@ class Renderer {
     wrapper.innerHTML = this.renderElementHbs({
       ...entry,
       hasDescription: entry.description !== undefined && entry.description !== '',
-      hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory !== []
+      hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory.length !== 0
     })
     // @ts-ignore
     return wrapper.firstChild

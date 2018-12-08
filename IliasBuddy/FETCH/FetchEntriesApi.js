@@ -23,37 +23,30 @@ class IliasBuddyFetchEntriesApi {
    * @returns {Promise<import('./FetchEntriesTypes').IliasPrivateRssFeed.WholeThing>}
    */
   getCurrentEntriesRaw () {
-    return new Promise((resolve, reject) => {
-      net.request(this.url)
-        .on('response', response => {
-          const responseDataBuffer = []
-          response
-            .on('data', chunk => {
-              responseDataBuffer.push(chunk)
+    return new Promise((resolve, reject) => net.request(this.url)
+      .on('response', response => {
+        const responseDataBuffer = []
+        response
+          .on('data', chunk => { responseDataBuffer.push(chunk) })
+          .on('error', reject)
+          .on('end', () => {
+            const rssString = Buffer.concat(responseDataBuffer).toString()
+            fs.writeFile('lastRss.xml', rssString, err => {
+              if (err) reject(err)
             })
-            .on('error', reject)
-            .on('end', () => {
-              const rssString = Buffer.concat(responseDataBuffer).toString()
-              fs.writeFile('lastRss.xml', rssString, err => {
-                if (err) reject(err)
-              })
-              // Parse raw feed
-              const result = JSON.parse(convert.xml2json(rssString, {
-                compact: true
-              }))
-              fs.writeFile('lastParsedRss.json', JSON.stringify(result, null, 4), err => {
-                if (err) reject(err)
-              })
-              // Return parsed feed raw
-              resolve(result)
+            // Parse raw feed
+            const result = JSON.parse(convert.xml2json(rssString, { compact: true }))
+            fs.writeFile('lastParsedRss.json', JSON.stringify(result, null, 4), err => {
+              if (err) reject(err)
             })
-        })
-        .on('login', (authInfo, callback) => {
-          callback(this.userName, this.password)
-        })
-        .on('error', reject)
-        .end()
-    })
+            // Return parsed feed raw
+            resolve(result)
+          })
+      })
+      .on('login', (authInfo, callback) => { callback(this.userName, this.password) })
+      .on('error', reject)
+      .end()
+    )
   }
   /**
    * Get the current Ilias entries

@@ -1,3 +1,5 @@
+// TODO Implement File save and load to save window postion, credentials, etc.
+
 class Settings {
   /**
    * @param {string} name

@@ -7,7 +7,7 @@
 
 /* =====  Imports  ====== */
 
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Tray, Menu } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
@@ -16,6 +16,7 @@ const Settings = require('./IliasBuddy/Other/Settings')
 const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
 const AutoLaunch = require('auto-launch')
 
+// TODO: Use electron dialogs instead of dialog module which is not 100% secure
 // TODO: Update checker
 // TODO: Settings IPC listener
 // TODO: Settings loader (default/saved)
@@ -42,6 +43,7 @@ const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials
     mainWindow.webContents.send('new-entries', newEntries)
   }
 })
+
 // Start checking for updates
 api.manageEntries.startBackgroundChecks()
 
@@ -114,6 +116,32 @@ function createWindow () {
     })
   )
 
+  const systemTray = new Tray('./images/favicon/favicon.ico')
+  systemTray.setToolTip('IliasBuddy')
+  systemTray.setContextMenu(Menu.buildFromTemplate([
+    { label: 'Show App',
+      click: function () {
+        if (mainWindow.isVisible()) {
+          mainWindow.focus()
+        } else {
+          mainWindow.show()
+        }
+      } },
+    { label: 'Quit',
+      click: function () {
+        app.quit()
+      } }
+  ]))
+  systemTray.on('click', () => {
+    if (mainWindow) {
+      if (mainWindow.isVisible()) {
+        mainWindow.focus()
+      } else {
+        mainWindow.show()
+      }
+    }
+  })
+
   mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
     if (frameName === 'modal') {
       // open window as modal
@@ -131,10 +159,12 @@ function createWindow () {
   // window event listener
   mainWindow
     .on('ready-to-show', () => {
+      // DONT:
       // if page is loaded show window
-      mainWindow.show()
+      // mainWindow.show()
+      mainWindow.minimize()
       // and focus the window
-      mainWindow.focus()
+      // mainWindow.focus()
       // and open the dev console
       // mainWindow.webContents.openDevTools()
       // and if settings say so check if a new version is available
@@ -150,6 +180,12 @@ function createWindow () {
       // dereference the window object
       mainWindow = null
     })
+
+  // System Tray integration
+  mainWindow.on('minimize', function (event) {
+    event.preventDefault()
+    mainWindow.hide()
+  })
 }
 
 /**
