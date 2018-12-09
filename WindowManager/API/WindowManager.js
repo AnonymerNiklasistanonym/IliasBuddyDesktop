@@ -46,7 +46,6 @@ class WindowManager {
    * Show a window
    * @param {string} showNewWindowId
    * @param {import('./WindowManagerTypes').WindowManager.ShowWindowOptions} [options]
-
    */
   showWindow (showNewWindowId, options) {
     let newWindowIndex = this.getIndexOfRegisteredWindow(showNewWindowId)

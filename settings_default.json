@@ -1,0 +1,10 @@
+{
+    "frame": false,
+    "tray": true,
+    "windowBounds": {
+        "height": 400,
+        "width": 720,
+        "x": 0,
+        "y": 0
+    }
+}
