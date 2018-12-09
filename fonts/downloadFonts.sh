@@ -13,3 +13,10 @@ unzip zippedFilesRoboto.zip
 # Remove unnecessary files
 rm -f zippedFilesOpenSans.zip
 rm -f zippedFilesRoboto.zip
+
+# Fira Code Regular Part
+wget -O zippedFilesFiraCode.zip "https://github.com/tonsky/FiraCode/releases/download/1.206/FiraCode_1.206.zip"
+unzip zippedFilesFiraCode.zip -d FiraCodeFilesExtracted
+mv FiraCodeFilesExtracted/woff2/FiraCode-Regular.woff2 FiraCode-Regular.woff2
+rm -f zippedFilesFiraCode.zip
+rm -rf FiraCodeFilesExtracted

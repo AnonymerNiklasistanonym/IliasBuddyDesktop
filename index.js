@@ -3,7 +3,7 @@ const TitleBarWin10 = require('./TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./WindowManager/API/WindowManager')
 
 const path = require('path')
-const Hammer = require('hammerjs')
+// const Hammer = require('hammerjs')
 const Dialogs = require('./Dialogs/API/Dialogs')
 const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
 
@@ -14,6 +14,7 @@ const windowManager = new WindowManager(
   [
     { documentId: 'main', id: 'main' },
     { documentId: 'info', id: 'info' },
+    { documentId: 'welcome', id: 'welcome' },
     { documentId: 'settings', id: 'settings' }
   ],
   'main'
@@ -83,15 +84,19 @@ Dialogs.question('Question', () => {
 const mainWindow = remote.getCurrentWindow()
 // mainWindow.webContents.openDevTools()
 
+// TODO Add later if there is a usecase
 /**
  * Hammer 'object' - gesture listener
  */
+/*
 const hammer = new Hammer(document.body)
 const pan = new Hammer.Pan()
 hammer
   .on('panright', leftAnimation)
   .on('panleft', rightAnimation)
   .add(pan)
+*/
+
 /**
  * Inter-process-communication
  */
@@ -150,15 +155,14 @@ function copyToClipboard (url) {
 /**
  * Keyboard input listener
  */
-document.addEventListener('keypress', e => {
+document.addEventListener('keydown', e => {
+  console.log('aha3', e)
   switch (e.which) {
     case 122: // F11 - Fullscreen
+      console.log('aha', mainWindow.isFullScreen())
       mainWindow.setFullScreen(!mainWindow.isFullScreen())
+      windowManager.toggleFullScreen(mainWindow.isFullScreen())
       break
-  }
-})
-document.addEventListener('keydown', e => {
-  switch (e.which) {
     case 116: // F5 - reload app
       mainWindow.reload()
       break

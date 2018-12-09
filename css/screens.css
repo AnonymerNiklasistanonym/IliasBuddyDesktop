@@ -13,6 +13,10 @@ ul#screens>li {
     position: absolute;
     /* Display each screen at the top */
 }
+ul#screens>li.window-manager-screen-full-screen {
+    /* Maximize when screen is fullscreen */
+    height: 100vh;
+}
 
 
 @keyframes moveScreenLeft {

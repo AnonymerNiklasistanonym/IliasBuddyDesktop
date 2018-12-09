@@ -22,6 +22,23 @@ class WindowManager {
     windowList.forEach(this.registerWindow.bind(this))
     // Show startup (main) window
     this.showWindow(startupWindowId)
+    this.fullScreen = false
+  }
+  /**
+   * @param {boolean} [on]
+   */
+  toggleFullScreen (on) {
+    if (on !== undefined) {
+      this.fullScreen = on
+    } else {
+      this.fullScreen = !this.fullScreen
+    }
+    console.log(this.fullScreen)
+    if (this.fullScreen) {
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.add('window-manager-screen-full-screen'))
+    } else {
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.remove('window-manager-screen-full-screen'))
+    }
   }
   /**
    * Get the name of the current window

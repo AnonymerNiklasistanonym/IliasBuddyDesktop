@@ -17,6 +17,15 @@
         url('../fonts/roboto-v18-latin-regular.woff2') format('woff2');
 }
 
+/* Load Fira Code font (https://github.com/tonsky/FiraCode/releases) */
+@font-face{
+    font-family: 'Local Fira Code';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fira Code'), local('Fira Code Regular'),
+        url('FiraCode-Regular.woff2') format('woff2');
+}
+
 * {
     vertical-align: baseline;
     font-size: 100%;

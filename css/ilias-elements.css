@@ -75,7 +75,20 @@ li.ilias-entry>div.ilias-entry-description {
     color: black;
     padding: 0.25em;
     margin: 0.5em 0;
+}
+
+/* Users should be able to select text in the description */
+li.ilias-entry>div.ilias-entry-description,
+li.ilias-entry>div.ilias-entry-description * {
+    /* Also the text should be broken into pieces if to long */
+    word-break: break-word;
     user-select: text;
+}
+
+li.ilias-entry>div.ilias-entry-description pre {
+    font-family: Local Fira Code;
+    color: white;
+    background-color: black;
 }
 
 li.ilias-entry>div.container-link-date>button.ilias-entry-link-button {
