@@ -15,6 +15,7 @@ const VersionChecker = require('./IliasBuddy/Other/VersionChecker')
 const Settings = require('./IliasBuddy/Other/Settings')
 const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
 const AutoLaunch = require('auto-launch')
+const cron = require('node-cron')
 
 // TODO: Use electron dialogs instead of dialog module which is not 100% secure
 // TODO: Update checker
@@ -45,7 +46,10 @@ const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials
 })
 
 // Start checking for updates
-api.manageEntries.startBackgroundChecks()
+var bgCheckTask = cron.schedule('*/10 * * * * *', () => {
+  console.log('Execute every 10 seconds')
+  api.getCurrentEntries().catch(console.error)
+})
 
 // inter process communication listeners
 ipcMain
