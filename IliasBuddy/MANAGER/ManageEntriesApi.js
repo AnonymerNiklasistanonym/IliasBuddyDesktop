@@ -41,23 +41,26 @@ class IliasBuddyManageEntriesApi {
       newEntries = fetchedEntries
     } else {
       console.log('There are current entries', 'The latest one is from', this.currentEntries[0].date.humanReadable, 'with the link', this.currentEntries[0].link)
-      const theLatestLink = this.currentEntries[0].link
+      const theLatestEntry = this.currentEntries[0]
 
-      if (theLatestLink === fetchedEntries[0].link) {
+      console.log('The latest fetched entry is from', fetchedEntries[0].date.humanReadable, 'with the link', fetchedEntries[0].link)
+      const theLatestFetchedEntry = fetchedEntries[0]
+
+      if (theLatestEntry.link === theLatestFetchedEntry.link) {
         console.log('First fetched entry is the same as the latest link - no new entries')
-        return undefined
-      }
-
-      console.log('First fetched entry is not the same as the latest link - iterate to get new entries')
-      for (let index = 0; index < fetchedEntries.length; index++) {
-        if (theLatestLink !== fetchedEntries[index].link) {
+      } else {
+        console.log('First fetched entry is not the same as the latest link - iterate to get new entries')
+        for (let index = 0; index < fetchedEntries.length; index++) {
+          if (theLatestEntry.link === fetchedEntries[index].link) {
+            break
+          }
           console.log('a new entry was found', fetchedEntries[index].link)
           newEntries.push(fetchedEntries[index])
         }
       }
     }
 
-    if (newEntries.length !== 0) {
+    if (newEntries.length > 0) {
       this.currentEntries = newEntries.concat(this.currentEntries)
       this.saveCacheFile()
       return newEntries
@@ -66,17 +69,19 @@ class IliasBuddyManageEntriesApi {
     }
   }
   getCurrentEntries (callback = false) {
+    console.log('callback', callback)
     return new Promise((resolve, reject) => {
       this.fetchEntries.getCurrentEntries().then(latestEntries => {
         if (latestEntries !== undefined && latestEntries.length !== 0) {
           const analysis = this.checkForUpdates(latestEntries)
+          console.log('analysis', analysis)
           if (analysis !== undefined) {
+            console.log('callback', callback)
             if (callback) {
+              console.log('this.newEntriesFoundCallback(analysis)', analysis)
               this.newEntriesFoundCallback(analysis)
-              resolve()
-            } else {
-              resolve(analysis)
             }
+            resolve(analysis)
           } else {
             resolve([])
           }

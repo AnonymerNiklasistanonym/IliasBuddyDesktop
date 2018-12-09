@@ -84,7 +84,7 @@ Dialogs.question('Question', () => {
 const mainWindow = remote.getCurrentWindow()
 // mainWindow.webContents.openDevTools()
 
-// TODO Add later if there is a usecase
+// TODO Add later if there is a use case
 /**
  * Hammer 'object' - gesture listener
  */
@@ -102,7 +102,7 @@ hammer
  */
 ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
 ipcRenderer.on('new-entries', (event, arg) => {
-  updateIliasEntries(arg)
+  updateIliasEntries(arg, true)
 })
 
 /**
@@ -127,7 +127,10 @@ function updateIliasEntries (newEntries, notification = true) {
   IliasBuddyApi.renderEntriesHtml(newEntries).map(element => { list.appendChild(element) })
 
   if (notification) {
-    Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {})
+    Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {
+      mainWindow.show()
+      mainWindow.focus()
+    })
   }
 }
 

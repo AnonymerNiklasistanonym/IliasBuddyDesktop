@@ -24,7 +24,9 @@ const cron = require('node-cron')
 
 if (!fs.existsSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json'))) {
   app.quit()
-  throw Error('Create the file "iliasPrivateRssFeedLogin.json" with the values\n{ url: string, userName:string, password:string }\nso that the app has access to your private ilias rss feed!')
+  const tempError = Error('Create the file "iliasPrivateRssFeedLogin.json" with the values \n{ url: string, userName: string, password: string }\n so that the app has access to your private ilias rss feed!')
+  dialog.showErrorBox('Temporary Configuration Error', tempError.toString())
+  // throw tempError
 }
 
 // global variables
@@ -40,15 +42,15 @@ if (!app.requestSingleInstanceLock()) app.quit()
 const credentials = JSON.parse(fs.readFileSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json')).toString())
 const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials.password, newEntries => {
   console.log('Main >> New entries >>', newEntries.length)
-  if (newEntries !== undefined && newEntries !== []) {
+  if (newEntries !== undefined && newEntries.length > 0) {
     mainWindow.webContents.send('new-entries', newEntries)
   }
 })
 
 // Start checking for updates
 var bgCheckTask = cron.schedule('*/10 * * * * *', () => {
-  console.log('Execute every 10 seconds')
-  api.getCurrentEntries().catch(console.error)
+  console.log('Execute every 10 seconds', true)
+  api.manageEntries.getCurrentEntries(true).catch(console.error)
 })
 
 // inter process communication listeners
@@ -62,13 +64,9 @@ ipcMain
       .catch(console.error)
   })
   .on('get-cache', (event, arg) => {
-    api.getCurrentEntries()
-      .then(a => {
-        const cache = api.getCache()
-        console.log('Main >> Cached entries >>', cache.length)
-        event.sender.send('cached-entries', cache)
-      })
-      .catch(console.error)
+    const cache = api.getCache()
+    console.log('Main >> Cached entries >>', cache.length)
+    event.sender.send('cached-entries', cache)
   })
 
 /**
