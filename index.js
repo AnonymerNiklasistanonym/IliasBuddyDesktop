@@ -135,6 +135,18 @@ function openExternal (url) {
 }
 
 /**
+ * Copy link to clipboard
+ * @param {string} url
+ */
+function copyToClipboard (url) {
+  navigator.clipboard.writeText(url).then(() => {
+    console.log('Async: Copying to clipboard was successful!')
+  }, err => {
+    console.error('Async: Could not copy text: ', err)
+  })
+}
+
+/**
  * Keyboard input listener
  */
 document.addEventListener('keypress', e => {
