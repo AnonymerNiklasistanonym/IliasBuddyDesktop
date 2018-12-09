@@ -1,4 +1,4 @@
-// TODO Implement File save and load to save window postion, credentials, etc.
+// TODO Implement credentials, etc.
 
 const fs = require('fs')
 const path = require('path')

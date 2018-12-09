@@ -1,9 +1,28 @@
 {
+    "credentials": {
+        "hash": false,
+        "password": false,
+        "url": false,
+        "userName": false
+    },
     "frame": false,
+    "schedules": {
+        "feedCheck": {
+            "cronJob": "* * * * *",
+            "enabled": true,
+            "onStart": true
+        },
+        "updateCheck": {
+            "cronJob": "* * * * *",
+            "enabled": true,
+            "onStart": true
+        }
+    },
+    "touchGestures": false,
     "tray": true,
     "windowBounds": {
-        "height": 400,
-        "width": 720,
+        "height": 600,
+        "width": 480,
         "x": 0,
         "y": 0
     }

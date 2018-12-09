@@ -75,6 +75,7 @@ li.ilias-entry>div.ilias-entry-description {
     color: black;
     padding: 0.25em;
     margin: 0.5em 0;
+    user-select: text;
 }
 
 li.ilias-entry>div.container-link-date>button.ilias-entry-link-button {

@@ -170,7 +170,7 @@ function createWindow () {
       // and focus the window
       // mainWindow.focus()
       // and open the dev console
-      // mainWindow.webContents.openDevTools()
+      mainWindow.webContents.openDevTools()
       // and if settings say so check if a new version is available
       // if (settings.get('checkForNewVersionOnStartup')) checkForNewVersion()
       VersionChecker.getLatestTagGithub()

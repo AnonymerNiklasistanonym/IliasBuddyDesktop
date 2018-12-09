@@ -136,13 +136,14 @@ function openExternal (url) {
 
 /**
  * Copy link to clipboard
+ * https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText
  * @param {string} url
  */
 function copyToClipboard (url) {
   navigator.clipboard.writeText(url).then(() => {
-    console.log('Async: Copying to clipboard was successful!')
+    Dialogs.toast('Copying to clipboard successful', url)
   }, err => {
-    console.error('Async: Could not copy text: ', err)
+    Dialogs.error('Could not copy url', JSON.stringify(err, null, 4))
   })
 }
 
