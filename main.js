@@ -7,7 +7,7 @@
 
 /* =====  Imports  ====== */
 
-const { app, BrowserWindow, ipcMain, dialog, Tray, Menu } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, Tray, Menu, shell, nativeImage } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
@@ -47,16 +47,12 @@ const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials
   }
 })
 
-// Start checking for updates
-var bgCheckTask = cron.schedule('*/10 * * * * *', () => {
-  console.log('Execute every 10 seconds', true)
-  api.manageEntries.getCurrentEntries(true).catch(console.error)
-})
-
 // inter process communication listeners
 ipcMain
   .on('render-process-to-main-message', (event, arg) => {
     console.log('Message:', arg)
+    mainWindow.webContents.send('main-process-to-renderer-message', 'Hello from main.js to index.js')
+    mainWindow.webContents.send('cron-job-debug', 'Hello')
   })
   .on('render-elements', (event, arg) => {
     api.getCurrentEntries()
@@ -91,6 +87,8 @@ function createWindow () {
   // get settings
   const settingsWindowBounds = Settings.get('windowBounds')
   const settingsFrame = Settings.get('frame')
+  // icon path
+  const iconPath = path.join(__dirname, 'images', 'favicon', 'favicon.ico')
   // create a BrowserWindow object
   mainWindow = new BrowserWindow({
     frame: settingsFrame,
@@ -103,7 +101,7 @@ function createWindow () {
     x: settingsWindowBounds.x,
     y: settingsWindowBounds.y,
     show: false, // do not show the window before content is loaded
-    icon: path.join(__dirname, 'images', 'favicon', 'favicon.ico'),
+    icon: iconPath,
     center: settingsWindowBounds.x === 0 && settingsWindowBounds.y === 0,
     webPreferences: {
       nativeWindowOpen: true
@@ -118,7 +116,7 @@ function createWindow () {
     })
   )
 
-  const systemTray = new Tray('./images/favicon/favicon.ico')
+  const systemTray = new Tray(nativeImage.createFromPath(iconPath))
   systemTray.setToolTip('IliasBuddy')
   systemTray.setContextMenu(Menu.buildFromTemplate([
     { label: 'Show App',
@@ -144,7 +142,17 @@ function createWindow () {
     }
   })
 
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    event.preventDefault()
+    if (url.startsWith('http:') || url.startsWith('https:')) {
+      shell.openExternal(url)
+    } else {
+      dialog.showErrorBox('Error', 'URL is not save? - ' + url)
+    }
+  })
+
   mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
+    console.log("mainWindow.webContents.on('new-window'", event, url)
     if (frameName === 'modal') {
       // open window as modal
       event.preventDefault()
@@ -168,7 +176,7 @@ function createWindow () {
       // and focus the window
       // mainWindow.focus()
       // and open the dev console
-      mainWindow.webContents.openDevTools()
+      // mainWindow.webContents.openDevTools()
       // and if settings say so check if a new version is available
       // if (settings.get('checkForNewVersionOnStartup')) checkForNewVersion()
       VersionChecker.getLatestTagGithub()
@@ -176,6 +184,18 @@ function createWindow () {
           console.log(json.tag_name, json.name, json.body, json.id)
         })
         .catch(console.error)
+
+      // Do instantly check for updates
+      api.manageEntries.getCurrentEntries(true).catch(console.error)
+      const cronJob = Settings.get('schedules.feedUpdate').cronJob
+      // And set up a 'cron job' for checking for updates
+      if (!cron.validate(cronJob)) {
+        throw Error('Feed update cron job is not valid!')
+      }
+      var bgCheckTask = cron.schedule(cronJob, () => {
+        api.manageEntries.getCurrentEntries(true).catch(console.error)
+        mainWindow.webContents.send('cron-job-debug', cronJob)
+      })
     })
     .on('close', saveSettings)
     .on('closed', () => {

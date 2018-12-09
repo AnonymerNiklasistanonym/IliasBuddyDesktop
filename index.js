@@ -101,6 +101,9 @@ hammer
  * Inter-process-communication
  */
 ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
+ipcRenderer.on('main-process-to-renderer-message', (event, arg) => {
+  console.log('Message:', arg)
+})
 ipcRenderer.on('new-entries', (event, arg) => {
   updateIliasEntries(arg, true)
 })
@@ -112,6 +115,9 @@ createIliasEntries([])
 ipcRenderer.send('get-cache')
 ipcRenderer.on('cached-entries', (event, arg) => {
   updateIliasEntries(arg, false)
+})
+ipcRenderer.on('cron-job-debug', (event, arg) => {
+  console.log('cron-job-debug', arg)
 })
 
 function createIliasEntries (iliasEntries) {

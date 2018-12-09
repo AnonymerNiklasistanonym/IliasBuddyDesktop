@@ -38,8 +38,38 @@
   ],
   "build": {
     "appId": "ilias-buddy",
+
     "win": {
-      "icon": "images/favicon/favicon.ico"
+      "icon": "images/favicon/favicon.ico",
+      "files": [
+        "node_modules/**/*",
+        "!node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+        "!node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+        "!node_modules/*.d.ts",
+        "!node_modules/.bin",
+        "!node_modules/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+        "!node_modules/*.editorconfig",
+        "!node_modules/**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+        "!node_modules/**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+        "!node_modules/**/{appveyor.yml,.travis.yml,circle.yml}",
+        "!node_modules/**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
+        "css/**/*.css",
+        "Dialogs/**/*.js",
+        "fonts/**/*.woff2",
+        "IliasBuddy/**/*.js",
+        "IliasBuddy/**/*.hbs",
+        "images/**/*.ico",
+        "images/**/*.png",
+        "images/**/*.svg",
+        "TitleBarWin10/**/*.js",
+        "TitleBarWin10/**/*.svg",
+        "WindowManager/**/*.js",
+        "index.js",
+        "index.html",
+        "main.js",
+        "settings_default.json",
+        "iliasPrivateRssFeedLogin.json"
+      ]
     },
     "nsis": {
       "artifactName": "${productName}_installer_v${version}.${ext}",

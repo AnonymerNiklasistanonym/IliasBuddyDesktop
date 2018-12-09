@@ -14,7 +14,7 @@ const settings = JSON.parse(fs.readFileSync(settingsFileExists ? settingsFilePat
 
 class Settings {
   /**
-   * @param {string} name
+   * @param {("windowBounds"|"frame"|"schedules.feedUpdate")} name
    * @returns {*}
    */
   static get (name) {
@@ -23,6 +23,8 @@ class Settings {
         return settings.windowBounds
       case 'frame':
         return settings.frame
+      case 'schedules.feedUpdate':
+        return settings.schedules.feedCheck
     }
   }
   static set (name, value) {

@@ -8,7 +8,7 @@
     "frame": false,
     "schedules": {
         "feedCheck": {
-            "cronJob": "* * * * *",
+            "cronJob": "*/5 * * * *",
             "enabled": true,
             "onStart": true
         },

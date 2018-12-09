@@ -3,7 +3,7 @@
 const { net } = require('electron')
 const convert = require('xml-js')
 const fs = require('fs')
-const RawEntryParser = require('../Parser/RawEntryParserApi')
+const RawEntryParser = require('../PARSER/RawEntryParserApi')
 
 /* ===== >> Imports << ====== */
 
