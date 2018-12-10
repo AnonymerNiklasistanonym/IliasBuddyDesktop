@@ -130,7 +130,9 @@ function updateIliasEntries (newEntries, notification = true) {
   console.log('Update Ilias Entries', newEntries)
 
   const list = document.getElementById('ilias-entries')
-  IliasBuddyApi.renderEntriesHtml(newEntries).map(element => { list.appendChild(element) })
+  IliasBuddyApi.renderEntriesHtml(newEntries).reverse().map(element => {
+    list.insertBefore(element, list.firstChild)
+  })
 
   if (notification) {
     Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {
