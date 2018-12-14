@@ -11,9 +11,9 @@ const { app, BrowserWindow, ipcMain, dialog, Tray, Menu, shell, nativeImage } = 
 const path = require('path')
 const fs = require('fs')
 const url = require('url')
-const VersionChecker = require('./IliasBuddy/Other/VersionChecker')
-const Settings = require('./IliasBuddy/Other/Settings')
-const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
+const VersionChecker = require('./modules/IliasBuddy/Other/VersionChecker')
+const Settings = require('./modules/Settings/API/Settings')
+const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 const AutoLaunch = require('auto-launch')
 const cron = require('node-cron')
 
@@ -64,6 +64,15 @@ ipcMain
     console.log('Main >> Cached entries >>', cache.length)
     event.sender.send('cached-entries', cache)
   })
+  .on('getVersion', (event, arg) => {
+    event.sender.send('version', app.getVersion())
+  })
+  .on('getName', (event, arg) => {
+    event.sender.send('name', app.getName())
+  })
+  .on('getSettings', (event, arg) => {
+    event.sender.send('settings', Settings.getModifiableSettings())
+  })
 
 /**
  * Create the main window
@@ -85,8 +94,8 @@ function createWindow () {
     }
   })
   // get settings
-  const settingsWindowBounds = Settings.get('windowBounds')
-  const settingsFrame = Settings.get('frame')
+  const settingsWindowBounds = Settings.getHidden('windowBounds')
+  const settingsFrame = false // Settings.getHidden('nativeTitleBar')
   // icon path
   const iconPath = path.join(__dirname, 'images', 'favicon', 'favicon.ico')
   // create a BrowserWindow object
@@ -187,7 +196,7 @@ function createWindow () {
 
       // Do instantly check for updates
       api.manageEntries.getCurrentEntries(true).catch(console.error)
-      const cronJob = Settings.get('schedules.feedUpdate').cronJob
+      const cronJob = '*/5 * * * *' // Settings.get('schedules.feedUpdate').cronJob
       // And set up a 'cron job' for checking for updates
       if (!cron.validate(cronJob)) {
         throw Error('Feed update cron job is not valid!')
@@ -215,8 +224,7 @@ function createWindow () {
  */
 function saveSettings () {
   api.manageEntries.saveCacheFile()
-  Settings.set('windowBounds', mainWindow.getBounds())
-  Settings.save()
+  Settings.setHidden('windowBounds', mainWindow.getBounds())
 }
 
 // app listeners

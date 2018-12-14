@@ -1,11 +1,12 @@
 const { ipcRenderer, remote, shell } = require('electron')
-const TitleBarWin10 = require('./TitleBarWin10/API/TitleBarWin10')
-const WindowManager = require('./WindowManager/API/WindowManager')
+const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
+const WindowManager = require('./modules/WindowManager/API/WindowManager')
 
 const path = require('path')
 // const Hammer = require('hammerjs')
-const Dialogs = require('./Dialogs/API/Dialogs')
-const IliasBuddyApi = require('./IliasBuddy/API/IliasBuddyApi')
+const Dialogs = require('./modules/Dialogs/API/Dialogs')
+const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
+const SettingsApi = require('./modules/Settings/API/Settings')
 
 /**
  * Create Window manager
@@ -208,3 +209,21 @@ function rightAnimation () {
 
 // TODO App info/settings manager
 // TODO Rss feed manager (bg checker with notifications)
+
+ipcRenderer.send('getSettings')
+ipcRenderer.on('settings', (event, arg) => {
+  const list = document.getElementById('settings_entries')
+  SettingsApi.renderSettings(arg).map(element => {
+    list.appendChild(element)
+  })
+})
+
+ipcRenderer.send('getVersion')
+ipcRenderer.on('version', (event, arg) => {
+  document.getElementById('app_version').innerText = arg
+})
+
+ipcRenderer.send('getName')
+ipcRenderer.on('name', (event, arg) => {
+  document.getElementById('app_name').innerText = arg
+})

@@ -63,7 +63,7 @@ class TitleBarWin10 {
 
     const icon = document.createElement('div')
     icon.id = 'title-bar-icon'
-    icon.innerHTML = fs.readFileSync(path.join(__dirname, '../../images/favicon/favicon.svg')).toString()
+    icon.innerHTML = fs.readFileSync(path.join(__dirname, '../../../images/favicon/favicon.svg')).toString()
     stagingElement.appendChild(icon)
 
     const title = document.createElement('div')
@@ -79,20 +79,20 @@ class TitleBarWin10 {
     actions.appendChild(this.addAction({
       alt: 'minimize',
       id: 'title-bar-action-minimize',
-      svgFiles: [{ fileName: path.join(__dirname, '..', 'icons', 'minimize.svg') }],
+      svgFiles: [{ fileName: path.join(__dirname, '../icons/minimize.svg') }],
       callback: () => {}
     }))
     actions.appendChild(this.addAction({
       alt: 'resize',
       id: 'title-bar-action-resize',
-      svgFiles: [{ fileName: path.join(__dirname, '..', 'icons', 'maximize.svg'), id: 'title-bar-action-resize-maximize-icon' },
-        { fileName: path.join(__dirname, '..', 'icons', 'restore.svg'), id: 'title-bar-action-resize-restore-icon' }],
+      svgFiles: [{ fileName: path.join(__dirname, '../icons/maximize.svg'), id: 'title-bar-action-resize-maximize-icon' },
+        { fileName: path.join(__dirname, '../icons/restore.svg'), id: 'title-bar-action-resize-restore-icon' }],
       callback: () => {}
     }))
     actions.appendChild(this.addAction({
       alt: 'close',
       id: 'title-bar-action-close',
-      svgFiles: [{ fileName: path.join(__dirname, '..', 'icons', 'close.svg') }],
+      svgFiles: [{ fileName: path.join(__dirname, '../icons/close.svg') }],
       callback: () => {}
     }))
     stagingElement.appendChild(actions)

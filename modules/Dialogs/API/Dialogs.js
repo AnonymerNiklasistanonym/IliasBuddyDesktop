@@ -34,7 +34,7 @@ class Dialogs {
     notifier.notify({
       title: title,
       message: message,
-      icon: path.join(__dirname, 'images', 'favicon', 'favicon.png'),
+      icon: path.join(__dirname, '../../images/favicon/favicon.ico'),
       sound: true,
       wait: true
     },

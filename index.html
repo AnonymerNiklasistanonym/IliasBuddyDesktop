@@ -33,30 +33,27 @@
                 <br>
                 <br>
                 <input type="submit" value="Try to login">
-              </form>
+            </form>
         </li>
         <li id="info">
             <p>About this app</p>
             <ul>
                 <!-- TODO Implement info class -->
-                <li>Authors:<ul id="app_authors"></ul>
+                <li>Authors:<ul id="app_authors">
+                        <li>AnonymerNiklasistanonym
+                            <button class="normal-button" onclick="openExternal('https://github.com/AnonymerNiklasistanonym')">GitHub</button>
+                        </li>
+                    </ul>
                 </li>
                 <li>Name: <span id="app_name"></span></li>
                 <li>Version: <span id="app_version"></span></li>
-                <li>Source Code: <span id="app_repository"></span></li>
+                <li>Source Code: <button class="normal-button" onclick="openExternal('https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop')">GitHub</button></li>
             </ul>
             <button>Check for update</button>
         </li>
         <li id="settings">
             <p>Settings</p>
-            <ul>
-                <!-- TODO Implement settings externally -->
-                <li>Use native window [TOGGLE]</li>
-                <li>Minimize to system tray [TOGGLE]</li>
-                <li>Automatically check for update [TOGGLE]</li>
-                <li>Start on login [TOGGLE]</li>
-                <li>Ilias RSS feed URL [INPUT]</li>
-                <li>Ilias RSS feed password [INPUT]</li>
+            <ul id="settings_entries">
             </ul>
             <webview src="http://www.github.com/" style="width:640px; height:480px"></webview>
         </li>

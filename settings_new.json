@@ -1,0 +1,169 @@
+{
+    "settings": {
+        "hidden": [
+            {
+                "id": "windowBounds",
+                "valueDefault": {
+                    "height": 600,
+                    "width": 480,
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            {
+                "id": "searchFilter",
+                "valueDefault": {
+                    "options": [
+                        {
+                            "filter": false,
+                            "id": "files"
+                        },
+                        {
+                            "filter": false,
+                            "id": "posts"
+                        }
+                    ],
+                    "query": ""
+                }
+            },
+            {
+                "id": "sort",
+                "valueDefault": [
+                    {
+                        "ascending": false,
+                        "by": "date",
+                        "on": true
+                    }
+                ]
+            },
+            {
+                "id": "savedEntries",
+                "valueDefault": [
+                    {
+                        "course": "Demo",
+                        "date": {
+                            "unix": 1544169490,
+                            "humanReadable": "Friday, December 7, 2018 8:58 AM"
+                        },
+                        "link": "https://ilias3.uni-stuttgart.de/login.php",
+                        "courseDirectory": ["Pages"],
+                        "description": "This is a demo entry that links to the Login page",
+                        "options": {
+                            "isPost": true,
+                            "isFile": false,
+                            "post": {
+                                "title": "Demo post that links to Login",
+                                "forum": "DEMO"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "savedLinks",
+                "valueDefault": [
+                    {
+                        "name": "Link name",
+                        "description": "Link description text",
+                        "link": "https://ilias3.uni-stuttgart.de/login.php"
+                    }
+                ]
+            }
+        ],
+        "modifiable": [
+            {
+                "id": "nativeTitleBar",
+                "info": {
+                    "description": "If activated the native implementation of the title bar will be used. Otherwise the software Windows 10 like custom title bar will be used.",
+                    "name": "Native Title Bar"
+                },
+                "type": "toggle",
+                "valueDefault": false
+            },
+            {
+                "id": "userName",
+                "info": {
+                    "description": "UPDATE THIS",
+                    "name": "Ilias private RSS feed user name"
+                },
+                "type": "text"
+            },
+            {
+                "id": "userUrl",
+                "info": {
+                    "description": "UPDATE THIS",
+                    "name": "Ilias private RSS feed user URL"
+                },
+                "type": "text"
+            },
+            {
+                "id": "userPassword",
+                "info": {
+                    "description": "UPDATE THIS",
+                    "name": "Ilias private RSS feed user password"
+                },
+                "type": "password"
+            },
+            {
+                "id": "minimizeToSystemTray",
+                "info": {
+                    "description": "UPDATE THIS",
+                    "name": "Minimize to the system tray"
+                },
+                "type": "toggle",
+                "valueDefault": true
+            },
+            {
+                "id": "checkForUpdatesOnStartup",
+                "info": {
+                    "description": "UPDATE THIS",
+                    "name": "Check for program updates on start"
+                },
+                "type": "toggle",
+                "valueDefault": true
+            },
+            {
+                "id": "checkForUpdatesCronJob",
+                "info": {
+                    "description": "Activate if on or disable if off the cron job that checks in the background for updates of this program",
+                    "name": "Cron job for program updates"
+                },
+                "type": "toggle",
+                "valueDefault": true
+            },
+            {
+                "id": "checkForUpdatesCronJobConfiguration",
+                "info": {
+                    "description": "Configure in cron job semantic how often the program should check for updates in the background",
+                    "name": "Cron job for program updates configuration"
+                },
+                "type": "text",
+                "valueDefault": "0 0 * * 0"
+            },
+            {
+                "id": "checkForFeedCronJob",
+                "info": {
+                    "description": "Activate if on or disable if off the cron job that checks in the background for updates of your private Ilias RSS feed",
+                    "name": "Cron job of private Ilias RSS feed"
+                },
+                "type": "toggle",
+                "valueDefault": true
+            },
+            {
+                "id": "checkForFeedCronJobConfiguration",
+                "info": {
+                    "description": "Configure in cron job semantic how often the program should check your feed in the background",
+                    "name": "Cron job of private Ilias RSS feed configuration"
+                },
+                "type": "text",
+                "valueDefault": "*/5 * * * *"
+            }
+        ]
+    },
+    "supportedTypes": [
+        "toggle",
+        "text",
+        "password"
+    ],
+    "version": 1
+}

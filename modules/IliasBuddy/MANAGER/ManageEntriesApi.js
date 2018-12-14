@@ -1,6 +1,7 @@
 /* ===== << Imports >> ====== */
 
 const FetchEntries = require('../FETCH/FetchEntriesApi')
+const FileManager = require('../../FileManager/API/FileManager')
 const fs = require('fs')
 const path = require('path')
 
@@ -17,7 +18,7 @@ class IliasBuddyManageEntriesApi {
   constructor (url, userName, password, newEntriesFoundCallback) {
     this.fetchEntries = new FetchEntries(url, userName, password)
     this.fetchIntervalSeconds = 15
-    this.fetchFilePath = path.join(__dirname, '..', '..', 'cache.json')
+    this.fetchFilePath = path.join('cache.json')
     this.currentEntries = this.loadCacheFile()
     this.newEntriesFoundCallback = newEntriesFoundCallback
   }
@@ -98,17 +99,13 @@ class IliasBuddyManageEntriesApi {
   }
   saveCacheFile () {
     return new Promise((resolve, reject) => {
-      fs.writeFile(this.fetchFilePath,
-        JSON.stringify(this.currentEntries, null, 4),
-        err => {
-          if (err) reject(err)
-          else resolve()
-        })
+      FileManager.writeFileSyncAppData(this.fetchFilePath,
+        JSON.stringify(this.currentEntries, null, 4))
     })
   }
   loadCacheFile () {
-    if (fs.existsSync(this.fetchFilePath)) {
-      return JSON.parse(fs.readFileSync(this.fetchFilePath).toString())
+    if (FileManager.fileExistsSyncAppData(this.fetchFilePath)) {
+      return JSON.parse(FileManager.readFileSyncAppData(this.fetchFilePath).toString())
     } else {
       // Return empty array if there is no cache file
       return []

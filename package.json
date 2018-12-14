@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop",
   "description": "Ilias desktop client",
-  "license": "MIT",
+  "license": "GPLv3",
   "repository": {
     "type": "git",
     "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop.git"
@@ -14,18 +14,18 @@
     "build-win": "electron-builder . --win"
   },
   "devDependencies": {
-    "electron": "^3.0.10",
-    "electron-builder": "^20.38.2"
+    "electron": "^3.0.11",
+    "electron-builder": "^20.38.3"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
     "handlebars": "^4.0.12",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "node-cron": "^2.0.3",
     "node-notifier": "^5.3.0",
     "xml-js": "^1.6.8"
   },
-  "bugs": "https://github.com/AnonymerNiklasistanonym/ilias-buddy-desktop/issues",
+  "bugs": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/issues",
   "author": {
     "name": "AnonymerNiklasistanonym",
     "url": "https://github.com/AnonymerNiklasistanonym"
@@ -38,7 +38,6 @@
   ],
   "build": {
     "appId": "ilias-buddy",
-
     "win": {
       "icon": "images/favicon/favicon.ico",
       "files": [
@@ -54,19 +53,17 @@
         "!node_modules/**/{appveyor.yml,.travis.yml,circle.yml}",
         "!node_modules/**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
         "css/**/*.css",
-        "Dialogs/**/*.js",
+        "modules/**/*.js",
+        "modules/**/*.hbs",
+        "modules/TitleBarWin10/**/*.svg",
         "fonts/**/*.woff2",
-        "IliasBuddy/**/*.js",
-        "IliasBuddy/**/*.hbs",
         "images/**/*.ico",
         "images/**/*.png",
         "images/**/*.svg",
-        "TitleBarWin10/**/*.js",
-        "TitleBarWin10/**/*.svg",
-        "WindowManager/**/*.js",
         "index.js",
         "index.html",
         "main.js",
+        "settings_new.json",
         "settings_default.json",
         "iliasPrivateRssFeedLogin.json"
       ]
