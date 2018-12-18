@@ -4,10 +4,17 @@
             {
                 "id": "windowBounds",
                 "valueDefault": {
-                    "height": 600,
-                    "width": 480,
+                    "height": 1280,
+                    "width": 720,
                     "x": 0,
                     "y": 0
+                }
+            },
+            {
+                "id": "minWindowBounds",
+                "valueDefault": {
+                    "height": 600,
+                    "width": 480
                 }
             },
             {
@@ -111,7 +118,16 @@
                     "name": "Minimize to the system tray"
                 },
                 "type": "toggle",
-                "valueDefault": true
+                "valueDefault": false
+            },
+            {
+                "id": "devMode",
+                "info": {
+                    "description": "Activate developer tools",
+                    "name": "Developer mode"
+                },
+                "type": "toggle",
+                "valueDefault": false
             },
             {
                 "id": "checkForUpdatesOnStartup",
@@ -157,6 +173,15 @@
                 },
                 "type": "text",
                 "valueDefault": "*/5 * * * *"
+            },
+            {
+                "id": "autoLaunch",
+                "info": {
+                    "description": "Automatically start the program in the background on start",
+                    "name": "Auto launch on login"
+                },
+                "type": "toggle",
+                "valueDefault": true
             }
         ]
     },

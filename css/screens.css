@@ -36,16 +36,53 @@ ul#screens>li.window-manager-screen-full-screen {
     }
 }
 
-#main {
-    /* background-color: white; */
+.screen-wrapper {
+    margin: auto;
+    width: 80%;
+    max-width: 800px;
+    padding: 2em;
+    background: white;
+    min-height: 80%;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 2rem;
 }
 
-#settings {
-    background-color: blue;
+.screen-wrapper h2 {
+    font-size: 2rem;
+    color: black;
+    margin-bottom: 1rem;
 }
 
-#info {
-    background-color: green;
+.screen-wrapper  ul {
+    margin-left: 1rem;
+}
+
+.screen-wrapper  ul > li {
+    margin: 1rem;
+}
+
+.screen-wrapper  ul  ul {
+    margin-left: 2rem;
+}
+
+.screen-wrapper button {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left: 1rem;
+    color: rgb(121, 121, 121);
+    background-color: rgb(204, 204, 204);
+    transition: .3s ease-out;
+}
+
+.screen-wrapper button:hover {
+    transition: .3s ease-out;
+    background-color: rgb(230, 230, 230);
 }
 
 .window-manager-screen-transition-in {

@@ -43,6 +43,7 @@ defaultCallbacks: {
 } })
 titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
 
+// TODO Fix window manager or this method
 let infoToggled = false
 let settingsToggled = false
 /**
@@ -109,6 +110,15 @@ ipcRenderer.on('new-entries', (event, arg) => {
   updateIliasEntries(arg, true)
 })
 
+// TODO react to wrong login and open Welcome page with input for all credentials
+/*
+ * Check if a login exists
+ */
+ipcRenderer.send('ilias-login-check')
+ipcRenderer.on('ilias-login-check-answer', (event, arg) => {
+  console.error('ilias-login-check-answer:', arg)
+})
+
 /**
  * Create iliasEntries list
  */
@@ -148,7 +158,11 @@ function updateIliasEntries (newEntries, notification = true) {
  * @param {string} url
  */
 function openExternal (url) {
-  shell.openExternal(url)
+  shell.openExternal(url, undefined, err => {
+    if (err) {
+      Dialogs.error('Could not open url in external browser', err.message)
+    }
+  })
 }
 
 /**
@@ -211,19 +225,19 @@ function rightAnimation () {
 // TODO Rss feed manager (bg checker with notifications)
 
 ipcRenderer.send('getSettings')
-ipcRenderer.on('settings', (event, arg) => {
-  const list = document.getElementById('settings_entries')
-  SettingsApi.renderSettings(arg).map(element => {
-    list.appendChild(element)
-  })
-})
-
 ipcRenderer.send('getVersion')
-ipcRenderer.on('version', (event, arg) => {
-  document.getElementById('app_version').innerText = arg
-})
-
 ipcRenderer.send('getName')
-ipcRenderer.on('name', (event, arg) => {
-  document.getElementById('app_name').innerText = arg
-})
+
+ipcRenderer
+  .on('settings', (event, arg) => {
+    const list = document.getElementById('settings_entries')
+    SettingsApi.renderSettings(arg).map(element => {
+      list.appendChild(element)
+    })
+  })
+  .on('version', (event, arg) => {
+    document.getElementById('app_version').innerText = arg
+  })
+  .on('name', (event, arg) => {
+    document.getElementById('app_name').innerText = arg
+  })

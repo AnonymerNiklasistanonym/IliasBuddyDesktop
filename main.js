@@ -17,52 +17,86 @@ const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 const AutoLaunch = require('auto-launch')
 const cron = require('node-cron')
 
-// TODO: Use electron dialogs instead of dialog module which is not 100% secure
 // TODO: Update checker
 // TODO: Settings IPC listener
-// TODO: Settings loader (default/saved)
-
-if (!fs.existsSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json'))) {
-  app.quit()
-  const tempError = Error('Create the file "iliasPrivateRssFeedLogin.json" with the values \n{ url: string, userName: string, password: string }\n so that the app has access to your private ilias rss feed!')
-  dialog.showErrorBox('Temporary Configuration Error', tempError.toString())
-  // throw tempError
-}
 
 // global variables
+
 /**
+ * GUI window
  * @type {BrowserWindow}
  */
 var mainWindow = null
+/**
+ * Cron job for program updates
+ * @type {cron.ScheduledTask}
+ */
+var cronJobProgramUpdates = null
+/**
+ * Cron job for feed updates
+ * @type {cron.ScheduledTask}
+ */
+var cronJobFeedUpdates = null
+/**
+ * IliasApi
+ * @type {IliasBuddyApi}
+ */
+var iliasApi = null
 
 // Only one instance of the program should run
 if (!app.requestSingleInstanceLock()) app.quit()
 
-// IliasApi object hidden from GUI process
-const credentials = JSON.parse(fs.readFileSync(path.join(__dirname, 'iliasPrivateRssFeedLogin.json')).toString())
-const api = new IliasBuddyApi(credentials.url, credentials.userName, credentials.password, newEntries => {
-  console.log('Main >> New entries >>', newEntries.length)
-  if (newEntries !== undefined && newEntries.length > 0) {
-    mainWindow.webContents.send('new-entries', newEntries)
+// Check if IliasApi has credentials
+let iliasApiLoggedIn = false
+{
+  const settingsFeedUserName = Settings.getModifiable('userName')
+  const settingsFeedPassword = Settings.getModifiable('userPassword')
+  const settingsFeedUrl = Settings.getModifiable('userUrl')
+  console.log('settingsFeedUserName', settingsFeedUserName)
+  console.log('settingsFeedPassword', settingsFeedPassword)
+  console.log('settingsFeedUrl', settingsFeedUrl)
+  if (settingsFeedUserName !== undefined &&
+    settingsFeedPassword !== undefined &&
+    settingsFeedUrl !== undefined) {
+    iliasApiLoggedIn = true
+    iliasApi = new IliasBuddyApi(settingsFeedUrl, settingsFeedUserName, settingsFeedPassword, newEntries => {
+      console.log('Main >> New entries >>', newEntries.length)
+      if (newEntries !== undefined && newEntries.length > 0) {
+        mainWindow.webContents.send('new-entries', newEntries)
+      }
+    })
+  } else {
+    console.error('IliasApi - No login found!')
   }
-})
+}
 
 // inter process communication listeners
 ipcMain
+  .on('ilias-login-check', (event, args) => {
+    event.sender.send('ilias-login-check-answer', iliasApiLoggedIn)
+  })
   .on('render-process-to-main-message', (event, arg) => {
     console.log('Message:', arg)
     mainWindow.webContents.send('main-process-to-renderer-message', 'Hello from main.js to index.js')
     mainWindow.webContents.send('cron-job-debug', 'Hello')
   })
   .on('render-elements', (event, arg) => {
-    api.getCurrentEntries()
-      .then(a => event.sender.send('render-elements-reply', a))
-      .catch(console.error)
+    if (iliasApi !== null) {
+      iliasApi.getCurrentEntries()
+        .then(a => event.sender.send('render-elements-reply', a))
+        .catch(console.error)
+    } else {
+      console.error('IliasAPI is null!')
+    }
   })
   .on('get-cache', (event, arg) => {
-    const cache = api.getCache()
-    console.log('Main >> Cached entries >>', cache.length)
-    event.sender.send('cached-entries', cache)
+    if (iliasApi !== null) {
+      const cache = iliasApi.getCache()
+      console.log('Main >> Cached entries >>', cache.length)
+      event.sender.send('cached-entries', cache)
+    } else {
+      console.error('IliasAPI is null!')
+    }
   })
   .on('getVersion', (event, arg) => {
     event.sender.send('version', app.getVersion())
@@ -78,33 +112,34 @@ ipcMain
  * Create the main window
  */
 function createWindow () {
-  let autoLaunch = new AutoLaunch({
-    name: 'test',
-    isHidden: true
-    // path: app.getPath("exe")
-  })
-  autoLaunch.isEnabled().then((isEnabled) => {
-    if (!isEnabled) {
-      autoLaunch.enable()
-      console.log('AutoLaunch enabled.')
-      // dialog.showMessageBox({ message: 'AutoLaunch enabled.', buttons: ['OK'] })
+  // Setup auto launch
+  const autoLaunchEnabled = Settings.getModifiable('autoLaunch')
+  const autoLaunch = new AutoLaunch({ name: 'test', isHidden: true })
+  autoLaunch.isEnabled().then(isEnabled => {
+    // Enable if wanted else disable if enabled
+    if (autoLaunchEnabled) {
+      if (!isEnabled) { autoLaunch.enable() }
     } else {
-      console.log('AutoLaunch already enabled.')
-      // dialog.showMessageBox({ message: 'AutoLaunch already enabled.', buttons: ['OK'] })
+      if (isEnabled) { autoLaunch.disable() }
     }
   })
-  // get settings
+
+  // Get settings that are used more than once
   const settingsWindowBounds = Settings.getHidden('windowBounds')
-  const settingsFrame = false // Settings.getHidden('nativeTitleBar')
-  // icon path
+  const settingsMinWindowBounds = Settings.getHidden('minWindowBounds')
+  const settingsNativeTitleBar = Settings.getModifiable('nativeTitleBar')
+  const settingsMinimizeToSystemTray = Settings.getModifiable('minimizeToSystemTray')
+
+  // Icon path
   const iconPath = path.join(__dirname, 'images', 'favicon', 'favicon.ico')
-  // create a BrowserWindow object
+
+  // Create a BrowserWindow object
   mainWindow = new BrowserWindow({
-    frame: settingsFrame,
+    frame: settingsNativeTitleBar,
     title: app.getName(),
     titleBarStyle: 'hidden', // macOS: buttons are an overlay
-    minWidth: 600,
-    minHeight: 600,
+    minWidth: settingsMinWindowBounds.width,
+    minHeight: settingsMinWindowBounds.height,
     width: settingsWindowBounds.width,
     height: settingsWindowBounds.height,
     x: settingsWindowBounds.x,
@@ -112,119 +147,189 @@ function createWindow () {
     show: false, // do not show the window before content is loaded
     icon: iconPath,
     center: settingsWindowBounds.x === 0 && settingsWindowBounds.y === 0,
-    webPreferences: {
-      nativeWindowOpen: true
-    }
+    webPreferences: { nativeWindowOpen: true }
   })
-  // load the 'index.html' file in the window
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file:',
-      slashes: true
-    })
-  )
 
-  const systemTray = new Tray(nativeImage.createFromPath(iconPath))
-  systemTray.setToolTip('IliasBuddy')
-  systemTray.setContextMenu(Menu.buildFromTemplate([
-    { label: 'Show App',
-      click: function () {
+  // Load the 'index.html' file in the window
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // If wanted create menu bar
+  if (!settingsNativeTitleBar) {
+    Menu.setApplicationMenu(
+      Menu.buildFromTemplate([
+        {
+          label: 'TODO - Get data from Win10Titlebar',
+          click () {
+            mainWindow.webContents.send('main-process-to-renderer-message', 'Menu Bar TODO')
+          }
+        }
+      ])
+    )
+  }
+
+  // If wanted create system tray
+  if (settingsMinimizeToSystemTray) {
+    const systemTray = new Tray(nativeImage.createFromPath(iconPath))
+    systemTray.setToolTip('IliasBuddy')
+    systemTray.setContextMenu(Menu.buildFromTemplate([
+      { label: 'Show App',
+        click: function () {
+          if (mainWindow.isVisible()) {
+            mainWindow.focus()
+          } else {
+            mainWindow.show()
+          }
+        } },
+      { label: 'Quit',
+        click: function () {
+          app.quit()
+        } }
+    ]))
+    systemTray.on('click', () => {
+      if (mainWindow) {
         if (mainWindow.isVisible()) {
           mainWindow.focus()
         } else {
           mainWindow.show()
         }
-      } },
-    { label: 'Quit',
-      click: function () {
-        app.quit()
-      } }
-  ]))
-  systemTray.on('click', () => {
-    if (mainWindow) {
-      if (mainWindow.isVisible()) {
-        mainWindow.focus()
-      } else {
-        mainWindow.show()
       }
-    }
-  })
+    })
+  }
 
-  mainWindow.webContents.on('will-navigate', (event, url) => {
-    event.preventDefault()
-    if (url.startsWith('http:') || url.startsWith('https:')) {
-      shell.openExternal(url)
-    } else {
-      dialog.showErrorBox('Error', 'URL is not save? - ' + url)
-    }
-  })
-
-  mainWindow.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
-    console.log("mainWindow.webContents.on('new-window'", event, url)
-    if (frameName === 'modal') {
-      // open window as modal
+  mainWindow.webContents
+    // Prevent the browser window from opening websites in it
+    .on('will-navigate', (event, url) => {
       event.preventDefault()
-      Object.assign(options, {
-        modal: true,
-        parent: mainWindow,
-        width: 100,
-        height: 100
-      })
-      event.newGuest = new BrowserWindow(options)
-    }
-  })
+      if (url.startsWith('http:') || url.startsWith('https:')) {
+        shell.openExternal(url)
+      } else {
+        dialog.showErrorBox('Error', 'URL is not safe? - ' + url)
+      }
+    })
+    // TODO React to new windows WHY IS THIS IN HERE?
+    .on('new-window', (event, url, frameName, disposition, options, additionalFeatures) => {
+      console.log("mainWindow.webContents.on('new-window'", event, url)
+      if (frameName === 'modal') {
+        // open window as modal
+        event.preventDefault()
+        Object.assign(options, {
+          modal: true,
+          parent: mainWindow,
+          width: 100,
+          height: 100
+        })
+        event.newGuest = new BrowserWindow(options)
+      }
+    })
 
   // window event listener
   mainWindow
     .on('ready-to-show', () => {
-      // DONT:
-      // if page is loaded show window
-      // mainWindow.show()
-      mainWindow.minimize()
-      // and focus the window
-      // mainWindow.focus()
-      // and open the dev console
-      // mainWindow.webContents.openDevTools()
-      // and if settings say so check if a new version is available
-      // if (settings.get('checkForNewVersionOnStartup')) checkForNewVersion()
-      VersionChecker.getLatestTagGithub()
-        .then(json => {
-          console.log(json.tag_name, json.name, json.body, json.id)
-        })
-        .catch(console.error)
-
-      // Do instantly check for updates
-      api.manageEntries.getCurrentEntries(true).catch(console.error)
-      const cronJob = '*/5 * * * *' // Settings.get('schedules.feedUpdate').cronJob
-      // And set up a 'cron job' for checking for updates
-      if (!cron.validate(cronJob)) {
-        throw Error('Feed update cron job is not valid!')
+      // If auto launch is enabled minimize the window on start
+      if (autoLaunchEnabled) {
+        mainWindow.minimize()
+      } else {
+        // Else show and focus it
+        mainWindow.show()
+        mainWindow.focus()
       }
-      var bgCheckTask = cron.schedule(cronJob, () => {
-        api.manageEntries.getCurrentEntries(true).catch(console.error)
-        mainWindow.webContents.send('cron-job-debug', cronJob)
-      })
+
+      // If dev mode is activated open dev console
+      if (Settings.getModifiable('devMode')) {
+        mainWindow.webContents.openDevTools()
+      }
+
+      // If wanted check for program updates on start
+      if (Settings.getModifiable('checkForUpdatesOnStartup')) {
+        checkForUpdates()
+      }
+
+      // Check for feed updates on start
+      if (iliasApi !== null) {
+        iliasApi.manageEntries.getCurrentEntries(true)
+          .catch(console.error)
+      }
+
+      // Start program update cron job if wanted
+      if (Settings.getModifiable('checkForUpdatesCronJob')) {
+        // Get cron job
+        const cronJob = Settings.getModifiable('checkForUpdatesCronJobConfiguration')
+        if (!cron.validate(cronJob)) {
+          throw Error('Program update cron job is not valid!')
+        }
+        cronJobProgramUpdates = cron.schedule(cronJob, () => {
+          checkForUpdates()
+          // DEBUG
+          mainWindow.webContents.send('cron-job-debug', 'cronJobProgramUpdates ' + cronJob)
+        })
+        // DEBUG
+        mainWindow.webContents.send('cron-job-debug', 'cronJobProgramUpdates started')
+      }
+
+      // Start feed update cron job if wanted
+      if (Settings.getModifiable('checkForFeedCronJob')) {
+        // Get cron job
+        const cronJob = Settings.getModifiable('checkForFeedCronJobConfiguration')
+        if (!cron.validate(cronJob)) {
+          throw Error('Feed update cron job is not valid!')
+        }
+        cronJobFeedUpdates = cron.schedule(cronJob, () => {
+          if (iliasApi !== null) {
+            iliasApi.manageEntries.getCurrentEntries(true).catch(console.error)
+          }
+          // DEBUG
+          mainWindow.webContents.send('cron-job-debug', 'cronJobFeedUpdates ' + cronJob)
+        })
+        // DEBUG
+        mainWindow.webContents.send('cron-job-debug', 'cronJobFeedUpdates started')
+      }
     })
-    .on('close', saveSettings)
+    .on('close', () => {
+      // Save settings before closing
+      saveSettings()
+      // Disable active cron jobs
+      if (cronJobProgramUpdates !== null) {
+        cronJobProgramUpdates.destroy()
+      }
+      if (cronJobFeedUpdates !== null) {
+        cronJobFeedUpdates.destroy()
+      }
+    })
     .on('closed', () => {
-      // dereference the window object
+      // Dereference the window object
       mainWindow = null
     })
-
-  // System Tray integration
-  mainWindow.on('minimize', function (event) {
-    event.preventDefault()
-    mainWindow.hide()
-  })
+    .on('minimize', function (event) {
+      // If wanted hide the window to the system tray if minimized
+      if (settingsMinimizeToSystemTray) {
+        event.preventDefault()
+        mainWindow.hide()
+      }
+    })
 }
 
 /**
  * Save current settings (+ window size/position) in preferences file
  */
 function saveSettings () {
-  api.manageEntries.saveCacheFile()
+  if (iliasApi !== null) {
+    iliasApi.manageEntries.saveCacheFile()
+  }
   Settings.setHidden('windowBounds', mainWindow.getBounds())
+}
+
+// TODO
+function checkForUpdates () {
+  VersionChecker.getLatestTagGithub()
+    .then(json => {
+      console.log('checkForUpdatesOnStartup\n',
+        json.tag_name, json.name, json.body, json.id)
+    })
+    .catch(console.error)
 }
 
 // app listeners
