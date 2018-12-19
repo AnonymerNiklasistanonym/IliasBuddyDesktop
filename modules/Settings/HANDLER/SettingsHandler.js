@@ -3,7 +3,7 @@ const FileManager = require('../../FileManager/API/FileManager')
 const fs = require('fs')
 const path = require('path')
 
-const defaultSettingsPath = path.join(__dirname, '../../../settings_new.json')
+const defaultSettingsPath = path.join(__dirname, '../../../default_settings.json')
 const localSettingsPath = path.join('settings.json')
 
 // Onload
@@ -20,7 +20,7 @@ const localSettingsExist = FileManager.fileExistsSyncAppData(localSettingsPath)
  */
 const localSettings = localSettingsExist ? JSON.parse(FileManager.readFileSyncAppData(localSettingsPath).toString()) : {}
 
-console.log('localSettings', JSON.stringify(localSettings))
+// console.log('localSettings', JSON.stringify(localSettings))
 
 class SettingsHandler {
   /**
@@ -34,11 +34,11 @@ class SettingsHandler {
     }
     // 2) Check if there is a local value of the ID
     const localValue = this.getLocalValue(id, modifiable)
-    console.log('SettingsHandler.getModifiableOrHidden(' + id + ').localValue:', localValue)
+    // console.log('SettingsHandler.getModifiableOrHidden(' + id + ').localValue:', localValue)
     if (localValue !== undefined) { return localValue }
     // 3) If not existing get the default value
     const defaultValue = this.getDefaultValue(id, modifiable)
-    console.log('SettingsHandler.getModifiableOrHidden(' + id + ').defaultValue:', defaultValue)
+    // console.log('SettingsHandler.getModifiableOrHidden(' + id + ').defaultValue:', defaultValue)
     return defaultValue
   }
   static getLocalValue (id, modifiable = false) {
@@ -46,10 +46,10 @@ class SettingsHandler {
       const settings = modifiable ? localSettings.settings.modifiable : localSettings.settings.hidden
       if (settings !== undefined) {
         // if not undefined check if a value was found
-        console.log('Local settings not undefined')
+        // console.log('Local settings not undefined')
         const foundElement = settings.find(el => el.id === id)
         if (foundElement !== undefined) {
-          console.log('Local settings object was found!')
+          // console.log('Local settings object was found!')
           return foundElement.value
         }
       }
@@ -59,7 +59,7 @@ class SettingsHandler {
     const settings = modifiable ? defaultSettings.settings.modifiable
       : defaultSettings.settings.hidden
     const foundElement = settings.find(el => el.id === id)
-    console.log('getDefaultValue(' + id + '):', foundElement)
+    // console.log('getDefaultValue(' + id + '):', foundElement)
     if (foundElement !== undefined) {
       return foundElement.valueDefault
     }
@@ -104,8 +104,13 @@ class SettingsHandler {
     console.log('Save')
     FileManager.writeFileSyncAppData(localSettingsPath, JSON.stringify(localSettings))
   }
-  static getModifiableSettings () {
-    return defaultSettings.settings.modifiable
+  /**
+   * @returns {import('./SettingsHandlerTypes').ModifiableSettingsWithValue[]}
+   */
+  static getModifiableSettingsWithCurrentValue () {
+    return defaultSettings.settings.modifiable.map(a => ({
+      ...a, value: this.getModifiableOrHidden(a.id, true)
+    }))
   }
 }
 

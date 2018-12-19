@@ -6,7 +6,6 @@ const path = require('path')
 // const Hammer = require('hammerjs')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
 const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
-const SettingsApi = require('./modules/Settings/API/Settings')
 
 /**
  * Create Window manager
@@ -231,8 +230,10 @@ ipcRenderer.send('getName')
 ipcRenderer
   .on('settings', (event, arg) => {
     const list = document.getElementById('settings_entries')
-    SettingsApi.renderSettings(arg).map(element => {
-      list.appendChild(element)
+    arg.map(a => {
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = a
+      list.appendChild(wrapper.firstChild)
     })
   })
   .on('version', (event, arg) => {
@@ -241,3 +242,17 @@ ipcRenderer
   .on('name', (event, arg) => {
     document.getElementById('app_name').innerText = arg
   })
+
+// TODO Implementation of settings update
+const saveChangesButton = document.getElementById('saveChanges')
+saveChangesButton.addEventListener('click', a => {
+  const list = document.getElementById('settings_entries')
+  console.log(list.childNodes.forEach(a => console.log(a.childNodes)))
+  console.log(list.querySelectorAll('input').forEach(a => {
+    ipcRenderer.send('testSetSettings', {
+      type: a.type,
+      id: a.name.replace('settings-value-name-', ''),
+      value: a.type === 'checkbox' ? a.checked : a.value
+    })
+  }))
+})

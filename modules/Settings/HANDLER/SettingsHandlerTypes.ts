@@ -6,19 +6,30 @@ export interface DefaultSettingsJson {
                 valueDefault: any;
             }
         ];
-        modifiable: [
-            {
-                id: string;
-                info: {
-                    name: string;
-                    description: string;
-                };
-                type: string;
-                valueDefault: any;
-            }
-        ]
+        modifiable: ModifiableSettings[];
     };
     version: number;
+}
+
+export interface ModifiableSettings {
+    id: string;
+    info: {
+        name: string;
+        description: string;
+    };
+    type: "toggle" | "text" | "password";
+    valueDefault: any;
+}
+
+export interface ModifiableSettingsWithValue {
+    id: string;
+    info: {
+        name: string;
+        description: string;
+    };
+    type: "toggle" | "text" | "password";
+    valueDefault: any;
+    value: any;
 }
 
 export interface LocalSettingsJson {

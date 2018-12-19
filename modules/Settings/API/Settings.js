@@ -1,4 +1,5 @@
 const SettingsHandler = require('../HANDLER/SettingsHandler')
+const Renderer = require('../RENDERER/Renderer')
 
 class Settings {
   /**
@@ -6,7 +7,6 @@ class Settings {
    * @returns {*}
    */
   static getHidden (id) {
-    console.log('Settings.getHidden(' + id + ')')
     return SettingsHandler.getModifiableOrHidden(id, false)
   }
   /**
@@ -14,7 +14,6 @@ class Settings {
    * @returns {*}
    */
   static getModifiable (id) {
-    console.log('Settings.getModifiable(' + id + ')')
     return SettingsHandler.getModifiableOrHidden(id, true)
   }
   /**
@@ -34,24 +33,8 @@ class Settings {
     SettingsHandler.setModifiableOrHidden(id, value, true)
   }
   static getModifiableSettings () {
-    return SettingsHandler.getModifiableSettings()
-  }
-  static renderSettings (settingsObject) {
-    return settingsObject.map(temp => {
-      const container = document.createElement('li')
-      container.id = temp.id
-      const name = document.createElement('p')
-      name.innerText = temp.info.name
-      const description = document.createElement('p')
-      description.innerText = temp.info.description
-      const value = document.createElement('p')
-      value.innerText = temp.type
-      container.appendChild(name)
-      container.appendChild(description)
-      container.appendChild(value)
-
-      return container
-    })
+    return SettingsHandler.getModifiableSettingsWithCurrentValue()
+      .map(Renderer.render.bind(Renderer))
   }
   static save () {
     SettingsHandler.save()

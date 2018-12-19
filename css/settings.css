@@ -1,0 +1,23 @@
+.settings-entry > .settings-value-container > .settings-value-container-name {
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.settings-entry > .settings-value-container > .settings-value-container-description {
+    font-style: italic;
+    font-size: 1rem;
+}
+
+.settings-entry-toggle input {
+width: 30px;
+height: 30px;
+}
+
+.settings-entry-text input, .settings-entry-password input {
+    padding: 8px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    border: 1px solid #ccc!important;
+}

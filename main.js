@@ -9,10 +9,10 @@
 
 const { app, BrowserWindow, ipcMain, dialog, Tray, Menu, shell, nativeImage } = require('electron')
 const path = require('path')
-const fs = require('fs')
 const url = require('url')
 const VersionChecker = require('./modules/IliasBuddy/Other/VersionChecker')
 const Settings = require('./modules/Settings/API/Settings')
+
 const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 const AutoLaunch = require('auto-launch')
 const cron = require('node-cron')
@@ -106,6 +106,13 @@ ipcMain
   })
   .on('getSettings', (event, arg) => {
     event.sender.send('settings', Settings.getModifiableSettings())
+  })
+  .on('testSetSettings', (event, arg) => {
+    // Check if any value has changed
+    if (Settings.getModifiable(arg.id) !== arg.value) {
+      console.log('There was a change', JSON.stringify(arg))
+      Settings.setModifiable(arg.id, arg.value)
+    }
   })
 
 /**
