@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <!-- CSS stylesheets -->
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/ilias.css">
     <link rel="stylesheet" type="text/css" href="./css/main-layout.css">
     <link rel="stylesheet" type="text/css" href="./css/title-bar.css">
     <link rel="stylesheet" type="text/css" href="./css/screens.css">
@@ -36,16 +37,16 @@
                 <!-- TODO Add getter and validator -->
                 <form>
                     Private ILIAS feed URL:<br>
-                    <input type="text" name="privateFeedUrl" value="URL">
+                    <input id="welcome-ilias-api-privateFeedUrl" type="text" name="privateFeedUrl" value="URL">
                     <br>
                     Private ILIAS feed user name:<br>
-                    <input type="text" name="privateFeedUserName" value="UserName">
+                    <input id="welcome-ilias-api-privateFeedUserName" type="text" name="privateFeedUserName" value="UserName">
                     <br>
                     Private ILIAS feed password:<br>
-                    <input type="password" name="privateFeedPassword" value="Password">
+                    <input id="welcome-ilias-api-privateFeedPassword" type="password" name="privateFeedPassword" value="Password">
                     <br>
                     <br>
-                    <input type="submit" value="Try to login">
+                    <input id="welcome-ilias-api-submit" type="submit" value="Try to login">
                 </form>
             </div>
         </li>
@@ -55,13 +56,13 @@
                 <ul>
                     <li>Authors:<ul id="app_authors">
                             <li>AnonymerNiklasistanonym
-                                <button class="normal-button" onclick="openExternal('https://github.com/AnonymerNiklasistanonym')">GitHub</button>
+                                <button class="normal-button distance-left" onclick="openExternal('https://github.com/AnonymerNiklasistanonym')">GitHub</button>
                             </li>
                         </ul>
                     </li>
                     <li>Name: <span id="app_name"></span></li>
                     <li>Version: <span id="app_version"></span></li>
-                    <li>Source Code: <button class="normal-button" onclick="openExternal('https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop')">GitHub</button></li>
+                    <li>Source Code: <button class="normal-button distance-left" onclick="openExternal('https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop')">GitHub</button></li>
                 </ul>
                 <br><br>
                 <button>Check for update</button>
@@ -73,6 +74,7 @@
                 <ul id="settings_entries">
                 </ul>
                 <button id="saveChanges">Save changes</button>
+                <button id="resetEverything">Reset everything</button>
                 <!--<webview src="http://www.github.com/" style="width:640px; height:480px"></webview>-->
             </div>
         </li>

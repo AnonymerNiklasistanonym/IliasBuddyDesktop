@@ -12,28 +12,11 @@ ul#screens>li {
     /* Make position absolute to be able to animate each screen (move animation) */
     position: absolute;
     /* Display each screen at the top */
+    background-color: var(--ilias-background-color);
 }
 ul#screens>li.window-manager-screen-full-screen {
     /* Maximize when screen is fullscreen */
     height: 100vh;
-}
-
-
-@keyframes moveScreenLeft {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-@keyframes moveScreenLeftOut {
-    100% {
-        transform: translateX(-100%);
-    }
-    0% {
-        transform: translateX(0);
-    }
 }
 
 .screen-wrapper {
@@ -41,15 +24,16 @@ ul#screens>li.window-manager-screen-full-screen {
     width: 80%;
     max-width: 800px;
     padding: 2em;
-    background: white;
+    background: var(--ilias-background-color-text);
     min-height: 80%;
     border-radius: 0 0 10px 10px;
     margin-bottom: 2rem;
 }
 
 .screen-wrapper h2 {
-    font-size: 2rem;
-    color: black;
+    font-size: var(--ilias-font-size);
+    font-weight: 400;
+    color: var(--ilias-text-color);
     margin-bottom: 1rem;
 }
 
@@ -72,33 +56,23 @@ ul#screens>li.window-manager-screen-full-screen {
     height: 36px;
     line-height: 36px;
     padding: 0 16px;
-    text-transform: uppercase;
     cursor: pointer;
+    color: var(--ilias-text-color-button);
+    background-color: var(--ilias-button-bg-color);
+    transition: .1s ease-out;
+}
+
+.screen-wrapper button.distance-left {
     margin-left: 1rem;
-    color: rgb(121, 121, 121);
-    background-color: rgb(204, 204, 204);
-    transition: .3s ease-out;
 }
 
 .screen-wrapper button:hover {
-    transition: .3s ease-out;
-    background-color: rgb(230, 230, 230);
+    transition: .1s ease-out;
+    background-color: var(--ilias-button-bg-color-hover);
 }
 
 .window-manager-screen-transition-in {
     display: block;
-}
-
-.window-manager-screen-transition-in {
-    display: block;
-    left: 0;
-    animation: moveScreenLeft 0.5s linear 1;
-}
-
-.window-manager-screen-transition-out {
-    display: block;
-    left: 100%;
-    animation: moveScreenLeftOut 0.5s linear 1;
 }
 
 .window-manager-screen-hide {

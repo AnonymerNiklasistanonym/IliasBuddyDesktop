@@ -1,0 +1,32 @@
+/*
+ * Ilias variables to make it look normal
+ */
+:root {
+    --ilias-background-color:  #f0f0f0;
+    --ilias-background-color-text:  #fdfdfd;
+    --ilias-text-color:  #333333;
+    --ilias-text-color-link: #557196;
+    --ilias-text-color-link-hover: #3a4c65;
+    --ilias-text-color-small: #909090;
+    --ilias-text-color-big: #6ea03c;
+    --ilias-text-color-button: #ffffff;
+    --ilias-color-grey: #7c7c7c;
+    --ilias-button-new-bg-color: #557b2e;
+    --ilias-button-new-bg-color-hover: #425F23;
+    --ilias-button-bg-color: #557196;
+    --ilias-button-bg-color-hover: #425875;
+    --ilias-font-family: 'Local Open Sans';
+    --ilias-font-size: 1.4rem;
+    --ilias-font-size-small: 90%;
+    --ilias-font-size-big: 2.7rem;
+    --ilias-line-height: 2rem;
+
+    --ilias-input-width: auto;
+    --ilias-input-width-max: 100%;
+    --ilias-input-color-background: white;
+    --ilias-input-border: 1px solid #ccc;
+    --ilias-input-color-text: color: #555555;
+    --ilias-input-color-border-hover: #8198b7;
+    --ilias-input-height: 28px;
+    --ilias-input-padding: 3px 8px;
+}

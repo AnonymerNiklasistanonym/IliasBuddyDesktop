@@ -75,7 +75,8 @@ table {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    /* Remove scroll bar and space */
+    width: 0px;
 }
 
 ::-webkit-scrollbar-track {

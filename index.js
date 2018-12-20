@@ -247,22 +247,19 @@ ipcRenderer
   })
 
 // TODO Implementation of settings update
-const saveChangesButton = document.getElementById('saveChanges')
-saveChangesButton.addEventListener('click', a => {
-  const list = document.getElementById('settings_entries')
-  console.log(list.childNodes.forEach(a => console.log(a.childNodes)))
-  console.log(list.querySelectorAll('input').forEach(a => {
-    ipcRenderer.send('testSetSettings', {
-      type: a.type,
-      id: a.name.replace('settings-value-name-', ''),
-      value: a.type === 'checkbox' ? a.checked : a.value
-    })
-  }))
-})
 
+
+/*
+ * -------------------------------
+ * Settings
+ * -------------------------------
+ */
+
+// Callbacks to interact with settings api from main process
 ipcRenderer
+  // Update settings value after it was set
   .on('settings-set-answer', /**
-     * @param {{ id: string, documentId: string, type: string, value: any, restart: boolean }} arg
+     * @param {{ id: string, documentId: string, type: "toggle"|"text"|"password", value: any, restart: boolean }} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.value)
@@ -271,16 +268,21 @@ ipcRenderer
           ipcRenderer.send('relaunch', { screenId: windowManager.getCurrentWindow() })
         })
       }
-      console.log('settings-set-answer', arg)
     })
+  // Update settings value after a reset was requested
   .on('settings-reset-answer', /**
-     * @param {{ id: string, documentId: string, type: string, defaultValue: any }} arg
+     * @param {{ id: string, documentId: string, type: "toggle"|"text"|"password", defaultValue: any }} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.defaultValue)
-      console.log('settings-reset-answer', arg)
     })
 
+/**
+ * Set settings element
+ * @param {string} id Settings id
+ * @param {"toggle"|"text"|"password"} type Settings type
+ * @param {*} value Settings value
+ */
 function setSettingsElement(id, type, value) {
   const element = document.getElementById(id)
   switch (type) {
@@ -293,17 +295,47 @@ function setSettingsElement(id, type, value) {
     // @ts-ignore
       element.value = value
       break
+    default:
+      throw Error(`The type "${type}" is not valid!`)
   }
 }
+
+/**
+ * Set settings onclick callback [Boiler plate from settings api RENDERER]
+ * @param {{documentId: string;id:string;type:"toggle"|"text"|"password"}} infoObject Necessary information
+ * @param {*} value New settings value
+ */
 function setSettings (infoObject, value) {
+  // Ask the main process to set the setting
   ipcRenderer.send('settings-set', { ...infoObject, value })
 }
 
+/**
+ * Reset settings onclick callback [Boiler plate from settings api RENDERER]
+ * @param {{documentId: string;id:string;type:"toggle"|"text"|"password"}} infoObject Necessary information
+ */
 function resetSettings (infoObject) {
+  // Ask the main process to send the default value of the setting
   ipcRenderer.send('settings-reset', { ...infoObject })
 }
 
-ipcRenderer.on('open-window', (event, arg) => {
-  console.log('open-window', arg)
+// Special buttons to reset everything or set all changes
+// TODO Implement a "set all" and "reset all" button, hide buttons for now
+const saveChangesButton = document.getElementById('saveChanges')
+saveChangesButton.style.display = 'none'
+const resetEverythingButton = document.getElementById('resetEverything')
+resetEverythingButton.style.display = 'none'
+
+/*
+ * -------------------------------
+ * Miscellaneous
+ * -------------------------------
+ */
+
+// Listen to the main process to open windows if the main process wants to
+ipcRenderer.on('open-window', /**
+   * @param {{ screenId: string; }} arg
+   */
+ (event, arg) => {
   windowManager.showWindow(arg.screenId)
 })

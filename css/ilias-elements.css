@@ -33,7 +33,7 @@ li.ilias-entry>p.ilias-entry-course {
 
     /*border-radius: 10px;
     background-color: #00ce00;*/
-    padding: 0.4em;
+    padding-bottom: 0.4em;
     width: 100%;
     overflow-x: auto;
 }
@@ -66,14 +66,13 @@ li.ilias-entry>p.ilias-entry-course-directory {
     width: 100%;
     overflow-x: auto;
     margin-bottom: 0.5em;
-    color: #557196;
+    color: var(--ilias-button-bg-color);
 }
 
 li.ilias-entry>div.ilias-entry-description {
-    border-radius: 10px;
     background-color: rgb(223, 223, 223);
     color: black;
-    padding: 0.25em;
+    padding: 0.5em;
     margin: 0.5em 0;
 }
 
@@ -93,15 +92,18 @@ li.ilias-entry>div.ilias-entry-description pre {
 
 li.ilias-entry>div.container-link-date>button.ilias-entry-link-button {
     border: none;
-    color: white;
+    color: var(--ilias-text-color-button);
     padding: 6px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
     border-radius: 0px;
-    background-color: #708bae;
+    background-color: var(--ilias-button-bg-color);
     font-size: 1em;
+}
+li.ilias-entry>div.container-link-date>button.ilias-entry-link-button:hover {
+    background-color: var(--ilias-button-bg-color-hover);
 }
 
 li.ilias-entry>div.container-link-date>button.ilias-entry-link-button.browser {

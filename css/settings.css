@@ -1,11 +1,14 @@
-.settings-entry > .settings-value-container > .settings-value-container-name {
-    font-weight: 400;
-    font-size: 1.2rem;
+.settings-entry > .settings-info-container > .settings-info-container-name {
+    color: var(--ilias-text-color);
 }
 
-.settings-entry > .settings-value-container > .settings-value-container-description {
+.settings-entry > .settings-info-container > .settings-info-container-description {
+    color: var(--ilias-text-color-small);
+    font-size: var(--ilias-font-size-small);
     font-style: italic;
-    font-size: 1rem;
+}
+.settings-value-container {
+padding: 1rem 0;
 }
 
 .settings-entry-toggle input {
@@ -14,10 +17,15 @@ height: 30px;
 }
 
 .settings-entry-text input, .settings-entry-password input {
-    padding: 8px;
-    display: block;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    width: 100%;
-    border: 1px solid #ccc!important;
+    width: var(--ilias-input-width-max);
+    max-width:  var(--ilias-input-width-max);
+    padding: var(--ilias-input-padding);
+    height: var(--ilias-input-height);
+    border: var(--ilias-input-border);
+    background-color: var(--ilias-input-color-background);
+    color: var(--ilias-input-color-text);
+}
+
+.settings-entry-text input:focus , .settings-entry-password input:focus {
+    border-color: var(--ilias-input-color-border-hover);
 }
