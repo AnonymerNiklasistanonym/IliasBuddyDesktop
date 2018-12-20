@@ -265,16 +265,7 @@ ipcRenderer
      * @param {{ id: string, documentId: string, type: string, value: any, restart: boolean }} arg
      */
     (event, arg) => {
-      const element = document.getElementById(arg.documentId)
-      switch (arg.type) {
-        case 'toggle':
-          element.checked = arg.value
-          break
-        case 'text':
-        case 'password':
-          element.value = arg.value
-          break
-      }
+      setSettingsElement(arg.documentId, arg.type, arg.value)
       if (arg.restart) {
         Dialogs.question('To see the changes the app needs to restart. Do you want to restart immediately?', () => {
           ipcRenderer.send('relaunch', { screenId: windowManager.getCurrentWindow() })
@@ -286,19 +277,24 @@ ipcRenderer
      * @param {{ id: string, documentId: string, type: string, defaultValue: any }} arg
      */
     (event, arg) => {
-      const element = document.getElementById(arg.documentId)
-      switch (arg.type) {
-        case 'toggle':
-          element.checked = arg.defaultValue
-          break
-        case 'text':
-        case 'password':
-          element.value = arg.defaultValue
-          break
-      }
+      setSettingsElement(arg.documentId, arg.type, arg.defaultValue)
       console.log('settings-reset-answer', arg)
     })
 
+function setSettingsElement(id, type, value) {
+  const element = document.getElementById(id)
+  switch (type) {
+    case 'toggle':
+      // @ts-ignore
+      element.checked = value
+      break
+    case 'text':
+    case 'password':
+    // @ts-ignore
+      element.value = value
+      break
+  }
+}
 function setSettings (infoObject, value) {
   ipcRenderer.send('settings-set', { ...infoObject, value })
 }

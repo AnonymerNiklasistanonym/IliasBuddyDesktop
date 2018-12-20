@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop",
   "description": "Ilias desktop client",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop.git"
@@ -14,8 +14,8 @@
     "build-win": "electron-builder . --win"
   },
   "devDependencies": {
-    "electron": "^3.0.11",
-    "electron-builder": "^20.38.3"
+    "electron": "^3.0.13",
+    "electron-builder": "^20.38.4"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
@@ -63,9 +63,7 @@
         "index.js",
         "index.html",
         "main.js",
-        "settings_new.json",
-        "settings_default.json",
-        "iliasPrivateRssFeedLogin.json"
+        "default_settings.json"
       ]
     },
     "nsis": {
