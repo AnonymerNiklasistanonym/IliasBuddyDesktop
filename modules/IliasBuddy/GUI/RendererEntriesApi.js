@@ -33,17 +33,14 @@ const templatePost = compileTemplate('templatePost')
 class Renderer {
   /**
    * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry} entry
-   * @returns {HTMLLIElement}
+   * @returns {string}
    */
   static render (entry) {
-    const wrapper = document.createElement('div')
-    wrapper.innerHTML = this.renderElementHbs({
+    return this.renderElementHbs({
       ...entry,
       hasDescription: entry.description !== undefined && entry.description !== '',
       hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory.length !== 0
     })
-    // @ts-ignore
-    return wrapper.firstChild
   }
   /**
    * @param {import('./RendererTypes').RenderEntry} entry

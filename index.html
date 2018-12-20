@@ -18,23 +18,36 @@
     <div id="title-bar"></div>
     <ul id="screens">
         <li id="welcome">
-            <p>Welcome to IliasBuddy</p>
-            <!-- TODO Add instructions -->
-            <div class="instructions">Instructions</div>
-            <!-- TODO Add getter and validator -->
-            <form>
-                Private ILIAS feed URL:<br>
-                <input type="text" name="privateFeedUrl" value="URL">
-                <br>
-                Private ILIAS feed user name:<br>
-                <input type="text" name="privateFeedUserName" value="UserName">
-                <br>
-                Private ILIAS feed password:<br>
-                <input type="password" name="privateFeedPassword" value="Password">
-                <br>
-                <br>
-                <input type="submit" value="Try to login">
-            </form>
+            <div class="screen-wrapper">
+                <p>Welcome to IliasBuddy</p>
+                <!-- TODO Add instructions -->
+                <div class="instructions">
+                    <p>To use this service you need to visit Ilias and click on the orange <b>RSS</b> button to get to
+                        the <a href="https://ilias3.uni-stuttgart.de/ilias.php?view=0&col_side=right&block_type=pdnews&cmd=showFeedUrl&cmdClass=ilpdnewsblockgui&cmdNode=sh:6b:rv&baseClass=ilPersonalDesktopGUI#il_mhead_t_focus\">Ilias
+                            news feed</a>.</p>
+                    <p>From there you need to copy the private feed url and replace the <b>password</b> with a password
+                        you set in the <a href="https://ilias3.uni-stuttgart.de/ilias.php?view=0&col_side=right&block_type=pdnews&cmd=editSettings&cmdClass=ilpdnewsblockgui&cmdNode=sh:6b:rv&baseClass=ilPersonalDesktopGUI#il_mhead_t_focus\">Ilias
+                            settings</a> (you get there by clicking the settings symbol at the top right of the same
+                        card you just clicked the orange RSS button.</p>
+                    <p>Then insert the url in the first text field and your username (The name string in the url
+                        without any spaces) and your just set password.</p>
+                    <p>Now to complete the setup click the check button at the bottom right.</p>
+                </div>
+                <!-- TODO Add getter and validator -->
+                <form>
+                    Private ILIAS feed URL:<br>
+                    <input type="text" name="privateFeedUrl" value="URL">
+                    <br>
+                    Private ILIAS feed user name:<br>
+                    <input type="text" name="privateFeedUserName" value="UserName">
+                    <br>
+                    Private ILIAS feed password:<br>
+                    <input type="password" name="privateFeedPassword" value="Password">
+                    <br>
+                    <br>
+                    <input type="submit" value="Try to login">
+                </form>
+            </div>
         </li>
         <li id="info">
             <div class="screen-wrapper">

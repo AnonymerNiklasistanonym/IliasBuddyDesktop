@@ -2,6 +2,13 @@
     "settings": {
         "hidden": [
             {
+                "id": "restartInfo",
+                "valueDefault": {
+                    "openScreen": true,
+                    "screenId": "welcome"
+                }
+            },
+            {
                 "id": "windowBounds",
                 "valueDefault": {
                     "height": 1280,
@@ -85,6 +92,7 @@
                     "name": "Native Title Bar"
                 },
                 "type": "toggle",
+                "restart": true,
                 "valueDefault": false
             },
             {
@@ -118,6 +126,7 @@
                     "name": "Minimize to the system tray"
                 },
                 "type": "toggle",
+                "restart": true,
                 "valueDefault": false
             },
             {

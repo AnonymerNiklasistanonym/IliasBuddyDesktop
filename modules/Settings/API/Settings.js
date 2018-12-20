@@ -7,14 +7,21 @@ class Settings {
    * @returns {*}
    */
   static getHidden (id) {
-    return SettingsHandler.getModifiableOrHidden(id, false)
+    return SettingsHandler.getSettingsObject(id, false)
   }
   /**
    * @param {string} id
    * @returns {*}
    */
   static getModifiable (id) {
-    return SettingsHandler.getModifiableOrHidden(id, true)
+    return SettingsHandler.getSettingsObject(id, true)
+  }
+  /**
+   * @param {string} id
+   * @returns {*}
+   */
+  static getModifiableDefault (id) {
+    return SettingsHandler.getDefaultValue(id, true)
   }
   /**
    * Set hidden setting with id and value

@@ -2,7 +2,7 @@
 
 const { net } = require('electron')
 const convert = require('xml-js')
-const fs = require('fs')
+// const fs = require('fs')
 const RawEntryParser = require('../PARSER/RawEntryParserApi')
 
 /* ===== >> Imports << ====== */
@@ -31,14 +31,18 @@ class IliasBuddyFetchEntriesApi {
           .on('error', reject)
           .on('end', () => {
             const rssString = Buffer.concat(responseDataBuffer).toString()
+            /* DEBUG
             fs.writeFile('lastRss.xml', rssString, err => {
               if (err) reject(err)
             })
+            */
             // Parse raw feed
             const result = JSON.parse(convert.xml2json(rssString, { compact: true }))
+            /* DEBUG
             fs.writeFile('lastParsedRss.json', JSON.stringify(result, null, 4), err => {
               if (err) reject(err)
             })
+            */
             // Return parsed feed raw
             resolve(result)
           })
@@ -58,9 +62,11 @@ class IliasBuddyFetchEntriesApi {
         .then(entries => entries.rss.channel.item.map(RawEntryParser.parseRawEntry))
         .then(entries => entries.map(RawEntryParser.parseToIliasBuddyEntry.bind(RawEntryParser)))
         .then(result => {
+          /* DEBUG
           fs.writeFile('lastParsedJsonRss.json', JSON.stringify(result, null, 4), err => {
             if (err) reject(err)
           })
+          */
 
           return result
         })

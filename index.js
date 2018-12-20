@@ -1,11 +1,8 @@
 const { ipcRenderer, remote, shell } = require('electron')
+const path = require('path')
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
-
-const path = require('path')
-// const Hammer = require('hammerjs')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
-const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 
 /**
  * Create Window manager
@@ -116,6 +113,10 @@ ipcRenderer.on('new-entries', (event, arg) => {
 ipcRenderer.send('ilias-login-check')
 ipcRenderer.on('ilias-login-check-answer', (event, arg) => {
   console.error('ilias-login-check-answer:', arg)
+  if (!arg) {
+    windowManager.showWindow('welcome')
+    ipcRenderer.send('show-and-focus-window')
+  }
 })
 
 /**
@@ -140,8 +141,10 @@ function updateIliasEntries (newEntries, notification = true) {
   console.log('Update Ilias Entries', newEntries)
 
   const list = document.getElementById('ilias-entries')
-  IliasBuddyApi.renderEntriesHtml(newEntries).reverse().map(element => {
-    list.insertBefore(element, list.firstChild)
+  newEntries.map(a => {
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = a
+    list.insertBefore(wrapper.firstChild, list.firstChild)
   })
 
   if (notification) {
@@ -255,4 +258,56 @@ saveChangesButton.addEventListener('click', a => {
       value: a.type === 'checkbox' ? a.checked : a.value
     })
   }))
+})
+
+ipcRenderer
+  .on('settings-set-answer', /**
+     * @param {{ id: string, documentId: string, type: string, value: any, restart: boolean }} arg
+     */
+    (event, arg) => {
+      const element = document.getElementById(arg.documentId)
+      switch (arg.type) {
+        case 'toggle':
+          element.checked = arg.value
+          break
+        case 'text':
+        case 'password':
+          element.value = arg.value
+          break
+      }
+      if (arg.restart) {
+        Dialogs.question('To see the changes the app needs to restart. Do you want to restart immediately?', () => {
+          ipcRenderer.send('relaunch', { screenId: windowManager.getCurrentWindow() })
+        })
+      }
+      console.log('settings-set-answer', arg)
+    })
+  .on('settings-reset-answer', /**
+     * @param {{ id: string, documentId: string, type: string, defaultValue: any }} arg
+     */
+    (event, arg) => {
+      const element = document.getElementById(arg.documentId)
+      switch (arg.type) {
+        case 'toggle':
+          element.checked = arg.defaultValue
+          break
+        case 'text':
+        case 'password':
+          element.value = arg.defaultValue
+          break
+      }
+      console.log('settings-reset-answer', arg)
+    })
+
+function setSettings (infoObject, value) {
+  ipcRenderer.send('settings-set', { ...infoObject, value })
+}
+
+function resetSettings (infoObject) {
+  ipcRenderer.send('settings-reset', { ...infoObject })
+}
+
+ipcRenderer.on('open-window', (event, arg) => {
+  console.log('open-window', arg)
+  windowManager.showWindow(arg.screenId)
 })

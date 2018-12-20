@@ -20,6 +20,8 @@ const cron = require('node-cron')
 // TODO: Update checker
 // TODO: Settings IPC listener
 
+// TODO remove cache of app: mainWindow.webContents.session.clearStorageData()
+
 // global variables
 
 /**
@@ -62,7 +64,7 @@ let iliasApiLoggedIn = false
     iliasApi = new IliasBuddyApi(settingsFeedUrl, settingsFeedUserName, settingsFeedPassword, newEntries => {
       console.log('Main >> New entries >>', newEntries.length)
       if (newEntries !== undefined && newEntries.length > 0) {
-        mainWindow.webContents.send('new-entries', newEntries)
+        mainWindow.webContents.send('new-entries', convertIliasEntriesForClient(newEntries))
       }
     })
   } else {
@@ -83,7 +85,7 @@ ipcMain
   .on('render-elements', (event, arg) => {
     if (iliasApi !== null) {
       iliasApi.getCurrentEntries()
-        .then(a => event.sender.send('render-elements-reply', a))
+        .then(a => event.sender.send('render-elements-reply', convertIliasEntriesForClient(a)))
         .catch(console.error)
     } else {
       console.error('IliasAPI is null!')
@@ -93,7 +95,7 @@ ipcMain
     if (iliasApi !== null) {
       const cache = iliasApi.getCache()
       console.log('Main >> Cached entries >>', cache.length)
-      event.sender.send('cached-entries', cache)
+      event.sender.send('cached-entries', convertIliasEntriesForClient(cache))
     } else {
       console.error('IliasAPI is null!')
     }
@@ -107,12 +109,44 @@ ipcMain
   .on('getSettings', (event, arg) => {
     event.sender.send('settings', Settings.getModifiableSettings())
   })
+  .on('settings-set', /**
+     * @param {{ id: string, documentId: string, type: string, value: any }} arg
+     */
+    (event, arg) => {
+      Settings.setModifiable(arg.id, arg.value)
+      event.sender.send('settings-set-answer', {
+        ...arg,
+        value: Settings.getModifiable(arg.id)
+      })
+    })
+  .on('settings-reset', /**
+     * @param {{ id: string, documentId: string, type: string }} arg
+     */
+    (event, arg) => {
+      event.sender.send('settings-reset-answer', {
+        ...arg,
+        defaultValue: Settings.getModifiableDefault(arg.id)
+      })
+    })
+  .on('show-and-focus-window', () => {
+    mainWindow.show()
+    mainWindow.focus()
+  })
   .on('testSetSettings', (event, arg) => {
     // Check if any value has changed
     if (Settings.getModifiable(arg.id) !== arg.value) {
       console.log('There was a change', JSON.stringify(arg))
       Settings.setModifiable(arg.id, arg.value)
     }
+  })
+  .on('relaunch', (event, arg) => {
+    // Save current opened screen
+    Settings.setHidden('restartInfo', { openScreen: true, screenId: arg.screenId })
+    // save settings before closing the app
+    saveSettings()
+    // close and reopen the app
+    app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
+    app.exit(0)
   })
 
 /**
@@ -237,12 +271,23 @@ function createWindow () {
   mainWindow
     .on('ready-to-show', () => {
       // If auto launch is enabled minimize the window on start
-      if (autoLaunchEnabled) {
-        mainWindow.minimize()
-      } else {
-        // Else show and focus it
+      const restartInfo = Settings.getHidden('restartInfo')
+      if (restartInfo.openScreen) {
+        // Show and focus it
         mainWindow.show()
         mainWindow.focus()
+        // And send notification to index.js
+        mainWindow.webContents.send('open-window', { screenId: restartInfo.screenId })
+        // And overwrite settings object
+        Settings.setHidden('restartInfo', { openScreen: false, screenId: 'none' })
+      } else {
+        if (autoLaunchEnabled) {
+          mainWindow.minimize()
+        } else {
+          // Else show and focus it
+          mainWindow.show()
+          mainWindow.focus()
+        }
       }
 
       // If dev mode is activated open dev console
@@ -305,6 +350,10 @@ function createWindow () {
       if (cronJobFeedUpdates !== null) {
         cronJobFeedUpdates.destroy()
       }
+      // Remove cache and other data that is not used to keep the app clean
+      mainWindow.webContents.session.clearStorageData()
+      mainWindow.webContents.session.clearCache(() => {})
+      mainWindow.webContents.clearHistory()
     })
     .on('closed', () => {
       // Dereference the window object
@@ -337,6 +386,11 @@ function checkForUpdates () {
         json.tag_name, json.name, json.body, json.id)
     })
     .catch(console.error)
+}
+
+// TODO
+function convertIliasEntriesForClient (entries) {
+  return IliasBuddyApi.renderEntriesHtml(entries).reverse()
 }
 
 // app listeners

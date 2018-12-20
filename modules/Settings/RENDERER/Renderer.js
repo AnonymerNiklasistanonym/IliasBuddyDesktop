@@ -27,6 +27,7 @@ registerPartial('partialTitleAndDescription')
 registerPartial('partialValuePassword')
 registerPartial('partialValueToggle')
 registerPartial('partialValueText')
+registerPartial('partialSetReset')
 
 const templatePassword = compileTemplate('templatePassword')
 const templateText = compileTemplate('templateText')

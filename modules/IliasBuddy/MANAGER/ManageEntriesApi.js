@@ -2,7 +2,6 @@
 
 const FetchEntries = require('../FETCH/FetchEntriesApi')
 const FileManager = require('../../FileManager/API/FileManager')
-const fs = require('fs')
 const path = require('path')
 
 /* ===== >> Imports << ====== */

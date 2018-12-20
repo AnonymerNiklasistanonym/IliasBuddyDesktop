@@ -24,10 +24,10 @@ const localSettings = localSettingsExist ? JSON.parse(FileManager.readFileSyncAp
 
 class SettingsHandler {
   /**
-     * @param {string} id
-     * @returns {*}
-     */
-  static getModifiableOrHidden (id, modifiable = false) {
+   * @param {string} id
+   * @returns {*}
+   */
+  static getSettingsObject (id, modifiable = false) {
     // 1) Check if the ID is in the default list
     if (!this.checkIfIdIsAllowed(id, modifiable)) {
       throw Error(`The id "${id}" is not allowed`)
@@ -109,7 +109,7 @@ class SettingsHandler {
    */
   static getModifiableSettingsWithCurrentValue () {
     return defaultSettings.settings.modifiable.map(a => ({
-      ...a, value: this.getModifiableOrHidden(a.id, true)
+      ...a, value: this.getSettingsObject(a.id, true)
     }))
   }
 }
