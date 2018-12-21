@@ -1,153 +1,121 @@
+/**
+ * Renderer/main-window script of the electron application
+ *
+ * @summary Handles the user interactions
+ * @author AnonymerNiklasistanyonym
+ */
+
+/* =====  TODO  ====== */
+
+// TODO react to wrong login and open Welcome page with input for all credentials
+// TODO App info/settings manager
+// TODO Rss feed manager (bg checker with notifications)
+
+/* =====  Imports  ====== */
+
+// npm modules
 const { ipcRenderer, remote, shell } = require('electron')
 const path = require('path')
+// custom modules
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
 
-/**
- * Create Window manager
- */
-const windowManager = new WindowManager(
-  [
-    { documentId: 'main', id: 'main' },
-    { documentId: 'info', id: 'info' },
-    { documentId: 'welcome', id: 'welcome' },
-    { documentId: 'settings', id: 'settings' }
-  ],
-  'main'
-)
+/* =====  Global variables  ====== */
 
 /**
- * Create title bar
+ * Indicate if info button was toggled
  */
-const titleBarWin10 = new TitleBarWin10({ actions: [{
-  alt: 'settings',
-  id: 'title-bar-action-settings',
-  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'settings.svg') }],
-  callback: () => toggleScreen('settings')
-}, {
-  alt: 'info',
-  id: 'title-bar-action-info',
-  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'info.svg') }],
-  callback: () => toggleScreen('info')
-}],
-defaultCallbacks: {
-  minimize: () => { console.log('minimize') },
-  maximize: () => { console.log('maximize') },
-  restore: () => { console.log('restore') },
-  close: () => { console.log('close') }
-} })
-titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
-
-// TODO Fix window manager or this method
 let infoToggled = false
+/**
+ * Indicate if settings button was toggled
+ */
 let settingsToggled = false
-/**
- * @param {string} screen
- */
-function toggleScreen (screen) {
-  if (screen === 'settings') {
-    if (settingsToggled) {
-      settingsToggled = false
-      return windowManager.showPreviousWindow({ removeFromHistory: true })
-    } else {
-      settingsToggled = true
-    }
-  } else if (screen === 'info') {
-    if (infoToggled) {
-      infoToggled = false
-      return windowManager.showPreviousWindow({ removeFromHistory: true })
-    } else {
-      infoToggled = true
-    }
-  } else {
-    throw Error('WTF')
-  }
-  windowManager.showWindow(screen)
-}
 
-/**
- * Dialog object - controls popup dialogs
- */
-/*
-Dialogs.question('Question', () => {
-  console.log('OK')
-  Dialogs.toast('Title', 'Info', () => console.log('Callback'))
-}, () => console.log('CANCEL'))
-*/
+/* =====  Global constants  ====== */
 
 /**
  * The current window to launch remote commands
  */
 const mainWindow = remote.getCurrentWindow()
-// mainWindow.webContents.openDevTools()
-
-// TODO Add later if there is a use case
-/**
- * Hammer 'object' - gesture listener
- */
-/*
-const hammer = new Hammer(document.body)
-const pan = new Hammer.Pan()
-hammer
-  .on('panright', leftAnimation)
-  .on('panleft', rightAnimation)
-  .add(pan)
-*/
 
 /**
- * Inter-process-communication
+ * Window manager
  */
-ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
-ipcRenderer.on('main-process-to-renderer-message', (event, arg) => {
-  console.log('Message:', arg)
-})
-ipcRenderer.on('new-entries', (event, arg) => {
-  updateIliasEntries(arg, true)
-})
+const windowManager = new WindowManager([
+  { documentId: 'main', id: 'main' },
+  { documentId: 'info', id: 'info' },
+  { documentId: 'welcome', id: 'welcome' },
+  { documentId: 'settings', id: 'settings' }], 'main')
 
-// TODO react to wrong login and open Welcome page with input for all credentials
-/*
- * Check if a login exists
+/**
+ * Title bar
  */
-ipcRenderer.send('ilias-login-check')
-ipcRenderer.on('ilias-login-check-answer', (event, arg) => {
-  console.error('ilias-login-check-answer:', arg)
-  if (!arg) {
-    windowManager.showWindow('welcome')
-    ipcRenderer.send('show-and-focus-window')
+const titleBarWin10 = new TitleBarWin10({ actions: [{
+  alt: 'settings',
+  id: 'title-bar-action-settings',
+  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'settings.svg') }],
+  callback: () => togglePopupScreen('settings')
+}, {
+  alt: 'info',
+  id: 'title-bar-action-info',
+  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'info.svg') }],
+  callback: () => togglePopupScreen('info')
+}],
+defaultCallbacks: {
+  minimize: () => { console.info('TitleBarWin10 > action > minimize') },
+  maximize: () => { console.info('TitleBarWin10 > action > maximize') },
+  restore: () => { console.info('TitleBarWin10 > action > restore') },
+  close: () => { console.info('TitleBarWin10 > action > close') }
+} })
+titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
+
+/* =====  Global functions  ====== */
+
+/**
+ * Toggle popup screens
+ * @param {string} popUpScreenId
+ */
+function togglePopupScreen (popUpScreenId) {
+  if (popUpScreenId === 'settings') {
+    settingsToggled = !settingsToggled
+    if (windowManager.getCurrentWindow() === 'settings') {
+      if (!settingsToggled) {
+        return windowManager.showPreviousWindow()
+      }
+    } else {
+      settingsToggled = true
+    }
+  } else if (popUpScreenId === 'info') {
+    if (windowManager.getCurrentWindow() === 'info') {
+      infoToggled = !infoToggled
+      if (!infoToggled) {
+        return windowManager.showPreviousWindow()
+      }
+    } else {
+      settingsToggled = true
+    }
+  } else {
+    throw Error('WTF')
   }
-})
+  windowManager.showWindow(popUpScreenId, { isPopUpWindow: true })
+}
 
 /**
- * Create iliasEntries list
+ * Add already rendered ilias entries
+ * @param {string[]} newEntries Rendered entries
+ * @param {boolean} notification Show notification about the new entries
  */
-createIliasEntries([])
-ipcRenderer.send('get-cache')
-ipcRenderer.on('cached-entries', (event, arg) => {
-  updateIliasEntries(arg, false)
-})
-ipcRenderer.on('cron-job-debug', (event, arg) => {
-  console.log('cron-job-debug', arg)
-})
-
-function createIliasEntries (iliasEntries) {
-  console.log('Create Ilias Entries')
-  const list = document.createElement('ul')
-  list.id = 'ilias-entries'
-  document.getElementById('main').appendChild(list)
-}
-function updateIliasEntries (newEntries, notification = true) {
-  console.log('Update Ilias Entries', newEntries)
-
+function addRenderedIliasEntries (newEntries, notification = true) {
+  // Add the new entries to the list (at the top)
   const list = document.getElementById('ilias-entries')
-  newEntries.map(a => {
+  newEntries.forEach(newEntry => {
     const wrapper = document.createElement('div')
-    wrapper.innerHTML = a
+    wrapper.innerHTML = newEntry
     list.insertBefore(wrapper.firstChild, list.firstChild)
   })
-
-  if (notification) {
+  // Show a notification if wanted
+  if (notification && newEntries.length > 0) {
     Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {
       mainWindow.show()
       mainWindow.focus()
@@ -181,56 +149,84 @@ function copyToClipboard (url) {
 }
 
 /**
- * Keyboard input listener
+ * Set settings element
+ * @param {string} documentId Settings id
+ * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsTypeName} type Settings type
+ * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsType} value Settings value
  */
-document.addEventListener('keydown', e => {
-  console.log('aha3', e)
-  switch (e.which) {
-    case 122: // F11 - Fullscreen
-      console.log('aha', mainWindow.isFullScreen())
-      mainWindow.setFullScreen(!mainWindow.isFullScreen())
-      windowManager.toggleFullScreen(mainWindow.isFullScreen())
+function setSettingsElement (documentId, type, value) {
+  const element = document.getElementById(documentId)
+  switch (type) {
+    case 'toggle':
+      // @ts-ignore
+      element.checked = value
       break
-    case 116: // F5 - reload app
-      mainWindow.reload()
+    case 'text':
+    case 'password':
+    case 'cronJob':
+    case 'url':
+    // @ts-ignore
+      element.value = value
       break
-    case 123: // F12 - open dev tools
-      mainWindow.webContents.isDevToolsOpened() ? mainWindow.webContents.closeDevTools() : mainWindow.webContents.openDevTools()
-      break
-    case 37: // <-  - Screen switch left
-      leftAnimation()
-      // windowManager.showLeftWindow()
-      break
-    case 39: // -> - Screen switch right
-      rightAnimation()
-      // windowManager.showRightWindow()
-      break
+    default:
+      throw Error(`The type "${type}" is not valid!`)
   }
-})
-let slideAnimationActive = false
-function hammerGestureHelper (callback) {
-  if (slideAnimationActive) {
-    return
-  }
-  slideAnimationActive = true
-  callback()
-  setTimeout(() => { slideAnimationActive = false }, 1000)
-}
-function leftAnimation () {
-  hammerGestureHelper(() => toggleScreen('info'))
-}
-function rightAnimation () {
-  hammerGestureHelper(() => toggleScreen('settings'))
 }
 
-// TODO App info/settings manager
-// TODO Rss feed manager (bg checker with notifications)
+/**
+ * Set settings onclick callback [Boiler plate from settings api RENDERER]
+ * @param {import('./types').SettingsResetInfoObject} infoObject Necessary information
+ * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsType} value New settings value
+ */
+function setSettings (infoObject, value) {
+  // Ask the main process to set the setting
+  ipcRenderer.send('settings-set', { ...infoObject, value })
+}
 
-ipcRenderer.send('getSettings')
-ipcRenderer.send('getVersion')
-ipcRenderer.send('getName')
+/**
+ * Reset settings onclick callback [Boiler plate from settings api RENDERER]
+ * @param {import('./types').SettingsResetInfoObject} infoObject Necessary information
+ */
+function resetSettings (infoObject) {
+  // Ask the main process to send the default value of the setting
+  ipcRenderer.send('settings-reset', { ...infoObject })
+}
+
+/* =====  Inter process communication listeners  ====== */
 
 ipcRenderer
+  .on('main-process-to-renderer-message', (event, arg) => {
+    console.log('Message:', arg)
+  })
+  .on('new-entries', (event, arg) => {
+    addRenderedIliasEntries(arg, true)
+  })
+  .on('ilias-login-update', (event, arg) => {
+    console.info('ilias-login-update:', arg)
+    if (!arg) {
+      windowManager.showWindow('welcome')
+      ipcRenderer.send('show-and-focus-window')
+    } else {
+      Dialogs.toast('Ilias login was successful', '')
+      windowManager.showWindow('main')
+    }
+  })
+  .on('error-dialog',
+    /**
+     * Display an error
+     * @param {{title: string, message: string }} arg
+     */
+    (event, arg) => {
+      console.log(JSON.stringify(arg))
+      console.log(arg.title, arg.message)
+      Dialogs.error(arg.title, arg.message)
+    })
+  .on('get-cache-reply', (event, arg) => {
+    addRenderedIliasEntries(arg, false)
+  })
+  .on('cron-job-debug', (event, arg) => {
+    console.log('cron-job-debug', arg)
+  })
   .on('settings', (event, arg) => {
     const list = document.getElementById('settings_entries')
     arg.map(a => {
@@ -245,21 +241,9 @@ ipcRenderer
   .on('name', (event, arg) => {
     document.getElementById('app_name').innerText = arg
   })
-
-// TODO Implementation of settings update
-
-
-/*
- * -------------------------------
- * Settings
- * -------------------------------
- */
-
-// Callbacks to interact with settings api from main process
-ipcRenderer
   // Update settings value after it was set
   .on('settings-set-answer', /**
-     * @param {{ id: string, documentId: string, type: "toggle"|"text"|"password", value: any, restart: boolean }} arg
+     * @param {import('./types').SettingsSetAnswer} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.value)
@@ -271,53 +255,50 @@ ipcRenderer
     })
   // Update settings value after a reset was requested
   .on('settings-reset-answer', /**
-     * @param {{ id: string, documentId: string, type: "toggle"|"text"|"password", defaultValue: any }} arg
+     * @param {import('./types').SettingsResetAnswer} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.defaultValue)
     })
+  // Detect new version and ask user if he wants to download and install it
+  .on('new-version-detected',
+    /**
+     * @param {import('./modules/VersionChecker/API/VersionCheckerTypes').GitHubLatestTag} arg
+     */
+    (event, arg) => {
+      Dialogs.question(`Newer version detected (${arg.tag_name}, ${arg.created_at}).\n` +
+        'Do you want to download it?', () => {
+        openExternal(arg.html_url)
+      })
+    })
+  // Listen to the main process to open windows if the main process wants to
+  .on('open-window',
+    /**
+     * @param {import('./types').OpenWindow} arg
+     */
+    (event, arg) => {
+      windowManager.showWindow(arg.screenId)
+    })
 
-/**
- * Set settings element
- * @param {string} id Settings id
- * @param {"toggle"|"text"|"password"} type Settings type
- * @param {*} value Settings value
- */
-function setSettingsElement(id, type, value) {
-  const element = document.getElementById(id)
-  switch (type) {
-    case 'toggle':
-      // @ts-ignore
-      element.checked = value
-      break
-    case 'text':
-    case 'password':
-    // @ts-ignore
-      element.value = value
-      break
-    default:
-      throw Error(`The type "${type}" is not valid!`)
-  }
-}
+/* =====  Inter process communication sender  ====== */
 
-/**
- * Set settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {{documentId: string;id:string;type:"toggle"|"text"|"password"}} infoObject Necessary information
- * @param {*} value New settings value
- */
-function setSettings (infoObject, value) {
-  // Ask the main process to set the setting
-  ipcRenderer.send('settings-set', { ...infoObject, value })
-}
+// Debug
+ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
 
-/**
- * Reset settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {{documentId: string;id:string;type:"toggle"|"text"|"password"}} infoObject Necessary information
- */
-function resetSettings (infoObject) {
-  // Ask the main process to send the default value of the setting
-  ipcRenderer.send('settings-reset', { ...infoObject })
-}
+// Check if a login exists
+ipcRenderer.send('ilias-login-check')
+
+// Request cached entries
+ipcRenderer.send('get-cache')
+
+// Request settings for settings page
+ipcRenderer.send('getSettings')
+
+// Request version number and app name for info page
+ipcRenderer.send('getVersion')
+ipcRenderer.send('getName')
+
+/* =====  Setup  ====== */
 
 // Special buttons to reset everything or set all changes
 // TODO Implement a "set all" and "reset all" button, hide buttons for now
@@ -325,17 +306,35 @@ const saveChangesButton = document.getElementById('saveChanges')
 saveChangesButton.style.display = 'none'
 const resetEverythingButton = document.getElementById('resetEverything')
 resetEverythingButton.style.display = 'none'
+const tryToLoginButton = document.getElementById('welcome-ilias-api-submit')
+tryToLoginButton.addEventListener('click', () => {
+  const url = document.getElementById('welcome-ilias-api-privateFeedUrl').value
+  const name = document.getElementById('welcome-ilias-api-privateFeedUserName').value
+  const password = document.getElementById('welcome-ilias-api-privateFeedPassword').value
+  ipcRenderer.send('test-and-login', { url, name, password })
+})
 
-/*
- * -------------------------------
- * Miscellaneous
- * -------------------------------
- */
+/* =====  Keyboard input listener  ====== */
 
-// Listen to the main process to open windows if the main process wants to
-ipcRenderer.on('open-window', /**
-   * @param {{ screenId: string; }} arg
-   */
- (event, arg) => {
-  windowManager.showWindow(arg.screenId)
+document.addEventListener('keydown', e => {
+  switch (e.which) {
+    case 122: // F11 - Fullscreen
+      mainWindow.setFullScreen(!mainWindow.isFullScreen())
+      windowManager.toggleFullScreen(mainWindow.isFullScreen())
+      break
+    case 116: // F5 - reload app
+      mainWindow.reload()
+      break
+    case 123: // F12 - open dev tools
+      mainWindow.webContents.isDevToolsOpened() ? mainWindow.webContents.closeDevTools() : mainWindow.webContents.openDevTools()
+      break
+    case 37: // <-  - Screen switch left
+      // TODO
+      // windowManager.showLeftWindow()
+      break
+    case 39: // -> - Screen switch right
+      // TODO
+      // windowManager.showRightWindow()
+      break
+  }
 })

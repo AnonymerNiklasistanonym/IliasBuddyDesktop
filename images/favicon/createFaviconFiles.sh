@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # PNG export: Declare an array with the image sizes
-array=( 512 )
+array=( 32 512 )
 for i in "${array[@]}"
 do
 	# Export each size as a `png` favicon from `favicon.svg`

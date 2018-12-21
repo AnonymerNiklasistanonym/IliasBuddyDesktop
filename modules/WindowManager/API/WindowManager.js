@@ -23,6 +23,7 @@ class WindowManager {
     // Show startup (main) window
     this.showWindow(startupWindowId)
     this.fullScreen = false
+    this.removeOpenPopUpWindow = false
   }
   /**
    * @param {boolean} [on]
@@ -33,7 +34,6 @@ class WindowManager {
     } else {
       this.fullScreen = !this.fullScreen
     }
-    console.log(this.fullScreen)
     if (this.fullScreen) {
       this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.add('window-manager-screen-full-screen'))
     } else {
@@ -77,14 +77,28 @@ class WindowManager {
       // Hide previous window
       this.hideWindowTransition(this.registeredWindows[this.getIndexOfRegisteredWindow(this.getCurrentWindow())].documentId)
 
+      // Remove the old window if it's a popup window
+      if (this.removeOpenPopUpWindow) {
+        this.openWindowsStack.pop()
+        this.removeOpenPopUpWindow = false
+      }
+
       // Check further options
       if (options !== undefined) {
         // If this is true remove current window from window history
         if (options.removeFromHistory !== undefined && options.removeFromHistory) {
-          this.openWindowsStack.pop()
+          // Check first if this window is not a popup window because it's already removed
+          if (!this.removeOpenPopUpWindow) {
+            this.openWindowsStack.pop()
+          }
+        }
+        // If this is true remove this window when a new window is shown
+        if (options.isPopUpWindow !== undefined && options.isPopUpWindow) {
+          this.removeOpenPopUpWindow = true
         }
       }
     }
+
     const registeredWindow = this.registeredWindows[newWindowIndex]
     this.showWindowTransition(registeredWindow.documentId)
     // Remove current window from open window stack history

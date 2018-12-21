@@ -36,14 +36,14 @@ const templateToggle = compileTemplate('templateToggle')
 class Renderer {
   /**
    *
-   * @param {import('./RendererTypes').ModifiableSettingsWithValue} entry
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsObjectMerged} entry
    * @returns {string}
    */
   static render (entry) {
     return this.renderElementHbs(entry)
   }
   /**
-   * @param {import('./RendererTypes').ModifiableSettingsWithValue} entry
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsObjectMerged} entry
    * @returns {string}
    */
   static renderElementHbs (entry) {
@@ -51,6 +51,8 @@ class Renderer {
       case 'toggle':
         return templateToggle(entry)
       case 'text':
+      case 'url':
+      case 'cronJob':
         return templateText(entry)
       case 'password':
         return templatePassword(entry)

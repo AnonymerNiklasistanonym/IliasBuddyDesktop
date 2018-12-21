@@ -6,6 +6,19 @@ const path = require('path')
 
 /* ===== >> Imports << ====== */
 
+const cacheFilePath = path.join('cache.json')
+
+function loadCacheFile () {
+  if (FileManager.fileExistsSyncAppData(cacheFilePath)) {
+    return JSON.parse(FileManager.readFileSyncAppData(cacheFilePath).toString())
+  } else {
+    // Return empty array if there is no cache file
+    return []
+  }
+}
+
+const cachedEntries = loadCacheFile()
+
 class IliasBuddyManageEntriesApi {
   /**
    * Creates an instance of IliasBuddyFetchEntriesApi
@@ -17,9 +30,11 @@ class IliasBuddyManageEntriesApi {
   constructor (url, userName, password, newEntriesFoundCallback) {
     this.fetchEntries = new FetchEntries(url, userName, password)
     this.fetchIntervalSeconds = 15
-    this.fetchFilePath = path.join('cache.json')
-    this.currentEntries = this.loadCacheFile()
+    this.currentEntries = cachedEntries
     this.newEntriesFoundCallback = newEntriesFoundCallback
+  }
+  static getCachedEntries () {
+    return cachedEntries
   }
   startBackgroundChecks () {
     this.interval = setInterval(() => {
@@ -68,17 +83,21 @@ class IliasBuddyManageEntriesApi {
       return undefined
     }
   }
+  static testConnection (url, userName, password) {
+    // console.log('ManageEntries - testConnection')
+    return FetchEntries.testConnection(url, userName, password)
+  }
   getCurrentEntries (callback = false) {
-    console.log('callback', callback)
+    // console.log('callback', callback)
     return new Promise((resolve, reject) => {
       this.fetchEntries.getCurrentEntries().then(latestEntries => {
         if (latestEntries !== undefined && latestEntries.length !== 0) {
           const analysis = this.checkForUpdates(latestEntries)
-          console.log('analysis', analysis)
+          // console.log('analysis', analysis)
           if (analysis !== undefined) {
-            console.log('callback', callback)
+            // console.log('callback', callback)
             if (callback) {
-              console.log('this.newEntriesFoundCallback(analysis)', analysis)
+              // console.log('this.newEntriesFoundCallback(analysis)', analysis)
               this.newEntriesFoundCallback(analysis)
             }
             resolve(analysis)
@@ -98,17 +117,9 @@ class IliasBuddyManageEntriesApi {
   }
   saveCacheFile () {
     return new Promise((resolve, reject) => {
-      FileManager.writeFileSyncAppData(this.fetchFilePath,
-        JSON.stringify(this.currentEntries, null, 4))
+      FileManager.writeFileSyncAppData(cacheFilePath,
+        JSON.stringify(this.currentEntries))
     })
-  }
-  loadCacheFile () {
-    if (FileManager.fileExistsSyncAppData(this.fetchFilePath)) {
-      return JSON.parse(FileManager.readFileSyncAppData(this.fetchFilePath).toString())
-    } else {
-      // Return empty array if there is no cache file
-      return []
-    }
   }
 }
 

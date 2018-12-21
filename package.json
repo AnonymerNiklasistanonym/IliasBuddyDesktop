@@ -11,10 +11,12 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build-win": "electron-builder . --win"
+    "build-win": "electron-builder . --win",
+    "build-linux": "electron-builder . --linux"
   },
   "devDependencies": {
-    "electron": "^3.0.13",
+    "@types/node-cron": "^2.0.0",
+    "electron": "^4.0.0",
     "electron-builder": "^20.38.4"
   },
   "dependencies": {
@@ -28,11 +30,13 @@
   "bugs": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/issues",
   "author": {
     "name": "AnonymerNiklasistanonym",
+    "email": "niklas.mikeler@gmail.com",
     "url": "https://github.com/AnonymerNiklasistanonym"
   },
   "contributors": [
     {
       "name": "AnonymerNiklasistanonym",
+      "email": "niklas.mikeler@gmail.com",
       "url": "https://github.com/AnonymerNiklasistanonym"
     }
   ],
@@ -53,6 +57,7 @@
         "!node_modules/**/{appveyor.yml,.travis.yml,circle.yml}",
         "!node_modules/**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}",
         "css/**/*.css",
+        "js/**/*.js",
         "modules/**/*.js",
         "modules/**/*.hbs",
         "modules/TitleBarWin10/**/*.svg",
@@ -65,6 +70,17 @@
         "main.js",
         "default_settings.json"
       ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "snap",
+        "pacman"
+      ],
+      "icon": "images/favicon/favicon_32.png",
+      "synopsis": "single line synopsis",
+      "category": "Utility"
     },
     "nsis": {
       "artifactName": "${productName}_installer_v${version}.${ext}",

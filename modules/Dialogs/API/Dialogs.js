@@ -3,6 +3,11 @@ const path = require('path')
 const dialog = require('electron').remote.dialog
 
 class Dialogs {
+  /**
+   * Display an error box
+   * @param {string} message
+   * @param {string} err
+   */
   static error (message, err) {
     dialog.showErrorBox(message, err)
   }

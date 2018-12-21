@@ -3,9 +3,10 @@ const { net } = require('electron')
 module.exports = {
   /**
    * Get the latest GitHub tag
+   * @param {string} githubLatestReleaseUrl
    * @returns {Promise<import('./VersionCheckerTypes').GitHubLatestTag>}
    */
-  getLatestTagGithub () {
+  getLatestTagGithub (githubLatestReleaseUrl) {
     return new Promise((resolve, reject) => {
       // Create a buffer in which all the chunks of data will be saved
       let responseDataBuffer = []
@@ -13,7 +14,7 @@ module.exports = {
       let jsonObject
       // Make a request to the github api about the latest release
       net
-        .request('https://api.github.com/repos/AnonymerNiklasistanonym/little-shutdown-program/releases/latest')
+        .request(githubLatestReleaseUrl)
         .on('response', response => {
           response
             // Save gotten response data into the buffer

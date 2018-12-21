@@ -52,6 +52,27 @@ class IliasBuddyFetchEntriesApi {
       .end()
     )
   }
+  static testConnection (url, userName, password) {
+    // console.log('FetchEntries - testConnection')
+    return new Promise((resolve, reject) => net.request(url)
+      .on('response', response => {
+        // console.log('FetchEntries - testConnection .on(\'response\'')
+        response
+          .on('data', chunk => {})
+          .on('error', err => {
+            // console.log('FetchEntries - testConnection - reject')
+            reject(err)
+          })
+          .on('end', () => {
+            // console.log('FetchEntries - testConnection - resolve')
+            resolve()
+          })
+      })
+      .on('login', (authInfo, callback) => { callback(userName, password) })
+      .on('error', reject)
+      .end()
+    )
+  }
   /**
    * Get the current Ilias entries
    * @returns {Promise<import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]>}
@@ -71,7 +92,10 @@ class IliasBuddyFetchEntriesApi {
           return result
         })
         .then(resolve)
-        .catch(reject)
+        .catch(err => {
+          console.error('Get current Entries error:', err)
+          reject(err)
+        })
     })
   }
 }

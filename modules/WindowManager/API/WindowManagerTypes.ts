@@ -13,6 +13,13 @@ export namespace WindowManager {
     }
 
     export interface ShowWindowOptions {
-        removeFromHistory: boolean;
+        /**
+         * Remove the current shown window from window history
+         */
+        removeFromHistory?: boolean;
+        /**
+         * Will discard the shown window if another window is shown after it
+         */
+        isPopUpWindow?: boolean;
     }
 }

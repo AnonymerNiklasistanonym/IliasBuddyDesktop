@@ -4,6 +4,10 @@
 <head>
     <!-- File encoding -->
     <meta charset="UTF-8">
+    <!-- Content security policy ("Which sources are trusted?"") -->
+    <!-- [default-src 'self'] Block all external sources that aren't from this directory -->
+    <!-- TODO: Remove script-src 'unsafe-inline' if there is a better solution found! -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline';">
     <!-- CSS stylesheets -->
     <link rel="stylesheet" type="text/css" href="./css/reset.css">
     <link rel="stylesheet" type="text/css" href="./css/ilias.css">
@@ -13,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="./css/ilias-elements.css">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
     <link rel="stylesheet" type="text/css" href="./css/settings.css">
+    <!-- JS scripts -->
+    <script type="text/javascript" src="./js/onlineStatusDetection.js"></script>
 </head>
 
 <body>
@@ -21,7 +27,6 @@
         <li id="welcome">
             <div class="screen-wrapper">
                 <p>Welcome to IliasBuddy</p>
-                <!-- TODO Add instructions -->
                 <div class="instructions">
                     <p>To use this service you need to visit Ilias and click on the orange <b>RSS</b> button to get to
                         the <a href="https://ilias3.uni-stuttgart.de/ilias.php?view=0&col_side=right&block_type=pdnews&cmd=showFeedUrl&cmdClass=ilpdnewsblockgui&cmdNode=sh:6b:rv&baseClass=ilPersonalDesktopGUI#il_mhead_t_focus\">Ilias
@@ -35,7 +40,7 @@
                     <p>Now to complete the setup click the check button at the bottom right.</p>
                 </div>
                 <!-- TODO Add getter and validator -->
-                <form>
+                <form class="settings-entry-text">
                     Private ILIAS feed URL:<br>
                     <input id="welcome-ilias-api-privateFeedUrl" type="text" name="privateFeedUrl" value="URL">
                     <br>
@@ -46,8 +51,8 @@
                     <input id="welcome-ilias-api-privateFeedPassword" type="password" name="privateFeedPassword" value="Password">
                     <br>
                     <br>
-                    <input id="welcome-ilias-api-submit" type="submit" value="Try to login">
                 </form>
+                <button id="welcome-ilias-api-submit">Try to login</button>
             </div>
         </li>
         <li id="info">
@@ -78,9 +83,12 @@
                 <!--<webview src="http://www.github.com/" style="width:640px; height:480px"></webview>-->
             </div>
         </li>
-        <li id="main"></li>
+        <li id="main">
+            <ul id="ilias-entries"></ul>
+        </li>
     </ul>
 
+    <!-- Main script (Only runs after the DOM is ready) -->
     <script src="index.js"></script>
 </body>
 

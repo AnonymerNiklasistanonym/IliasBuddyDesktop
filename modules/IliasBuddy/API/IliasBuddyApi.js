@@ -1,7 +1,6 @@
 /* ===== << Imports >> ====== */
 
 const RendererEntries = require('../GUI/RendererEntriesApi')
-const FetchEntries = require('../FETCH/FetchEntriesApi')
 const ManageEntries = require('../MANAGER/ManageEntriesApi')
 
 /* ===== >> Imports << ====== */
@@ -25,13 +24,17 @@ class IliasBuddyApi {
   getCurrentEntries () {
     return this.manageEntries.getCurrentEntries()
   }
-  getCache () {
-    return this.manageEntries.currentEntries
+  static getCache () {
+    return ManageEntries.getCachedEntries()
+  }
+  static testConnection (url, userName, password) {
+    console.log('API - testConnection')
+    return ManageEntries.testConnection(url, userName, password)
   }
   /**
    * Get the current Ilias entries as HTML elements
    * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]} entries
-   * @returns {HTMLLIElement[]}
+   * @returns {string[]}
    */
   static renderEntriesHtml (entries) {
     return entries.map(RendererEntries.render.bind(RendererEntries))

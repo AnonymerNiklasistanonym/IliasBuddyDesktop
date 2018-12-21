@@ -82,6 +82,10 @@
                         "link": "https://ilias3.uni-stuttgart.de/login.php"
                     }
                 ]
+            },
+            {
+                "id": "githubLatestReleaseUrl",
+                "valueDefault": "https://api.github.com/repos/AnonymerNiklasistanonym/little-shutdown-program/releases/latest"
             }
         ],
         "modifiable": [
@@ -109,7 +113,7 @@
                     "description": "UPDATE THIS",
                     "name": "Ilias private RSS feed user URL"
                 },
-                "type": "text"
+                "type": "url"
             },
             {
                 "id": "userPassword",
@@ -162,7 +166,7 @@
                     "description": "Configure in cron job semantic how often the program should check for updates in the background",
                     "name": "Cron job for program updates configuration"
                 },
-                "type": "text",
+                "type": "cronJob",
                 "valueDefault": "0 0 * * 0"
             },
             {
@@ -180,7 +184,7 @@
                     "description": "Configure in cron job semantic how often the program should check your feed in the background",
                     "name": "Cron job of private Ilias RSS feed configuration"
                 },
-                "type": "text",
+                "type": "cronJob",
                 "valueDefault": "*/5 * * * *"
             },
             {
@@ -194,10 +198,5 @@
             }
         ]
     },
-    "supportedTypes": [
-        "toggle",
-        "text",
-        "password"
-    ],
     "version": 1
 }
