@@ -12,7 +12,8 @@
   "scripts": {
     "start": "electron .",
     "build-win": "electron-builder . --win",
-    "build-linux": "electron-builder . --linux"
+    "build-linux": "electron-builder . --linux",
+    "debug": "electron --nolazy --inspect-brk=9229 ."
   },
   "devDependencies": {
     "@types/node-cron": "^2.0.0",

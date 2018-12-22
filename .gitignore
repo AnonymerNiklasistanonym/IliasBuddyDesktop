@@ -94,3 +94,8 @@ lastRss.xml
 package-lock.json
 cache.json
 settings.json
+
+# ignore VisualStudioCode
+.vscode/*
+# but do not ignore the debug launch script
+!.vscode/launch.json
