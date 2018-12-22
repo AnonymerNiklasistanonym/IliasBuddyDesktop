@@ -35,3 +35,23 @@ export interface SettingsSetAnswer extends SettingsSet { }
 export interface OpenWindow {
     screenId: string;
 }
+
+/**
+ * Inter process communication types
+ */
+export namespace IPC {
+    /**
+     * Ilias login update object
+     */
+    export interface IliasLoginUpdate {
+        /**
+         * Ilias API is ready (state is known)
+         */
+        ready: boolean;
+         /**
+         * Ilias API state (state is known)
+         */
+        iliasApiState?: boolean;
+        errorMessage?: string;
+    }
+}

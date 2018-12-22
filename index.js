@@ -203,16 +203,25 @@ ipcRenderer
   .on('new-entries', (event, arg) => {
     addRenderedIliasEntries(arg, true)
   })
-  .on('ilias-login-update', (event, arg) => {
-    console.info('ilias-login-update:', arg)
-    if (!arg) {
-      windowManager.showWindow('welcome')
-      ipcRenderer.send('show-and-focus-window')
-    } else {
-      Dialogs.toast('Ilias login was successful', '')
-      windowManager.showWindow('main')
-    }
-  })
+  .on('ilias-login-update',
+    /**
+     * @param {import('./types').IPC.IliasLoginUpdate} arg
+     */
+    (event, arg) => {
+      console.info('ilias-login-update:', arg)
+      if (arg.ready) {
+        if (!arg.iliasApiState) {
+          Dialogs.toast('Ilias login was NOT successful', arg.errorMessage !== undefined ? arg.errorMessage : '')
+          windowManager.showWindow('welcome')
+          ipcRenderer.send('show-and-focus-window')
+        } else {
+          Dialogs.toast('Ilias login was successful', '')
+          windowManager.showWindow('main')
+        }
+      } else {
+        console.info('API is not yet ready')
+      }
+    })
   .on('error-dialog',
     /**
      * Display an error

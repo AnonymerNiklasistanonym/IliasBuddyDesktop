@@ -36,6 +36,7 @@ class Dialogs {
    * @param {Function} [timeoutCallback] Function that will be executed on timeout
    */
   static toast (title, message, clickCallback = () => {}, timeoutCallback = () => {}) {
+    console.log('Make a toast')
     notifier.notify({
       title: title,
       message: message,

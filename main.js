@@ -57,9 +57,26 @@ let gOnline = false
  * @type {AutoLaunch}
  */
 let gAutoLaunch = null
-
-let waitUnitlOneLoginTest = true
-let atLeastOneFeedbackOnlineStatus = false
+/**
+ * Global variable to display if the ilias Api is ready
+ * @type {boolean}
+ */
+let gIliasApiIsReady = false
+/**
+ * Global variable to display if the online Api is ready
+ * @type {boolean}
+ */
+let gIliasOnlineIsReady = false
+/**
+ * Global variable to display if the ilias login Api is currently evaluating a login
+ * @type {boolean}
+ */
+let gIliasApiPending = false
+/**
+ * Global variable to display if a version check is currently running
+ * @type {boolean}
+ */
+let gVersionCheckPending = false
 
 /* =====  Global functions  ====== */
 
@@ -80,76 +97,102 @@ function setAutoLaunch () {
 }
 
 /**
+ * Enable/disable/change the a cron job
+ */
+function setCronJob (cronJobVar, cronJobId, enableIt, cronJobString, callback, runInitially = false) {
+  if (cronJobVar !== null) {
+    cronJobVar.destroy()
+  }
+  if (enableIt) {
+    gCronJobProgramUpdate = cron.schedule(cronJobString, () => {
+      callback()
+      gMainWindow.webContents.send('cron-job-debug', `${cronJobId} executed (${cronJobString})`)
+    })
+    gMainWindow.webContents.send('cron-job-debug', `${cronJobId} started`)
+    // Also if wanted run callback instantly once
+    if (runInitially) { callback() }
+  }
+}
+
+/**
  * Enable/disable/change the program update cron job after settings
  */
-function setCronJobProgramUpdate () {
-  if (gCronJobProgramUpdate !== null) {
-    gCronJobProgramUpdate.destroy()
-  }
-  const enableIt = Settings.getModifiable('checkForUpdatesCronJob')
-  if (enableIt) {
-    const cronJob = Settings.getModifiable('checkForUpdatesCronJobConfiguration')
-    gCronJobProgramUpdate = cron.schedule(cronJob, () => {
+function setCronJobProgramUpdate (runInitially = false) {
+  setCronJob(gCronJobProgramUpdate, 'cronJobProgramUpdate',
+    Settings.getModifiable('checkForUpdatesCronJob'),
+    Settings.getModifiable('checkForUpdatesCronJobConfiguration'), () => {
       checkForUpdates()
-      gMainWindow.webContents.send('cron-job-debug', 'cronJobProgramUpdates ' + cronJob)
-    })
-    gMainWindow.webContents.send('cron-job-debug', 'cronJobProgramUpdates started')
-  }
+    }, runInitially)
 }
 
 /**
  * Enable/disable/change the feed update cron job
  */
-function setCronJobFeedUpdate () {
-  if (gCronJobFeedUpdate !== null) {
-    gCronJobFeedUpdate.destroy()
-  }
-  const enableIt = Settings.getModifiable('checkForFeedCronJob')
-  if (enableIt) {
-    const cronJob = Settings.getModifiable('checkForFeedCronJobConfiguration')
-    gCronJobFeedUpdate = cron.schedule(cronJob, () => {
+function setCronJobFeedUpdate (runInitially = false) {
+  setCronJob(gCronJobFeedUpdate, 'cronJobFeedUpdate',
+    Settings.getModifiable('checkForFeedCronJob'),
+    Settings.getModifiable('checkForFeedCronJobConfiguration'), () => {
       if (gIliasApi !== null) {
         gIliasApi.manageEntries.getCurrentEntries(true).catch(console.error)
       }
-      // DEBUG
-      gMainWindow.webContents.send('cron-job-debug', 'cronJobFeedUpdates ' + cronJob)
-    })
-    gMainWindow.webContents.send('cron-job-debug', 'cronJobFeedUpdates started')
-  }
+    }, runInitially)
 }
 
 function loginIliasBuddy () {
   console.log('loginIliasBuddy')
-  if (atLeastOneFeedbackOnlineStatus) {
-    // Check first if online
-    if (!gOnline) {
-      console.log('loginToIliasApi', 'if (!gOnline)')
-      gMainWindow.webContents.send('error-dialog', { title: 'Ilias login error', message: 'Not online' })
 
-      waitUnitlOneLoginTest = false
-    } else {
-      console.log('loginToIliasApi', 'if (gOnline)')
-      // If online check if the credentials are correct
-      checkIliasLogin()
-        .then(() => {
-          console.log('loginToIliasApi', 'checkIliasLogin().then(')
-          loginToIliasApi()
-          console.log('loginToIliasApi', 'was successful')
-          gMainWindow.webContents.send('ilias-login-update', true)
-          // And at last try to fetch the latest entries
-          getLatestIliasEntries()
+  if (!gIliasOnlineIsReady) {
+    console.log('loginIliasBuddy is not yet ready, online state is unknown')
+    return
+  }
 
-          waitUnitlOneLoginTest = false
+  if (gIliasApiPending) {
+    console.log('loginIliasBuddy is currently already evaluating a login')
+    return
+  }
+
+  gIliasApiPending = true
+  // Check first if online
+  if (!gOnline) {
+    console.log('loginToIliasApi', 'if (!gOnline)')
+    gMainWindow.webContents.send('ilias-login-update', {
+      ready: true,
+      iliasApiState: false,
+      errorMessage: 'Device is not online'
+    })
+
+    gIliasApiIsReady = true
+    gIliasApiPending = false
+  } else {
+    console.log('loginToIliasApi', 'if (gOnline)')
+    // If online check if the credentials are correct
+    checkIliasLogin()
+      .then(() => {
+        console.log('loginToIliasApi', 'checkIliasLogin().then(')
+        loginToIliasApi()
+        console.log('loginToIliasApi', 'was successful')
+        gMainWindow.webContents.send('ilias-login-update', {
+          ready: true,
+          iliasApiState: true
         })
-        .catch(err => {
-          console.log('loginToIliasApi', 'checkIliasLogin().catch(')
-          console.log('loginToIliasApi', 'was NOT successful')
-          gMainWindow.webContents.send('error-dialog', { title: 'Ilias login error', message: err.message + '' })
-          gMainWindow.webContents.send('ilias-login-update', false)
+        // And at last try to fetch the latest entries
+        getLatestIliasEntries()
 
-          waitUnitlOneLoginTest = false
+        gIliasApiIsReady = true
+        gIliasApiPending = false
+      })
+      .catch(err => {
+        console.log('loginToIliasApi', 'checkIliasLogin().catch(')
+        console.log('loginToIliasApi', 'was NOT successful')
+        gMainWindow.webContents.send('ilias-login-update', {
+          ready: true,
+          iliasApiState: false,
+          errorMessage: err.message + ''
         })
-    }
+
+        gIliasApiIsReady = true
+        gIliasApiPending = false
+      })
   }
 }
 
@@ -203,8 +246,6 @@ function convertIliasEntriesForClient (entries) {
 }
 
 function setupAfterWindowHasLoaded () {
-  gMainWindow.webContents.send('main-process-to-renderer-message', 'Hello from main.js to index.js 2')
-  console.log('ready-to-show')
   // Try to login to ilias API
   loginIliasBuddy()
 
@@ -250,10 +291,10 @@ function setupAfterWindowHasLoaded () {
   }
 
   // Start program update cron job if wanted
-  setCronJobProgramUpdate()
+  setCronJobProgramUpdate(false)
 
   // Start feed update cron job if wanted
-  setCronJobFeedUpdate()
+  setCronJobFeedUpdate(false)
 }
 
 /**
@@ -294,25 +335,23 @@ function createWindow () {
     slashes: true
   }))
 
-  // TODO Fill with wanted settings and be also able to send to the render process
-  // which ones should be enabled in case of the win10 like menubar is used
-  if (settingsNativeTitleBar) {
-    Menu.setApplicationMenu(Menu.buildFromTemplate([
-      {
-        label: 'Menu',
-        submenu: [
-          {
-            label: 'Click',
-            click () {
-              gMainWindow.webContents.send('main-process-to-renderer-message', 'Menu Bar TODO')
-            }
-          },
-          { label: 'submenu1' },
-          { label: 'submenu2' }
-        ]
-      }
-    ]))
-  }
+  // Menu bar with links to all available screens
+  Menu.setApplicationMenu(Menu.buildFromTemplate([{
+    label: 'Current Feed',
+    click () { gMainWindow.webContents.send('open-window', { screenId: 'main' }) }
+  }, {
+    label: 'Saved Feed',
+    click () { gMainWindow.webContents.send('open-window', { screenId: 'saved' }) }
+  }, {
+    label: 'Links',
+    click () { gMainWindow.webContents.send('open-window', { screenId: 'links' }) }
+  }, {
+    label: 'Settings',
+    click () { gMainWindow.webContents.send('open-window', { screenId: 'settings' }) }
+  }, {
+    label: 'About',
+    click () { gMainWindow.webContents.send('open-window', { screenId: 'info' }) }
+  }]))
 
   // If wanted create system tray
   if (settingsMinimizeToSystemTray) {
@@ -354,10 +393,12 @@ function createWindow () {
       }
     })
 
-  gMainWindow.once('ready-to-show', () => {
-    console.log('.once(\'ready-to-show\'')
-    setupAfterWindowHasLoaded()
-  })
+  // window event listener that only get called once
+  gMainWindow
+    .once('ready-to-show', () => {
+      console.log('.once(\'ready-to-show\'')
+      setupAfterWindowHasLoaded()
+    })
 
   // window event listener
   gMainWindow
@@ -407,14 +448,24 @@ function saveSettings () {
 }
 
 function checkForUpdates () {
+  if (gVersionCheckPending) {
+    console.log('Version check pending')
+    return
+  }
+
+  gVersionCheckPending = true
   VersionChecker.getLatestTagGithub(Settings.getHidden('githubLatestReleaseUrl'))
     .then(json => {
       if (json.tag_name !== 'v' + app.getVersion()) {
         console.log('Other version detected')
         gMainWindow.webContents.send('new-version-detected', json)
       }
+      gVersionCheckPending = false
     })
-    .catch(console.error)
+    .catch(err => {
+      console.error(err)
+      gVersionCheckPending = false
+    })
 }
 
 function getLatestIliasEntries () {
@@ -489,8 +540,8 @@ function setSetting (arg) {
           if (arg.id === 'devMode') {
             arg.value ? gMainWindow.webContents.openDevTools() : gMainWindow.webContents.closeDevTools()
           }
-          if (arg.id === 'checkForFeedCronJob') { setCronJobFeedUpdate() }
-          if (arg.id === 'checkForUpdatesCronJob') { setCronJobProgramUpdate() }
+          if (arg.id === 'checkForFeedCronJob') { setCronJobFeedUpdate(true) }
+          if (arg.id === 'checkForUpdatesCronJob') { setCronJobProgramUpdate(true) }
           break
         case 'text':
           if (arg.id === 'userName') { loginIliasBuddy() }
@@ -526,7 +577,7 @@ ipcMain
      */
     (event, onlineStatus) => {
       gOnline = onlineStatus
-      atLeastOneFeedbackOnlineStatus = true
+      gIliasOnlineIsReady = true
       loginIliasBuddy()
     })
   .on('ilias-login-check',
@@ -534,9 +585,10 @@ ipcMain
      * When the renderer process asks if the login to the Ilias API was successful
      * answer with true/false
      */
-    event => {
-      event.sender.send('ilias-login-update', gIliasApi !== null)
-    })
+    event => event.sender.send('ilias-login-update', {
+      ready: gIliasApiIsReady,
+      iliasApiState: gIliasApi !== null
+    }))
   .on('test-and-login',
     /**
      * When a message is send from the renderer process check credentials and if
