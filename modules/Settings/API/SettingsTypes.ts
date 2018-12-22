@@ -24,6 +24,7 @@ export namespace Hidden {
      */
     export interface SettingsObjectDefault {
         id: SettingsId;
+        info?: string;
         valueDefault: SettingsType;
     };
 

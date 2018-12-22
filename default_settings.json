@@ -1,8 +1,9 @@
 {
+    "$schema": "./default_settings_schema.json",
     "settings": {
-        "hidden": [
-            {
+        "hidden": [{
                 "id": "restartInfo",
+                "info": "Information to check on start of this program if the program was restarted and which screen was open at that time",
                 "valueDefault": {
                     "openScreen": true,
                     "screenId": "welcome"
@@ -27,8 +28,7 @@
             {
                 "id": "searchFilter",
                 "valueDefault": {
-                    "options": [
-                        {
+                    "options": [{
                             "filter": false,
                             "id": "files"
                         },
@@ -42,54 +42,47 @@
             },
             {
                 "id": "sort",
-                "valueDefault": [
-                    {
-                        "ascending": false,
-                        "by": "date",
-                        "on": true
-                    }
-                ]
+                "valueDefault": [{
+                    "ascending": false,
+                    "by": "date",
+                    "on": true
+                }]
             },
             {
                 "id": "savedEntries",
-                "valueDefault": [
-                    {
-                        "course": "Demo",
-                        "date": {
-                            "unix": 1544169490,
-                            "humanReadable": "Friday, December 7, 2018 8:58 AM"
-                        },
-                        "link": "https://ilias3.uni-stuttgart.de/login.php",
-                        "courseDirectory": ["Pages"],
-                        "description": "This is a demo entry that links to the Login page",
-                        "options": {
-                            "isPost": true,
-                            "isFile": false,
-                            "post": {
-                                "title": "Demo post that links to Login",
-                                "forum": "DEMO"
-                            }
+                "valueDefault": [{
+                    "course": "Demo",
+                    "date": {
+                        "unix": 1544169490,
+                        "humanReadable": "Friday, December 7, 2018 8:58 AM"
+                    },
+                    "link": "https://ilias3.uni-stuttgart.de/login.php",
+                    "courseDirectory": ["Pages"],
+                    "description": "This is a demo entry that links to the Login page",
+                    "options": {
+                        "isPost": true,
+                        "isFile": false,
+                        "post": {
+                            "title": "Demo post that links to Login",
+                            "forum": "DEMO"
                         }
                     }
-                ]
+                }]
             },
             {
                 "id": "savedLinks",
-                "valueDefault": [
-                    {
-                        "name": "Link name",
-                        "description": "Link description text",
-                        "link": "https://ilias3.uni-stuttgart.de/login.php"
-                    }
-                ]
+                "valueDefault": [{
+                    "name": "Link name",
+                    "description": "Link description text",
+                    "link": "https://ilias3.uni-stuttgart.de/login.php"
+                }]
             },
             {
                 "id": "githubLatestReleaseUrl",
                 "valueDefault": "https://api.github.com/repos/AnonymerNiklasistanonym/little-shutdown-program/releases/latest"
             }
         ],
-        "modifiable": [
-            {
+        "modifiable": [{
                 "id": "nativeTitleBar",
                 "info": {
                     "description": "If activated the native implementation of the title bar will be used. Otherwise the software Windows 10 like custom title bar will be used.",

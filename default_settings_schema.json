@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "title": "Default settings JSON",
+    "version": "1.0.0",
+    "type": "object",
+    "properties": {
+        "settings": {
+            "type": "object",
+            "required": ["hidden", "modifiable"],
+            "description": "In here are all settings objects listed",
+            "properties": {
+                "hidden": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "description": "All hidden not user configurable settings",
+                    "items": {
+                        "type": "object",
+                        "required": ["id", "info", "valueDefault"],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Unique identifier of this hidden setting"
+                            },
+                            "info": {
+                                "type": "string",
+                                "description": "Information about what this hidden settings is all about"
+                            },
+                            "valueDefault": {
+                                "type": ["integer", "string", "boolean", "object", "array", "number"],
+                                "description": "The default value of the hidden setting"
+                            }
+                        }
+                    }
+                },
+                "modifiable": {
+                    "type": "array",
+                    "description": "All the user configurable settings",
+                    "items": {
+                        "type": "object",
+                        "required": ["id", "info", "valueDefault"],
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Unique identifier of this modifiable setting"
+                            },
+                            "info": {
+                                "type": "object",
+                                "required": ["description", "name"],
+                                "description": "Information object about this setting",
+                                "properties": {
+                                    "description": {
+                                        "type": "string",
+                                        "description": "A description about this setting that explains why it exists"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "A unique and short name to easily find it in a list of all settings"
+                                    }
+                                }
+                            },
+                            "restart": {
+                                "type": "boolean",
+                                "description": "If this setting is changed is there a restart necessary"
+                            },
+                            "valueDefault": {
+                                "type": ["integer", "string", "boolean", "object", "array", "number"],
+                                "description": "The default value of the modifiable setting"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "version": {
+            "type": "integer",
+            "description": "The version of the setting JSON"
+        }
+    },
+    "required": ["settings", "version"]
+}

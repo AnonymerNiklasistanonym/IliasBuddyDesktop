@@ -46,7 +46,9 @@ const windowManager = new WindowManager([
   { documentId: 'main', id: 'main' },
   { documentId: 'info', id: 'info' },
   { documentId: 'welcome', id: 'welcome' },
-  { documentId: 'settings', id: 'settings' }], 'main')
+  { documentId: 'settings', id: 'settings' },
+  { documentId: 'saved', id: 'saved' },
+  { documentId: 'links', id: 'links' }], 'main')
 
 /**
  * Title bar

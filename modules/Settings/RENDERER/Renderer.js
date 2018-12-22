@@ -18,7 +18,6 @@ const registerPartial = nameOfPartial => {
  * @returns {Handlebars.TemplateDelegate}
  */
 const compileTemplate = nameOfTemplate => {
-  console.log('WHY...')
   const filePath = path.join(hbsTemplatePath, nameOfTemplate + '.hbs')
   return Handlebars.compile(fs.readFileSync(filePath).toString())
 }

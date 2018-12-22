@@ -8,11 +8,11 @@ Your private Ilias RSS feed in one app with notifications when a file gets uploa
 
 ---
 
-<br>
-
 ## Build
 
-### Windows
+Build executable files of this program for specified OSes.
+
+### Build > Windows
 
 ```sh
 cd scripts
@@ -21,7 +21,9 @@ cd scripts
 
 ## Install
 
-### Windows
+Install scripts that build and install this program on specified OSes.
+
+### Install > Windows
 
 ```sh
 cd scripts
@@ -30,17 +32,26 @@ cd scripts
 
 ## Clean
 
-### Windows
+Clean scripts that remove all files that eventually get created by debugging or using this program on specified OSes.
+
+### Clean > Not necessary files for archiving
+
+Remove always created files that are not necessary for archives on every operating system.
+
+```sh
+./clean.sh
+```
+
+### Clean > Windows
 
 ```sh
 cd scripts
 ./win_clean_appData.ps1
 ```
 
-
 ## Other
 
-### What is this source code?
+### What is this source code
 
 #### `cloc`
 
@@ -48,10 +59,10 @@ cd scripts
 2. Run `cloc --vcs=git` to see all the files and lines of code that are tracked via this `git` repository
 3. Or check especially for a programming language with `cloc --vcs=git --include-lang=JavaScript` (For other languages replace *JavaScript* or if you want to view more than one add them with a comma like `cloc --vcs=git --include-lang=JavaScript,TypeScript`)
 
-*(Example preview from 20.12.2018)*
+(*Example preview from 20.12.2018*)
 
 ```sh
-$ cloc --vcs=git`
+$ cloc --vcs=git
 
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
@@ -73,7 +84,7 @@ SUM:                            60            287            635           2469
 
 If you want to see what the most used constructs/calls are use the following command:
 
-*(Example preview from 20.12.2018)*
+(*Example preview from 20.12.2018*)
 
 ```sh
 $ find -iname '*.js' -not -path "./node_modules/*" -not -path "./dist/*" | xargs cat | sort | uniq -c | sort -nr | head -n 5
@@ -87,7 +98,7 @@ $ find -iname '*.js' -not -path "./node_modules/*" -not -path "./dist/*" | xargs
 
 Because the first some lines are always not that necessary (Whitespaces, parentheses, brackets, ...) just play around and probably add a tail to start off from the nth line:
 
-*(Example preview from 20.12.2018)*
+(*Example preview from 20.12.2018*)
 
 ```sh
 $ find -iname '*.js' -not -path "./node_modules/*" -not -path "./dist/*" | xargs cat | sort | uniq -c | sort -nr | head -n 21 |tail -n +14
@@ -102,7 +113,7 @@ $ find -iname '*.js' -not -path "./node_modules/*" -not -path "./dist/*" | xargs
       6 const fs = require('fs')
 ```
 
-### Set envirnomental variables
+### Set environmental variables
 
 #### Powershell (Windows)
 
