@@ -5,7 +5,7 @@
 /* Make each screen as wide as all the available space */
 ul#screens>li {
     width: 100vw;
-    height: calc(100vh - var(--title-bar-height));
+    height: 100vh;
     /*background-color: blue;
     /* Create automatically scroll bars if content is longer than there is space */
     overflow-y: auto;
@@ -14,20 +14,23 @@ ul#screens>li {
     /* Display each screen at the top */
     background-color: var(--ilias-background-color);
 }
+ul#screens>li.window-manager-title-bar-screen {
+    /* Maximize when screen is fullscreen */
+    height: calc(100vh - var(--title-bar-height));
+}
 ul#screens>li.window-manager-screen-full-screen {
     /* Maximize when screen is fullscreen */
     height: 100vh;
 }
 
 .screen-wrapper {
-    margin: auto;
     width: 80%;
     max-width: 800px;
     padding: 2em;
     background: var(--ilias-background-color-text);
     min-height: 80%;
-    border-radius: 0 0 10px 10px;
-    margin-bottom: 2rem;
+    border-radius: 10px;
+    margin: 2rem auto;
 }
 
 .screen-wrapper h2 {

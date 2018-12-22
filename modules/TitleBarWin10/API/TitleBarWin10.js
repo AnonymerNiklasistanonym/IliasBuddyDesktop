@@ -51,6 +51,8 @@ class TitleBarWin10 {
    * @param {HTMLDivElement} titleBarDiv
    */
   addTitleBar (titleBarDiv) {
+    titleBarDiv.classList.remove('title-bar-hidden')
+
     const stagingElement = document.createDocumentFragment()
 
     const resizeHandleTop = document.createElement('div')
@@ -102,6 +104,15 @@ class TitleBarWin10 {
     const callbacksExist = this.options !== undefined && this.options.defaultCallbacks !== undefined
     this.defaultClickActions(callbacksExist ? this.options.defaultCallbacks : undefined)
     this.electronWindowListener()
+  }
+  /**
+   * @param {HTMLDivElement} titleBarDiv
+   */
+  removeTitleBar (titleBarDiv) {
+    titleBarDiv.classList.add('title-bar-hidden')
+    while (titleBarDiv.firstChild) {
+      titleBarDiv.removeChild(titleBarDiv.firstChild)
+    }
   }
   defaultClickActions (defaultCallbacks) {
     const titleBarMinimize = document.getElementById('title-bar-action-minimize')

@@ -70,7 +70,6 @@ defaultCallbacks: {
   restore: () => { console.info('TitleBarWin10 > action > restore') },
   close: () => { console.info('TitleBarWin10 > action > close') }
 } })
-titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
 
 /* =====  Global functions  ====== */
 
@@ -290,6 +289,13 @@ ipcRenderer
     (event, arg) => {
       windowManager.showWindow(arg.screenId)
     })
+    .on('set-native-title-bar', (event, nativeTitleBar) => {
+      titleBarWin10.removeTitleBar(document.querySelector('div#title-bar'))
+      windowManager.toggleTitleBar(!nativeTitleBar)
+      if (!nativeTitleBar) {
+        titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
+      }
+    })
 
 /* =====  Inter process communication sender  ====== */
 
@@ -308,6 +314,9 @@ ipcRenderer.send('getSettings')
 // Request version number and app name for info page
 ipcRenderer.send('getVersion')
 ipcRenderer.send('getName')
+
+// Check if th Win10 title bar should be displayed
+ipcRenderer.send('native-title-bar-check')
 
 /* =====  Setup  ====== */
 

@@ -20,7 +20,7 @@ div#title-bar {
     -webkit-app-region: drag;
 }
 
-div#title-bar.title-bar-full-screen {
+div#title-bar.title-bar-full-screen, div#title-bar.title-bar-hidden {
     display: none;
 }
 

@@ -670,6 +670,8 @@ ipcMain
     app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
     app.exit(0)
   })
+  .on('native-title-bar-check', event => event.sender.send('set-native-title-bar',
+    Settings.getModifiable('nativeTitleBar')))
 
 /* =====  Electron app listeners  ====== */
 

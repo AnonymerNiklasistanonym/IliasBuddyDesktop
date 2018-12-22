@@ -41,6 +41,21 @@ class WindowManager {
     }
   }
   /**
+   * @param {boolean} [on]
+   */
+  toggleTitleBar (on) {
+    if (on !== undefined) {
+      this.titleBar = on
+    } else {
+      this.titleBar = !this.titleBar
+    }
+    if (this.titleBar) {
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.add('window-manager-title-bar-screen'))
+    } else {
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.remove('window-manager-title-bar-screen'))
+    }
+  }
+  /**
    * Get the name of the current window
    * @returns {string}
    */
