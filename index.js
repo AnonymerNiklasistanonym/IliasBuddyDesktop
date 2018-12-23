@@ -16,6 +16,9 @@
 // npm modules
 const { ipcRenderer, remote, shell } = require('electron')
 const path = require('path')
+const cronstrue = require('cronstrue')
+const nodeCron = require('node-cron')
+
 // custom modules
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
@@ -193,6 +196,15 @@ function resetSettings (infoObject) {
   ipcRenderer.send('settings-reset', { ...infoObject })
 }
 
+function cronJobToText (documentId, goalId) {
+  const cronJobValue = document.getElementById(documentId).value
+  if (nodeCron.validate(cronJobValue)) {
+    document.getElementById(goalId).value = cronstrue.toString(cronJobValue, { use24HourTimeFormat: true })
+  } else {
+    document.getElementById(goalId).value = 'Not valid'
+  }
+}
+
 /* =====  Inter process communication listeners  ====== */
 
 ipcRenderer
@@ -211,6 +223,21 @@ ipcRenderer
       if (arg.ready) {
         if (!arg.iliasApiState) {
           Dialogs.toast('Ilias login was NOT successful', arg.errorMessage !== undefined ? arg.errorMessage : '')
+          const urlElement = document.getElementById('welcome-ilias-api-privateFeedUrl')
+          const nameElement = document.getElementById('welcome-ilias-api-privateFeedUserName')
+          const passwordElement = document.getElementById('welcome-ilias-api-privateFeedPassword')
+          if (arg.url !== undefined) {
+            urlElement.value = arg.url.value
+            urlElement.placeholder = arg.url.defaultValue
+          }
+          if (arg.name !== undefined) {
+            nameElement.value = arg.name.value
+            nameElement.placeholder = arg.name.defaultValue
+          }
+          if (arg.password !== undefined) {
+            passwordElement.value = arg.password.value
+            passwordElement.placeholder = arg.password.defaultValue
+          }
           windowManager.showWindow('welcome')
           ipcRenderer.send('show-and-focus-window')
         } else {
@@ -289,13 +316,13 @@ ipcRenderer
     (event, arg) => {
       windowManager.showWindow(arg.screenId)
     })
-    .on('set-native-title-bar', (event, nativeTitleBar) => {
-      titleBarWin10.removeTitleBar(document.querySelector('div#title-bar'))
-      windowManager.toggleTitleBar(!nativeTitleBar)
-      if (!nativeTitleBar) {
-        titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
-      }
-    })
+  .on('set-native-title-bar', (event, nativeTitleBar) => {
+    titleBarWin10.removeTitleBar(document.querySelector('div#title-bar'))
+    windowManager.toggleTitleBar(!nativeTitleBar)
+    if (!nativeTitleBar) {
+      titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
+    }
+  })
 
 /* =====  Inter process communication sender  ====== */
 

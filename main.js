@@ -138,7 +138,7 @@ function setCronJobFeedUpdate (runInitially = false) {
     }, runInitially)
 }
 
-function loginIliasBuddy () {
+function loginIliasBuddy (relaunch = false) {
   console.log('loginIliasBuddy')
 
   if (!gIliasOnlineIsReady) {
@@ -151,17 +151,39 @@ function loginIliasBuddy () {
     return
   }
 
+  function nameLater (errorMsg = undefined) {
+    if (errorMsg !== undefined) {
+      return {
+        ready: gIliasApiIsReady,
+        iliasApiState: gIliasApi !== null,
+        errorMessage: errorMsg,
+        url: {
+          value: Settings.getModifiable('userUrl') === Settings.getModifiableDefault('userUrl') ? '' : Settings.getModifiable('userUrl'),
+          defaultValue: Settings.getModifiableDefault('userUrl')
+        },
+        password: {
+          value: Settings.getModifiable('userPassword') === Settings.getModifiableDefault('userPassword') ? '' : Settings.getModifiable('userPassword'),
+          defaultValue: Settings.getModifiableDefault('userPassword')
+        },
+        name: {
+          value: Settings.getModifiable('userName') === Settings.getModifiableDefault('userName') ? '' : Settings.getModifiable('userName'),
+          defaultValue: Settings.getModifiableDefault('userName')
+        }
+      }
+    } else {
+      return {
+        ready: gIliasApiIsReady,
+        iliasApiState: gIliasApi !== null
+      }
+    }
+  }
+
   gIliasApiPending = true
   // Check first if online
   if (!gOnline) {
     console.log('loginToIliasApi', 'if (!gOnline)')
-    gMainWindow.webContents.send('ilias-login-update', {
-      ready: true,
-      iliasApiState: false,
-      errorMessage: 'Device is not online'
-    })
-
     gIliasApiIsReady = true
+    gMainWindow.webContents.send('ilias-login-update', nameLater('Device is not online'))
     gIliasApiPending = false
   } else {
     console.log('loginToIliasApi', 'if (gOnline)')
@@ -171,29 +193,34 @@ function loginIliasBuddy () {
         console.log('loginToIliasApi', 'checkIliasLogin().then(')
         loginToIliasApi()
         console.log('loginToIliasApi', 'was successful')
-        gMainWindow.webContents.send('ilias-login-update', {
-          ready: true,
-          iliasApiState: true
-        })
+        gIliasApiIsReady = true
+        gMainWindow.webContents.send('ilias-login-update', nameLater())
+        gIliasApiPending = false
         // And at last try to fetch the latest entries
         getLatestIliasEntries()
-
-        gIliasApiIsReady = true
-        gIliasApiPending = false
+        // TODO Change in the future
+        if (relaunch) {
+          // Open main screen the next time
+          Settings.setHidden('restartInfo', { openScreen: true, screenId: 'main' })
+          relaunchApp()
+        }
       })
       .catch(err => {
         console.log('loginToIliasApi', 'checkIliasLogin().catch(')
         console.log('loginToIliasApi', 'was NOT successful')
-        gMainWindow.webContents.send('ilias-login-update', {
-          ready: true,
-          iliasApiState: false,
-          errorMessage: err.message + ''
-        })
-
         gIliasApiIsReady = true
+        gMainWindow.webContents.send('ilias-login-update', nameLater(err.message))
         gIliasApiPending = false
       })
   }
+}
+
+function relaunchApp () {
+  // save settings before closing the app
+  saveSettings()
+  // close and reopen the app
+  app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
+  app.exit(0)
 }
 
 /**
@@ -602,7 +629,7 @@ ipcMain
           setSetting({ id: 'userName', value: message.name, documentId: 'settings-value-id-userName', type: 'text', restart: false })
           setSetting({ id: 'userPassword', value: message.password, documentId: 'settings-value-id-userPassword', type: 'text', restart: false })
           setSetting({ id: 'userUrl', value: message.url, documentId: 'settings-value-id-userUrl', type: 'text', restart: false })
-          loginIliasBuddy()
+          loginIliasBuddy(true)
         })
         .catch(err => {
           gMainWindow.webContents.send('error-dialog', { title: 'Ilias login error', message: err.message })
@@ -664,11 +691,7 @@ ipcMain
   .on('relaunch', (event, arg) => {
     // Save current opened screen
     Settings.setHidden('restartInfo', { openScreen: true, screenId: arg.screenId })
-    // save settings before closing the app
-    saveSettings()
-    // close and reopen the app
-    app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
-    app.exit(0)
+    relaunchApp()
   })
   .on('native-title-bar-check', event => event.sender.send('set-native-title-bar',
     Settings.getModifiable('nativeTitleBar')))

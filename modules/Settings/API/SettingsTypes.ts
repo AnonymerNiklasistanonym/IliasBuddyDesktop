@@ -59,7 +59,7 @@ export namespace Modifiable {
     /**
      * All defined settings values [Modifiable settings]
      */
-    export type SettingsType = boolean | string;
+    export type SettingsType = any;
 
     /**
      * Settings object [Modifiable settings]

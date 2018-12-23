@@ -98,7 +98,8 @@
                     "description": "UPDATE THIS",
                     "name": "Ilias private RSS feed user name"
                 },
-                "type": "text"
+                "type": "text",
+                "valueDefault": "UserName"
             },
             {
                 "id": "userUrl",
@@ -106,7 +107,8 @@
                     "description": "UPDATE THIS",
                     "name": "Ilias private RSS feed user URL"
                 },
-                "type": "url"
+                "type": "url",
+                "valueDefault": "https://ilias3.uni-stuttgart.de/privfeed.php..."
             },
             {
                 "id": "userPassword",
@@ -114,7 +116,8 @@
                     "description": "UPDATE THIS",
                     "name": "Ilias private RSS feed user password"
                 },
-                "type": "password"
+                "type": "password",
+                "valueDefault": "private RSS feed password, not the Ilias login password!"
             },
             {
                 "id": "minimizeToSystemTray",

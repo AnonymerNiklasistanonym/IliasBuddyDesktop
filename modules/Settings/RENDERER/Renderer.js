@@ -1,6 +1,8 @@
 const Handlebars = require('handlebars')
 const fs = require('fs')
 const path = require('path')
+const cronstrue = require('cronstrue')
+const nodeCron = require('node-cron')
 
 const hbsTemplatePath = path.join(__dirname, 'templates')
 const hbsPartialPath = path.join(hbsTemplatePath, 'partials')
@@ -26,10 +28,12 @@ registerPartial('partialTitleAndDescription')
 registerPartial('partialValuePassword')
 registerPartial('partialValueToggle')
 registerPartial('partialValueText')
+registerPartial('partialValueCronJob')
 registerPartial('partialSetReset')
 
 const templatePassword = compileTemplate('templatePassword')
 const templateText = compileTemplate('templateText')
+const templateCronJob = compileTemplate('templateCronJob')
 const templateToggle = compileTemplate('templateToggle')
 
 class Renderer {
@@ -51,8 +55,10 @@ class Renderer {
         return templateToggle(entry)
       case 'text':
       case 'url':
-      case 'cronJob':
         return templateText(entry)
+      case 'cronJob':
+        const cronJobExplanation = nodeCron.validate(entry.value) ? cronstrue.toString(entry.value, { use24HourTimeFormat: true }) : 'Not valid'
+        return templateCronJob({ ...entry, cronJobExplanation })
       case 'password':
         return templatePassword(entry)
       default:

@@ -57,16 +57,20 @@ class IliasBuddyFetchEntriesApi {
     return new Promise((resolve, reject) => net.request(url)
       .on('response', response => {
         // console.log('FetchEntries - testConnection .on(\'response\'')
-        response
-          .on('data', chunk => {})
-          .on('error', err => {
-            // console.log('FetchEntries - testConnection - reject')
-            reject(err)
-          })
-          .on('end', () => {
-            // console.log('FetchEntries - testConnection - resolve')
-            resolve()
-          })
+        if (response.statusCode === 200) {
+          response
+            .on('data', chunk => {})
+            .on('error', err => {
+              // console.log('FetchEntries - testConnection - reject')
+              reject(err)
+            })
+            .on('end', () => {
+              // console.log('FetchEntries - testConnection - resolve')
+              resolve()
+            })
+        } else {
+          reject(Error(`Wrong status code (${response.statusCode})`))
+        }
       })
       .on('login', (authInfo, callback) => { callback(userName, password) })
       .on('error', reject)

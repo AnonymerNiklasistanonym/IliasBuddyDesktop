@@ -53,5 +53,17 @@ export namespace IPC {
          */
         iliasApiState?: boolean;
         errorMessage?: string;
+        url?: {
+            value: string;
+            defaultValue: string;
+        };
+        password?: {
+            value: string;
+            defaultValue: string;
+        };
+        name?: {
+            value: string;
+            defaultValue: string;
+        }
     }
 }
