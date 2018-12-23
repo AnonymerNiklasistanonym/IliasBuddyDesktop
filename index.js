@@ -23,6 +23,7 @@ const nodeCron = require('node-cron')
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
+const CronJobHelper = require('./modules/CronJobHelper/API/CronJobHelper')
 
 /* =====  Global variables  ====== */
 
@@ -175,6 +176,9 @@ function setSettingsElement (documentId, type, value) {
     default:
       throw Error(`The type "${type}" is not valid!`)
   }
+  if (type === 'cronJob') {
+    document.getElementById(documentId + '-text').value = CronJobHelper.cronJobStringToHumanReadableString(value, { use24HourTimeFormat: true })
+  }
 }
 
 /**
@@ -197,12 +201,7 @@ function resetSettings (infoObject) {
 }
 
 function cronJobToText (documentId, goalId) {
-  const cronJobValue = document.getElementById(documentId).value
-  if (nodeCron.validate(cronJobValue)) {
-    document.getElementById(goalId).value = cronstrue.toString(cronJobValue, { use24HourTimeFormat: true })
-  } else {
-    document.getElementById(goalId).value = 'Not valid'
-  }
+  document.getElementById(goalId).value = CronJobHelper.cronJobStringToHumanReadableString(document.getElementById(documentId).value, { use24HourTimeFormat: true })
 }
 
 /* =====  Inter process communication listeners  ====== */

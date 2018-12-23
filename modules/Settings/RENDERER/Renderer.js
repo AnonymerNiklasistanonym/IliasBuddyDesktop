@@ -1,8 +1,7 @@
 const Handlebars = require('handlebars')
 const fs = require('fs')
 const path = require('path')
-const cronstrue = require('cronstrue')
-const nodeCron = require('node-cron')
+const CronJobHelper = require('../../CronJobHelper/API/CronJobHelper')
 
 const hbsTemplatePath = path.join(__dirname, 'templates')
 const hbsPartialPath = path.join(hbsTemplatePath, 'partials')
@@ -57,8 +56,10 @@ class Renderer {
       case 'url':
         return templateText(entry)
       case 'cronJob':
-        const cronJobExplanation = nodeCron.validate(entry.value) ? cronstrue.toString(entry.value, { use24HourTimeFormat: true }) : 'Not valid'
-        return templateCronJob({ ...entry, cronJobExplanation })
+        return templateCronJob({
+          ...entry,
+          cronJobExplanation: CronJobHelper.cronJobStringToHumanReadableString(entry.value, { use24HourTimeFormat: true })
+        })
       case 'password':
         return templatePassword(entry)
       default:

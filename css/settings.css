@@ -1,24 +1,27 @@
-.settings-entry > .settings-info-container > .settings-info-container-name {
+.settings-entry>.settings-info-container>.settings-info-container-name {
     color: var(--ilias-text-color);
 }
 
-.settings-entry > .settings-info-container > .settings-info-container-description {
+.settings-entry>.settings-info-container>.settings-info-container-description {
     color: var(--ilias-text-color-small);
     font-size: var(--ilias-font-size-small);
     font-style: italic;
 }
+
 .settings-value-container {
-padding: 1rem 0;
+    padding: 1rem 0;
 }
 
 .settings-entry-toggle input {
-width: 30px;
-height: 30px;
+    width: 30px;
+    height: 30px;
 }
 
-.settings-entry-text input, .settings-entry-password input {
+.settings-entry-cron-job input,
+.settings-entry-text input,
+.settings-entry-password input {
     width: var(--ilias-input-width-max);
-    max-width:  var(--ilias-input-width-max);
+    max-width: var(--ilias-input-width-max);
     padding: var(--ilias-input-padding);
     height: var(--ilias-input-height);
     border: var(--ilias-input-border);
@@ -26,6 +29,12 @@ height: 30px;
     color: var(--ilias-input-color-text);
 }
 
-.settings-entry-text input:focus , .settings-entry-password input:focus {
+.settings-entry-cron-job input.settings-value-container-cron-job-explanation {
+    border: none;
+}
+
+.settings-entry-cron-job input:focus,
+.settings-entry-text input:focus,
+.settings-entry-password input:focus {
     border-color: var(--ilias-input-color-border-hover);
 }
