@@ -1,9 +1,9 @@
-import { Hidden, Modifiable } from "./modules/Settings/API/SettingsTypes";
+import { Modifiable } from "./modules/Settings/API/SettingsTypes";
 
 /**
  * Settings set information object that is necessary to determine the DOM object
- * which was set, it's type in settings for type-checks and the id of the setting
- * object to set it (or get the default value)
+ * which was set, it's type in settings for type-checks and the id of the
+ * setting object to set it (or get the default value)
  */
 export interface SettingsResetInfoObject {
     /**
@@ -11,26 +11,19 @@ export interface SettingsResetInfoObject {
      */
     id: Modifiable.SettingsId;
     /**
-     * The id of the DOM <input> tag
+     * The id of the DOM `<input>` tag to be reset
      */
     documentId: string;
-    /**
-     * The type of the setting for type checking
-     * TODO: Remove this and determine this internally
-     */
-    type: Modifiable.SettingsTypeName;
 }
 
-export interface SettingsReset extends SettingsResetInfoObject { }
-export interface SettingsResetAnswer extends SettingsReset {
-    defaultValue: any;
+export interface SettingsResetAnswer extends SettingsResetInfoObject {
+    valueDefault: any;
 }
 
 export interface SettingsSet extends SettingsResetInfoObject {
     value: any;
     restart: boolean;
 }
-export interface SettingsSetAnswer extends SettingsSet { }
 
 export interface OpenWindow {
     screenId: string;
@@ -49,8 +42,8 @@ export namespace IPC {
          */
         ready: boolean;
          /**
-         * Ilias API state (state is known)
-         */
+          * Ilias API state (state is known)
+          */
         iliasApiState?: boolean;
         errorMessage?: string;
         url?: {
@@ -64,6 +57,6 @@ export namespace IPC {
         name?: {
             value: string;
             defaultValue: string;
-        }
+        };
     }
 }

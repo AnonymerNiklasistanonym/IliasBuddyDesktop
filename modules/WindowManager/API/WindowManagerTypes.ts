@@ -8,8 +8,8 @@ export namespace WindowManager {
     export interface WindowOptions {
         cssClassListShow: string[];
         cssClassListHide: string[];
-        callbackShow: VoidFunction;
-        callbackHide: VoidFunction;
+        callbackShow: () => void;
+        callbackHide: () => void;
     }
 
     export interface ShowWindowOptions {

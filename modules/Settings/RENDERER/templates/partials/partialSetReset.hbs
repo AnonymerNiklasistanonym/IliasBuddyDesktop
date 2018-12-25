@@ -1,4 +1,4 @@
 <div class="settings-set-reset-container">
     <button class="settings-button settings-button-set" onclick="setSettings({ id: '{{id}}', documentId: 'settings-value-id-{{id}}', type: '{{type}}', restart: {{#if restart}}{{restart}}{{else}}false{{/if}} }, document.getElementById('settings-value-id-{{id}}').{{specifier}})">Set{{#if restart}} & Restart{{/if}}</button>
-    <button class="settings-button settings-button-reset" onclick="resetSettings({ id: '{{id}}', documentId: 'settings-value-id-{{id}}', type: '{{type}}' })">Reset</button>
+    <button class="settings-button settings-button-reset" onclick="resetSettings({ id: '{{id}}', documentId: 'settings-value-id-{{id}}'})">Reset</button>
 </div>

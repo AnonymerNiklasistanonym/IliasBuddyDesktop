@@ -44,11 +44,22 @@ class Settings {
   }
   /**
    * Get all modifiable settings merged with the local values
-   * @returns {import('./SettingsTypes').Modifiable.SettingsObjectMerged[]}
+   * @returns {string[]}
    */
   static getModifiableSettings () {
     return SettingsHandler.getModifiableSettingsWithCurrentValue()
       .map(Renderer.render.bind(Renderer))
+  }
+  /**
+   * Get all modifiable settings merged with the local values
+   * @param {string} settingId
+   * @returns {import('./SettingsTypes').Modifiable.SettingsObjectMerged}
+   */
+  static getModifiableSetting (settingId) {
+    const settingsObject = SettingsHandler
+      .getModifiableSettingsWithCurrentValue()
+      .find(a => a.id === settingId)
+    return settingsObject
   }
   /**
    * Save settings in local file

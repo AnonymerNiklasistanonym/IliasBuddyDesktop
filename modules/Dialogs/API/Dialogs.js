@@ -11,6 +11,7 @@ class Dialogs {
   static error (message, err) {
     dialog.showErrorBox(message, err)
   }
+  // TODO
   /**
    * Dialog with OK and CANCEL button
    * @param {String} message - Message of the dialog
@@ -18,14 +19,9 @@ class Dialogs {
    * @param {Function} cancelCallback - Function that will be executed on CANCEL press
    */
   static question (message, okCallback = () => {}, cancelCallback = () => {}) {
-    dialog.showMessageBox({
-      title: 'IliasBuddy > Confirm',
-      message,
-      buttons: ['OK', 'CANCEL']
-    }, okWasPressed => {
-      console.log('Pressed:', okWasPressed)
-      okWasPressed === 0 ? okCallback() : cancelCallback()
-    })
+    dialog.showMessageBox(
+      { buttons: ['OK', 'CANCEL'], message, title: 'Confirm' },
+      okWasPressed => { okWasPressed === 0 ? okCallback() : cancelCallback() })
   }
 
   /**
@@ -45,9 +41,8 @@ class Dialogs {
       wait: true
     },
     (err, response) => {
-      if (err) return console.error(err)
-      if (response === 'the toast has timed out') timeoutCallback()
-      else clickCallback()
+      if (err) { return console.error(err) }
+      if (response === 'the toast has timed out') { timeoutCallback() } else { clickCallback() }
     })
   }
 }

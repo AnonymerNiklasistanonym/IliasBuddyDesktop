@@ -1,11 +1,14 @@
-import { IliasBuddyFetchEntries } from "../../IliasBuddy/FETCH/FetchEntriesTypes";
+import {
+    IliasBuddyFetchEntries,
+} from "../../IliasBuddy/FETCH/FetchEntriesTypes";
 
 export namespace Hidden {
     /**
      * All defined settings ids [Hidden settings]
      */
-    export type SettingsId = "restartInfo" | "windowBounds" | "minWindowBounds" |
-        "searchFilter" | "sort" | "savedEntries" | "savedLinks" | "githubLatestReleaseUrl";
+    export type SettingsId = "restartInfo" | "windowBounds" |
+        "minWindowBounds" | "searchFilter" | "sort" | "savedEntries" |
+        "savedLinks" | "githubLatestReleaseUrl";
     /**
      * All defined settings values [Hidden settings]
      */
@@ -26,7 +29,7 @@ export namespace Hidden {
         id: SettingsId;
         info?: string;
         valueDefault: SettingsType;
-    };
+    }
 
     /**
      * Settings object local [Hidden settings]
@@ -34,28 +37,30 @@ export namespace Hidden {
     export interface SettingsObjectLocal {
         id: SettingsId;
         value: SettingsType;
-    };
+    }
 
     /**
      * Settings object with local/current value [Hidden settings]
      */
     export interface SettingsObjectMerged extends SettingsObjectDefault {
         value: SettingsType;
-    };
+    }
 }
 
 export namespace Modifiable {
     /**
      * All defined settings ids [Modifiable settings]
      */
-    export type SettingsId = "nativeTitleBar" | "userName" | "userUrl" | "userPassword" |
-        "minimizeToSystemTray" | "devMode" | "checkForUpdatesOnStartup" |
-        "checkForUpdatesCronJob" | "checkForUpdatesCronJobConfiguration" |
-        "checkForFeedCronJob" | "checkForFeedCronJobConfiguration" | "autoLaunch";
+    export type SettingsId = "nativeTitleBar" | "userName" | "userUrl" |
+        "userPassword" | "minimizeToSystemTray" | "devMode" |
+        "checkForUpdatesOnStartup" | "checkForUpdatesCronJob" |
+        "checkForUpdatesCronJobConfiguration" | "checkForFeedCronJob" |
+        "checkForFeedCronJobConfiguration" | "autoLaunch";
     /**
      * All defined settings types [Modifiable settings]
      */
-    export type SettingsTypeName = "toggle" | "text" | "password" | "cronJob" | "url";
+    export type SettingsTypeName = "toggle" | "text" | "password" | "cronJob" |
+        "url";
     /**
      * All defined settings values [Modifiable settings]
      */
@@ -70,7 +75,7 @@ export namespace Modifiable {
         type: SettingsType;
         info: { description: string; name: string; };
         restart?: boolean;
-    };
+    }
 
     /**
      * Settings object local [Modifiable settings]
@@ -78,14 +83,14 @@ export namespace Modifiable {
     export interface SettingsObjectLocal {
         id: SettingsId;
         value: SettingsType;
-    };
+    }
 
     /**
      * Settings object with local/current value [Modifiable settings]
      */
     export interface SettingsObjectMerged extends SettingsObjectDefault {
         value: SettingsType;
-    };
+    }
 }
 
 /**

@@ -11,6 +11,7 @@
             },
             {
                 "id": "windowBounds",
+                "info": "The window position and width/height of the last run for the next start",
                 "valueDefault": {
                     "height": 1280,
                     "width": 720,
@@ -20,6 +21,7 @@
             },
             {
                 "id": "minWindowBounds",
+                "info": "The minimal window width/height that is allowed",
                 "valueDefault": {
                     "height": 600,
                     "width": 480
@@ -27,6 +29,7 @@
             },
             {
                 "id": "searchFilter",
+                "info": "FUTURE > TODO",
                 "valueDefault": {
                     "options": [{
                             "filter": false,
@@ -42,6 +45,7 @@
             },
             {
                 "id": "sort",
+                "info": "FUTURE > TODO",
                 "valueDefault": [{
                     "ascending": false,
                     "by": "date",
@@ -50,6 +54,7 @@
             },
             {
                 "id": "savedEntries",
+                "info": "FUTURE > TODO",
                 "valueDefault": [{
                     "course": "Demo",
                     "date": {
@@ -71,6 +76,7 @@
             },
             {
                 "id": "savedLinks",
+                "info": "FUTURE > TODO",
                 "valueDefault": [{
                     "name": "Link name",
                     "description": "Link description text",
@@ -79,7 +85,8 @@
             },
             {
                 "id": "githubLatestReleaseUrl",
-                "valueDefault": "https://api.github.com/repos/AnonymerNiklasistanonym/little-shutdown-program/releases/latest"
+                "info": "The latest GitHub release (api) URL",
+                "valueDefault": "https://api.github.com/repos/AnonymerNiklasistanonym/IliasBuddyDesktop/releases/latest"
             }
         ],
         "modifiable": [{

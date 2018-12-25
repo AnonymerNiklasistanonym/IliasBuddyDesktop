@@ -1,7 +1,8 @@
 /**
  * Main script of the electron application
  *
- * @summary Handles the app start/close, main process, window-creation, api-calls, ...
+ * @summary Handles the app main process an thus window-creation/destruction,
+ * encapsulated api-calls, ...
  * @author AnonymerNiklasistanyonym
  */
 
@@ -10,7 +11,8 @@
 /* =====  Imports  ====== */
 
 // npm modules
-const { app, BrowserWindow, ipcMain, dialog, Tray, Menu, shell, nativeImage } = require('electron')
+const { app, BrowserWindow, dialog, ipcMain,
+  Menu, nativeImage, shell, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
 const AutoLaunch = require('auto-launch')
@@ -23,7 +25,7 @@ const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 /* =====  Startup checks  ====== */
 
 // Only one instance of the program should run - quit if this is the >= 2nd
-if (!app.requestSingleInstanceLock()) app.quit()
+if (!app.requestSingleInstanceLock()) { app.quit() }
 
 /* =====  Global variables  ====== */
 
@@ -68,12 +70,12 @@ let gIliasApiIsReady = false
  */
 let gIliasOnlineIsReady = false
 /**
- * Global variable to display if the ilias login Api is currently evaluating a login
+ * Is true if there is currently an Ilias API login pending
  * @type {boolean}
  */
 let gIliasApiPending = false
 /**
- * Global variable to display if a version check is currently running
+ * Is true if there is currently a version check pending
  * @type {boolean}
  */
 let gVersionCheckPending = false
@@ -84,164 +86,167 @@ let gVersionCheckPending = false
  * Enable/disable the auto launch after settings
  */
 function setAutoLaunch () {
-  const enableIt = Settings.getModifiable('autoLaunch')
   gAutoLaunch.isEnabled().then(isEnabled => {
-    if (enableIt) {
-      // If it should be enabled but not on the system enable it
+    if (Settings.getModifiable('autoLaunch')) {
+      // If it should be enabled but is not already enable it
       if (!isEnabled) { gAutoLaunch.enable() }
     } else {
-      // If it should be disabled but on the system disable it
+      // If it should be disabled but is enabled on the system disable it
       if (isEnabled) { gAutoLaunch.disable() }
     }
   })
 }
 
 /**
- * Enable/disable/change the a cron job
+ * Enable/disable/change a cron job
+ * @param {ScheduledTask} cronJobVar The global cron job variable
+ * @param {boolean} enableIt Should the cron job be enabled or destroyed
+ * @param {string} cronJobString The cron job string expression
+ * @param {Function} callback The callback that will be executed as cron job
+ * @param {{ runInitially?: boolean; }} [options]
  */
-function setCronJob (cronJobVar, cronJobId, enableIt, cronJobString, callback, runInitially = false) {
-  if (cronJobVar !== null) {
-    cronJobVar.destroy()
-  }
+function setCronJob (cronJobVar, enableIt, cronJobString, callback, options) {
+  // First destroy the currently running cron job
+  if (cronJobVar !== null) { cronJobVar.destroy() }
+  // An then if wanted enable it again
   if (enableIt) {
-    gCronJobProgramUpdate = cron.schedule(cronJobString, () => {
-      callback()
-      gMainWindow.webContents.send('cron-job-debug', `${cronJobId} executed (${cronJobString})`)
-    })
-    gMainWindow.webContents.send('cron-job-debug', `${cronJobId} started`)
-    // Also if wanted run callback instantly once
-    if (runInitially) { callback() }
+    gCronJobProgramUpdate = cron.schedule(cronJobString, () => { callback() })
+    // Check further options
+    if (options !== undefined) {
+      // If wanted run callback instantly once
+      if (options.runInitially !== undefined && options.runInitially) {
+        callback()
+      }
+    }
   }
 }
 
 /**
  * Enable/disable/change the program update cron job after settings
+ * @param {boolean} [runInitially] Run the callback initially after set
  */
 function setCronJobProgramUpdate (runInitially = false) {
-  setCronJob(gCronJobProgramUpdate, 'cronJobProgramUpdate',
+  setCronJob(gCronJobProgramUpdate,
     Settings.getModifiable('checkForUpdatesCronJob'),
-    Settings.getModifiable('checkForUpdatesCronJobConfiguration'), () => {
-      checkForUpdates()
-    }, runInitially)
+    Settings.getModifiable('checkForUpdatesCronJobConfiguration'),
+    checkForUpdates, { runInitially })
 }
 
 /**
  * Enable/disable/change the feed update cron job
+ * @param {boolean} [runInitially] Run the callback initially after set
  */
 function setCronJobFeedUpdate (runInitially = false) {
-  setCronJob(gCronJobFeedUpdate, 'cronJobFeedUpdate',
+  setCronJob(gCronJobFeedUpdate,
     Settings.getModifiable('checkForFeedCronJob'),
-    Settings.getModifiable('checkForFeedCronJobConfiguration'), () => {
+    Settings.getModifiable('checkForFeedCronJobConfiguration'),
+    () => {
       if (gIliasApi !== null) {
         gIliasApi.manageEntries.getCurrentEntries(true).catch(console.error)
       }
-    }, runInitially)
+    }, { runInitially })
 }
 
-function loginIliasBuddy (relaunch = false) {
-  console.log('loginIliasBuddy')
+/**
+ * Message renderer window about a login test
+ * @param {string} errorMessage
+ */
+function broadcastIliasLoginUpdate (errorMessage) {
+  const ready = gIliasApiIsReady
+  const iliasApiState = gIliasApi !== null
 
-  if (!gIliasOnlineIsReady) {
-    console.log('loginIliasBuddy is not yet ready, online state is unknown')
-    return
-  }
-
-  if (gIliasApiPending) {
-    console.log('loginIliasBuddy is currently already evaluating a login')
-    return
-  }
-
-  function nameLater (errorMsg = undefined) {
-    if (errorMsg !== undefined) {
-      return {
-        ready: gIliasApiIsReady,
-        iliasApiState: gIliasApi !== null,
-        errorMessage: errorMsg,
-        url: {
-          value: Settings.getModifiable('userUrl') === Settings.getModifiableDefault('userUrl') ? '' : Settings.getModifiable('userUrl'),
-          defaultValue: Settings.getModifiableDefault('userUrl')
-        },
-        password: {
-          value: Settings.getModifiable('userPassword') === Settings.getModifiableDefault('userPassword') ? '' : Settings.getModifiable('userPassword'),
-          defaultValue: Settings.getModifiableDefault('userPassword')
-        },
-        name: {
-          value: Settings.getModifiable('userName') === Settings.getModifiableDefault('userName') ? '' : Settings.getModifiable('userName'),
-          defaultValue: Settings.getModifiableDefault('userName')
-        }
+  if (errorMessage === undefined) {
+    gMainWindow.webContents.send('ilias-login-update', { iliasApiState, ready })
+  } else {
+    const userPassword = Settings.getModifiable('userPassword')
+    const userPasswordDefault = Settings.getModifiableDefault('userPassword')
+    const userName = Settings.getModifiable('userName')
+    const userNameDefault = Settings.getModifiableDefault('userName')
+    const userUrl = Settings.getModifiable('userUrl')
+    const userUrlDefault = Settings.getModifiableDefault('userUrl')
+    gMainWindow.webContents.send('ilias-login-update', {
+      errorMessage,
+      iliasApiState,
+      name: {
+        defaultValue: userNameDefault,
+        value: userName === userNameDefault ? '' : userName
+      },
+      password: {
+        defaultValue: userPasswordDefault,
+        value: userPassword === userPasswordDefault ? '' : userPassword
+      },
+      ready,
+      url: {
+        defaultValue: userUrlDefault,
+        value: userUrl === userUrlDefault ? '' : userUrl
       }
-    } else {
-      return {
-        ready: gIliasApiIsReady,
-        iliasApiState: gIliasApi !== null
-      }
-    }
+    })
   }
+}
+
+/**
+ * Try to connect the user to a private RSS feed
+ */
+function connectToIliasRssFeed () {
+  // Check first if an online state is known, else stop
+  if (!gIliasOnlineIsReady) { return }
+  // Check then if this method is already running
+  if (gIliasApiPending) { return }
 
   gIliasApiPending = true
   // Check first if online
   if (!gOnline) {
-    console.log('loginToIliasApi', 'if (!gOnline)')
     gIliasApiIsReady = true
-    gMainWindow.webContents.send('ilias-login-update', nameLater('Device is not online'))
+    broadcastIliasLoginUpdate('Device is not online')
     gIliasApiPending = false
   } else {
-    console.log('loginToIliasApi', 'if (gOnline)')
     // If online check if the credentials are correct
     checkIliasLogin()
       .then(() => {
-        console.log('loginToIliasApi', 'checkIliasLogin().then(')
         loginToIliasApi()
-        console.log('loginToIliasApi', 'was successful')
         gIliasApiIsReady = true
-        gMainWindow.webContents.send('ilias-login-update', nameLater())
+        broadcastIliasLoginUpdate()
         gIliasApiPending = false
-        // And at last try to fetch the latest entries
-        getLatestIliasEntries()
-        // TODO Change in the future
-        if (relaunch) {
-          // Open main screen the next time
-          Settings.setHidden('restartInfo', { openScreen: true, screenId: 'main' })
-          relaunchApp()
-        }
       })
       .catch(err => {
-        console.log('loginToIliasApi', 'checkIliasLogin().catch(')
-        console.log('loginToIliasApi', 'was NOT successful')
         gIliasApiIsReady = true
-        gMainWindow.webContents.send('ilias-login-update', nameLater(err.message))
+        broadcastIliasLoginUpdate(err.message)
         gIliasApiPending = false
       })
   }
 }
 
+/**
+ * Relaunch the whole application
+ */
 function relaunchApp () {
-  // save settings before closing the app
+  // Save settings before closing the app
   saveSettings()
-  // close and reopen the app
+  // Close and reopen the app
   app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
   app.exit(0)
 }
 
+// TODO
 /**
  * Check if the credentials/internet connection are correct
+ * @param {{ userName?: string; userName?: string; userName?: string; }} login
  * @returns {Promise<boolean>}
  */
-function checkIliasLogin (userName = Settings.getModifiable('userName'),
-  password = Settings.getModifiable('userPassword'),
-  url = Settings.getModifiable('userUrl')) {
+function checkIliasLogin (login) {
+  let userName = Settings.getModifiable('userName')
+  let password = Settings.getModifiable('userPassword')
+  let userUrl = Settings.getModifiable('userUrl')
+  if (login !== undefined) {
+    if (login.userName !== undefined) { userName = login.userName }
+    if (login.password !== undefined) { password = login.password }
+    if (login.userUrl !== undefined) { userUrl = login.userUrl }
+  }
   return new Promise((resolve, reject) => {
-    console.log(userName, password, url)
-    if (userName !== undefined && password !== undefined && url !== undefined) {
-      console.log('checkIliasLogin - test connection')
-      IliasBuddyApi.testConnection(url, userName, password)
-        .then(() => {
-          console.log('checkIliasLogin - test connection.then()')
-          resolve()
-        }).catch(err => {
-          console.log('checkIliasLogin - test connection.catch()')
-          reject(err)
-        })
+    if (userName !== undefined && password !== undefined &&
+        userUrl !== undefined) {
+      IliasBuddyApi.testConnection(userUrl, userName, password)
+        .then(resolve).catch(reject)
     } else {
       reject(Error('Not all settings were found setup (' +
         `user name: ${userName !== undefined}, ` +
@@ -251,6 +256,7 @@ function checkIliasLogin (userName = Settings.getModifiable('userName'),
   })
 }
 
+// TODO
 function loginToIliasApi () {
   const settingsFeedUserName = Settings.getModifiable('userName')
   const settingsFeedPassword = Settings.getModifiable('userPassword')
@@ -274,7 +280,7 @@ function convertIliasEntriesForClient (entries) {
 
 function setupAfterWindowHasLoaded () {
   // Try to login to ilias API
-  loginIliasBuddy()
+  connectToIliasRssFeed()
 
   // Create auto launch object
   gAutoLaunch = new AutoLaunch({ name: 'test', isHidden: true })
@@ -332,27 +338,27 @@ function createWindow () {
   const settingsWindowBounds = Settings.getHidden('windowBounds')
   const settingsMinWindowBounds = Settings.getHidden('minWindowBounds')
   const settingsNativeTitleBar = Settings.getModifiable('nativeTitleBar')
-  const settingsMinimizeToSystemTray = Settings.getModifiable('minimizeToSystemTray')
+  const settingsSystemTray = Settings.getModifiable('minimizeToSystemTray')
 
   // Icon path
   const iconPath = path.join(__dirname, 'images', 'favicon', 'favicon.ico')
 
   // Create a BrowserWindow object
   gMainWindow = new BrowserWindow({
+    center: settingsWindowBounds.x === 0 && settingsWindowBounds.y === 0,
     frame: settingsNativeTitleBar,
+    height: settingsWindowBounds.height,
+    icon: iconPath,
+    minHeight: settingsMinWindowBounds.height,
+    minWidth: settingsMinWindowBounds.width,
+    show: false, // do not show the window before content is loaded
     title: app.getName(),
     titleBarStyle: 'hidden', // macOS: buttons are an overlay
-    minWidth: settingsMinWindowBounds.width,
-    minHeight: settingsMinWindowBounds.height,
-    width: settingsWindowBounds.width,
-    height: settingsWindowBounds.height,
-    x: settingsWindowBounds.x,
-    y: settingsWindowBounds.y,
-    show: false, // do not show the window before content is loaded
-    icon: iconPath,
-    center: settingsWindowBounds.x === 0 && settingsWindowBounds.y === 0,
     // Enable node integration in window
-    webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true },
+    width: settingsWindowBounds.width,
+    x: settingsWindowBounds.x,
+    y: settingsWindowBounds.y
   })
 
   // Load the 'index.html' file in the window
@@ -364,73 +370,80 @@ function createWindow () {
 
   // Menu bar with links to all available screens
   Menu.setApplicationMenu(Menu.buildFromTemplate([{
-    label: 'Current Feed',
-    click () { gMainWindow.webContents.send('open-window', { screenId: 'main' }) }
+    click () {
+      gMainWindow.webContents.send('open-window', { screenId: 'main' })
+    },
+    label: 'Current Feed'
   }, {
-    label: 'Saved Feed',
-    click () { gMainWindow.webContents.send('open-window', { screenId: 'saved' }) }
+    click () {
+      gMainWindow.webContents.send('open-window', { screenId: 'saved' })
+    },
+    label: 'Saved Feed'
   }, {
-    label: 'Links',
-    click () { gMainWindow.webContents.send('open-window', { screenId: 'links' }) }
+    click () {
+      gMainWindow.webContents.send('open-window', { screenId: 'links' })
+    },
+    label: 'Links'
   }, {
-    label: 'Settings',
-    click () { gMainWindow.webContents.send('open-window', { screenId: 'settings' }) }
+    click () {
+      gMainWindow.webContents.send('open-window', { screenId: 'settings' })
+    },
+    label: 'Settings'
   }, {
-    label: 'About',
-    click () { gMainWindow.webContents.send('open-window', { screenId: 'info' }) }
+    click () {
+      gMainWindow.webContents.send('open-window', { screenId: 'info' })
+    },
+    label: 'About'
   }]))
 
   // If wanted create system tray
-  if (settingsMinimizeToSystemTray) {
+  if (settingsSystemTray) {
     const systemTray = new Tray(nativeImage.createFromPath(iconPath))
     systemTray.setToolTip('IliasBuddy')
     systemTray.setContextMenu(Menu.buildFromTemplate([
-      { label: 'Show App',
-        click: function () {
-          if (gMainWindow.isVisible()) {
-            gMainWindow.focus()
-          } else {
-            gMainWindow.show()
-          }
-        } },
-      { label: 'Quit',
-        click: function () {
-          app.quit()
-        } }
-    ]))
-    systemTray.on('click', () => {
-      if (gMainWindow) {
+      { click: function () {
         if (gMainWindow.isVisible()) {
           gMainWindow.focus()
         } else {
           gMainWindow.show()
         }
+      },
+      label: 'Show App' },
+      { click: function () {
+        app.quit()
+      },
+      label: 'Quit' }
+    ]))
+    systemTray.on('click', () => {
+      if (gMainWindow) {
+        gMainWindow.isVisible() ? gMainWindow.focus() : gMainWindow.show()
       }
     })
   }
 
   gMainWindow.webContents
     // Prevent the browser window from opening websites in it
-    .on('will-navigate', (event, url) => {
+    .on('will-navigate', (event, urlToBeOpened) => {
       event.preventDefault()
-      if (url.startsWith('http:') || url.startsWith('https:')) {
-        shell.openExternal(url)
+      if (urlToBeOpened.startsWith('http:') ||
+          urlToBeOpened.startsWith('https:')) {
+        shell.openExternal(urlToBeOpened)
       } else {
-        dialog.showErrorBox('Error', 'URL is not safe? - ' + url)
+        dialog.showErrorBox('Error', `URL is not safe?\n(${urlToBeOpened})`)
       }
     })
 
   // window event listener that only get called once
   gMainWindow
     .once('ready-to-show', () => {
-      console.log('.once(\'ready-to-show\'')
+      console.debug('.once(\'ready-to-show\'')
       setupAfterWindowHasLoaded()
     })
 
   // window event listener
   gMainWindow
     .on('ready-to-show', () => {
-      console.log('.on(\'ready-to-show\'')
+      console.debug('.on(\'ready-to-show\'')
       setupAfterWindowHasLoaded()
     })
     .on('close', () => {
@@ -445,7 +458,7 @@ function createWindow () {
       }
       // Remove cache and other data that is not used to keep the app clean
       gMainWindow.webContents.session.clearStorageData()
-      gMainWindow.webContents.session.clearCache(() => {})
+      gMainWindow.webContents.session.clearCache(() => undefined)
       gMainWindow.webContents.clearHistory()
     })
     .on('closed', () => {
@@ -454,13 +467,12 @@ function createWindow () {
     })
     .on('minimize', function (event) {
       // If wanted hide the window to the system tray if minimized
-      if (settingsMinimizeToSystemTray) {
+      if (settingsSystemTray) {
         event.preventDefault()
         gMainWindow.hide()
       }
     })
 
-  console.log('Window is ready')
   setupAfterWindowHasLoaded()
 }
 
@@ -475,22 +487,25 @@ function saveSettings () {
 }
 
 function checkForUpdates () {
-  if (gVersionCheckPending) {
-    console.log('Version check pending')
-    return
-  }
+  // Stop instantly if a version check is already running
+  if (gVersionCheckPending) { return }
 
   gVersionCheckPending = true
-  VersionChecker.getLatestTagGithub(Settings.getHidden('githubLatestReleaseUrl'))
+
+  VersionChecker.getLatestTagGithub(
+    Settings.getHidden('githubLatestReleaseUrl'))
     .then(json => {
       if (json.tag_name !== 'v' + app.getVersion()) {
-        console.log('Other version detected')
         gMainWindow.webContents.send('new-version-detected', json)
       }
       gVersionCheckPending = false
     })
     .catch(err => {
       console.error(err)
+      gMainWindow.webContents.send('error-dialog', {
+        message: err.message,
+        title: 'Version check error'
+      })
       gVersionCheckPending = false
     })
 }
@@ -499,7 +514,8 @@ function getLatestIliasEntries () {
   if (gIliasApi !== null && gMainWindow !== null) {
     gIliasApi.getCurrentEntries()
       .then(a => {
-        gMainWindow.webContents.send('render-elements-reply', convertIliasEntriesForClient(a))
+        gMainWindow.webContents.send('render-elements-reply',
+          convertIliasEntriesForClient(a))
       })
       .catch(console.error)
   } else {
@@ -514,6 +530,7 @@ function getLatestIliasEntries () {
  * @returns {boolean} is valid url
  */
 function isValidURL (string) {
+  // tslint:disable-next-line:max-line-length
   const res = string.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
   return !(res == null)
 }
@@ -549,7 +566,6 @@ function setSetting (arg) {
         if (typeof arg.value !== typeof '') {
           throw Error('A url setting can never not be a string!')
         }
-        // TODO This is not valid enough
         if (!isValidURL(arg.value)) {
           throw Error('The url setting is not valid!')
         }
@@ -571,10 +587,10 @@ function setSetting (arg) {
           if (arg.id === 'checkForUpdatesCronJob') { setCronJobProgramUpdate(true) }
           break
         case 'text':
-          if (arg.id === 'userName') { loginIliasBuddy() }
+          if (arg.id === 'userName') { connectToIliasRssFeed() }
           break
         case 'password':
-          if (arg.id === 'userPassword') { loginIliasBuddy() }
+          if (arg.id === 'userPassword') { connectToIliasRssFeed() }
           break
         case 'cronJob':
           if (arg.id === 'checkForFeedCronJobConfiguration') {
@@ -585,7 +601,7 @@ function setSetting (arg) {
           }
           break
         case 'url':
-          if (arg.id === 'userUrl') { loginIliasBuddy() }
+          if (arg.id === 'userUrl') { connectToIliasRssFeed() }
       }
     }
     gMainWindow.webContents.send('settings-set-answer', { ...arg, value: Settings.getModifiable(arg.id) })
@@ -605,7 +621,7 @@ ipcMain
     (event, onlineStatus) => {
       gOnline = onlineStatus
       gIliasOnlineIsReady = true
-      loginIliasBuddy()
+      connectToIliasRssFeed()
     })
   .on('ilias-login-check',
     /**
@@ -626,10 +642,10 @@ ipcMain
       // TODO - Type checks before checking for login
       checkIliasLogin(message.name, message.password, message.url)
         .then(() => {
-          setSetting({ id: 'userName', value: message.name, documentId: 'settings-value-id-userName', type: 'text', restart: false })
-          setSetting({ id: 'userPassword', value: message.password, documentId: 'settings-value-id-userPassword', type: 'text', restart: false })
-          setSetting({ id: 'userUrl', value: message.url, documentId: 'settings-value-id-userUrl', type: 'text', restart: false })
-          loginIliasBuddy(true)
+          setSetting({ id: 'userName', value: message.name, resetDocumentId: 'settings-value-id-userName', type: 'text', restart: false })
+          setSetting({ id: 'userPassword', value: message.password, resetDocumentId: 'settings-value-id-userPassword', type: 'text', restart: false })
+          setSetting({ id: 'userUrl', value: message.url, resetDocumentId: 'settings-value-id-userUrl', type: 'text', restart: false })
+          connectToIliasRssFeed(true)
         })
         .catch(err => {
           gMainWindow.webContents.send('error-dialog', { title: 'Ilias login error', message: err.message })
@@ -670,12 +686,22 @@ ipcMain
     (event, arg) => {
       setSetting(arg)
     })
-  .on('settings-reset', /**
-     * @param {import('./types').SettingsReset} arg
+  .on('settings-reset',
+    /**
+     * @param {import('./types').SettingsResetInfoObject} arg
      */
     (event, arg) => {
-      event.sender.send('settings-reset-answer',
-        { ...arg, defaultValue: Settings.getModifiableDefault(arg.id) })
+      const settingsObject = Settings.getModifiableSetting(arg.id)
+      if (settingsObject !== undefined) {
+        event.sender.send('settings-reset-answer', {
+          documentId: arg.resetDocumentId,
+          id: arg.id,
+          type: settingsObject.type,
+          valueDefault: settingsObject.valueDefault
+        })
+      } else {
+        console.error('Settings object not found!')
+      }
     })
   .on('show-and-focus-window', () => {
     gMainWindow.show()
@@ -710,10 +736,10 @@ app
   // When all windows were closed, close the program
   .on('window-all-closed', () => {
     // macOS: Applications keep their menu bar until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin') { app.quit() }
   })
   .on('activate', () => {
     // macOS: Re-create a window in the app when the dock icon is clicked and there are no
     // other open windows
-    if (gMainWindow === null) createWindow()
+    if (gMainWindow === null) { createWindow() }
   })

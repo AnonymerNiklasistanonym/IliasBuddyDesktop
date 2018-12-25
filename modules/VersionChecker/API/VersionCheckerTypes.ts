@@ -35,3 +35,11 @@ interface GitHubLatestTagAsset {
     published_at: string;
     browser_download_url: string;
 }
+
+export interface LatestVersionCheck {
+    /**
+     * Indicates if a newer version is available
+     */
+    newerVersionAvailable: boolean;
+    newerVersionInfo: string;
+}

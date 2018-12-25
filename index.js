@@ -5,19 +5,11 @@
  * @author AnonymerNiklasistanyonym
  */
 
-/* =====  TODO  ====== */
-
-// TODO react to wrong login and open Welcome page with input for all credentials
-// TODO App info/settings manager
-// TODO Rss feed manager (bg checker with notifications)
-
 /* =====  Imports  ====== */
 
 // npm modules
 const { ipcRenderer, remote, shell } = require('electron')
 const path = require('path')
-const cronstrue = require('cronstrue')
-const nodeCron = require('node-cron')
 
 // custom modules
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
@@ -57,23 +49,61 @@ const windowManager = new WindowManager([
 /**
  * Title bar
  */
-const titleBarWin10 = new TitleBarWin10({ actions: [{
-  alt: 'settings',
-  id: 'title-bar-action-settings',
-  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'settings.svg') }],
-  callback: () => togglePopupScreen('settings')
-}, {
-  alt: 'info',
-  id: 'title-bar-action-info',
-  svgFiles: [{ fileName: path.join(__dirname, 'images', 'title-bar', 'info.svg') }],
-  callback: () => togglePopupScreen('info')
-}],
-defaultCallbacks: {
-  minimize: () => { console.info('TitleBarWin10 > action > minimize') },
-  maximize: () => { console.info('TitleBarWin10 > action > maximize') },
-  restore: () => { console.info('TitleBarWin10 > action > restore') },
-  close: () => { console.info('TitleBarWin10 > action > close') }
-} })
+const titleBarWin10 = new TitleBarWin10({
+  actions: [{
+    alt: 'settings',
+    id: 'title-bar-action-settings',
+    onClickCallback: () => { togglePopupScreen('settings') },
+    svgFiles: [{
+      fileName: path.join(__dirname, 'images', 'title-bar', 'settings.svg')
+    }]
+  }, {
+    alt: 'info',
+    id: 'title-bar-action-info',
+    onClickCallback: () => { togglePopupScreen('info') },
+    svgFiles: [{
+      fileName: path.join(__dirname, 'images', 'title-bar', 'info.svg')
+    }]
+  }],
+  appIconPath: path.join(__dirname, './images/favicon/favicon.svg'),
+  appName: 'IliasBuddyDesktop',
+  defaultCallbacks: {
+    close: () => {
+      return new Promise(resolve => {
+        console.info('TitleBarWin10 > action > close')
+        resolve()
+      })
+    },
+    maximize: () => {
+      return new Promise(resolve => {
+        console.info('TitleBarWin10 > action > maximize')
+        resolve()
+      })
+    },
+    minimize: () => {
+      return new Promise(resolve => {
+        console.info('TitleBarWin10 > action > minimize')
+        resolve()
+      })
+    },
+    restore: () => {
+      return new Promise(resolve => {
+        console.info('TitleBarWin10 > action > restore')
+        resolve()
+      })
+    }
+  },
+  menu: [{
+    onClickCallback: () => { windowManager.showWindow('main') },
+    text: 'Feed'
+  }, {
+    onClickCallback: () => { windowManager.showWindow('links') },
+    text: 'Links'
+  }, {
+    onClickCallback: () => { windowManager.showWindow('saved') },
+    text: 'Saved'
+  }]
+})
 
 /* =====  Global functions  ====== */
 
@@ -177,7 +207,8 @@ function setSettingsElement (documentId, type, value) {
       throw Error(`The type "${type}" is not valid!`)
   }
   if (type === 'cronJob') {
-    document.getElementById(documentId + '-text').value = CronJobHelper.cronJobStringToHumanReadableString(value, { use24HourTimeFormat: true })
+    document.getElementById(documentId + '-text').value = CronJobHelper
+      .cronJobStringToHumanReadableString(value, { use24HourTimeFormat: true })
   }
 }
 
@@ -188,6 +219,8 @@ function setSettingsElement (documentId, type, value) {
  */
 function setSettings (infoObject, value) {
   // Ask the main process to set the setting
+  // FIXME
+  // TODO Determine with switch case and infoObject.documentId the current value to remove inline JS
   ipcRenderer.send('settings-set', { ...infoObject, value })
 }
 
@@ -201,14 +234,24 @@ function resetSettings (infoObject) {
 }
 
 function cronJobToText (documentId, goalId) {
-  document.getElementById(goalId).value = CronJobHelper.cronJobStringToHumanReadableString(document.getElementById(documentId).value, { use24HourTimeFormat: true })
+  document.getElementById(goalId).value = CronJobHelper
+    .cronJobStringToHumanReadableString(
+      document.getElementById(documentId).value, { use24HourTimeFormat: true })
+}
+
+const runThemNeverOnlyCallbacks = false
+if (runThemNeverOnlyCallbacks) {
+  resetSettings(undefined)
+  setSettings(undefined)
+  copyToClipboard(undefined)
+  cronJobToText(undefined, undefined)
 }
 
 /* =====  Inter process communication listeners  ====== */
 
 ipcRenderer
-  .on('main-process-to-renderer-message', (event, arg) => {
-    console.log('Message:', arg)
+  .on('main-process-to-renderer-message', (event, message) => {
+    console.info('Message:', message)
   })
   .on('new-entries', (event, arg) => {
     addRenderedIliasEntries(arg, true)
@@ -227,15 +270,15 @@ ipcRenderer
           const passwordElement = document.getElementById('welcome-ilias-api-privateFeedPassword')
           if (arg.url !== undefined) {
             urlElement.value = arg.url.value
-            urlElement.placeholder = arg.url.defaultValue
+            urlElement.placeholder = arg.url.valueDefault
           }
           if (arg.name !== undefined) {
             nameElement.value = arg.name.value
-            nameElement.placeholder = arg.name.defaultValue
+            nameElement.placeholder = arg.name.valueDefault
           }
           if (arg.password !== undefined) {
             passwordElement.value = arg.password.value
-            passwordElement.placeholder = arg.password.defaultValue
+            passwordElement.placeholder = arg.password.valueDefault
           }
           windowManager.showWindow('welcome')
           ipcRenderer.send('show-and-focus-window')
@@ -278,23 +321,27 @@ ipcRenderer
     document.getElementById('app_name').innerText = arg
   })
   // Update settings value after it was set
-  .on('settings-set-answer', /**
-     * @param {import('./types').SettingsSetAnswer} arg
+  .on('settings-set-answer',
+    /**
+     * @param {import('./types').SettingsSet} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.value)
       if (arg.restart) {
-        Dialogs.question('To see the changes the app needs to restart. Do you want to restart immediately?', () => {
-          ipcRenderer.send('relaunch', { screenId: windowManager.getCurrentWindow() })
+        Dialogs.question('To see the changes the app needs to restart.' +
+          'Do you want to restart immediately?', () => {
+          ipcRenderer.send('relaunch',
+            { screenId: windowManager.getCurrentWindow() })
         })
       }
     })
   // Update settings value after a reset was requested
-  .on('settings-reset-answer', /**
+  .on('settings-reset-answer',
+    /**
      * @param {import('./types').SettingsResetAnswer} arg
      */
     (event, arg) => {
-      setSettingsElement(arg.documentId, arg.type, arg.defaultValue)
+      setSettingsElement(arg.resetDocumentId, arg.type, arg.valueDefault)
     })
   // Detect new version and ask user if he wants to download and install it
   .on('new-version-detected',
@@ -302,7 +349,8 @@ ipcRenderer
      * @param {import('./modules/VersionChecker/API/VersionCheckerTypes').GitHubLatestTag} arg
      */
     (event, arg) => {
-      Dialogs.question(`Newer version detected (${arg.tag_name}, ${arg.created_at}).\n` +
+      Dialogs.question('Newer version detected ' +
+        `(${arg.tag_name}, ${arg.created_at}).\n` +
         'Do you want to download it?', () => {
         openExternal(arg.html_url)
       })
@@ -326,7 +374,8 @@ ipcRenderer
 /* =====  Inter process communication sender  ====== */
 
 // Debug
-ipcRenderer.send('render-process-to-main-message', 'Hello from index.js to main.js')
+ipcRenderer.send('render-process-to-main-message',
+  'Hello from index.js to main.js')
 
 // Check if a login exists
 ipcRenderer.send('ilias-login-check')
@@ -354,10 +403,14 @@ const resetEverythingButton = document.getElementById('resetEverything')
 resetEverythingButton.style.display = 'none'
 const tryToLoginButton = document.getElementById('welcome-ilias-api-submit')
 tryToLoginButton.addEventListener('click', () => {
-  const url = document.getElementById('welcome-ilias-api-privateFeedUrl').value
-  const name = document.getElementById('welcome-ilias-api-privateFeedUserName').value
-  const password = document.getElementById('welcome-ilias-api-privateFeedPassword').value
-  ipcRenderer.send('test-and-login', { url, name, password })
+  ipcRenderer.send('test-and-login', {
+    name: document
+      .getElementById('welcome-ilias-api-privateFeedUserName').value,
+    password: document
+      .getElementById('welcome-ilias-api-privateFeedPassword').value,
+    url: document
+      .getElementById('welcome-ilias-api-privateFeedUrl').value
+  })
 })
 
 /* =====  Keyboard input listener  ====== */
@@ -372,15 +425,33 @@ document.addEventListener('keydown', e => {
       mainWindow.reload()
       break
     case 123: // F12 - open dev tools
-      mainWindow.webContents.isDevToolsOpened() ? mainWindow.webContents.closeDevTools() : mainWindow.webContents.openDevTools()
+      mainWindow.webContents.isDevToolsOpened()
+        ? mainWindow.webContents.closeDevTools()
+        : mainWindow.webContents.openDevTools()
       break
     case 37: // <-  - Screen switch left
-      // TODO
-      // windowManager.showLeftWindow()
+      switch (windowManager.getCurrentWindow()) {
+        case 'main':
+          windowManager.showWindow('saved')
+          break
+        case 'links':
+          windowManager.showWindow('main')
+          break
+        default:
+          // do nothing
+      }
       break
     case 39: // -> - Screen switch right
-      // TODO
-      // windowManager.showRightWindow()
+      switch (windowManager.getCurrentWindow()) {
+        case 'main':
+          windowManager.showWindow('links')
+          break
+        case 'saved':
+          windowManager.showWindow('main')
+          break
+        default:
+          // do nothing
+      }
       break
   }
 })

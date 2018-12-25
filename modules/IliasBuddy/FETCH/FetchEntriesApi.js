@@ -1,6 +1,6 @@
 /* ===== << Imports >> ====== */
 
-const { net } = require('electron')
+const { net, session } = require('electron')
 const convert = require('xml-js')
 // const fs = require('fs')
 const RawEntryParser = require('../PARSER/RawEntryParserApi')
@@ -52,30 +52,46 @@ class IliasBuddyFetchEntriesApi {
       .end()
     )
   }
+  /**
+   * Test if a successful connection can be established
+   * @param {string} url Private Ilias RSS feed url
+   * @param {string} userName Private Ilias RSS feed username
+   * @param {string} password Private Ilias RSS feed password
+   */
   static testConnection (url, userName, password) {
     // console.log('FetchEntries - testConnection')
-    return new Promise((resolve, reject) => net.request(url)
-      .on('response', response => {
-        // console.log('FetchEntries - testConnection .on(\'response\'')
-        if (response.statusCode === 200) {
-          response
-            .on('data', chunk => {})
-            .on('error', err => {
-              // console.log('FetchEntries - testConnection - reject')
-              reject(err)
+    return new Promise((resolve, reject) => {
+      // Do first clear the authentication cache
+      session.defaultSession.clearAuthCache({ password }, () => {
+        // Try this for now
+        // TODO
+        session.defaultSession.clearStorageData(undefined, () => {
+          net.request(url)
+            .on('response', response => {
+              // console.log('FetchEntries - testConnection .on(\'response\'')
+              if (response.statusCode === 200) {
+                response
+                  .on('data', chunk => {})
+                  .on('error', err => {
+                    // console.log('FetchEntries - testConnection - reject')
+                    reject(err)
+                  })
+                  .on('end', () => {
+                    // console.log('FetchEntries - testConnection - resolve')
+                    resolve()
+                  })
+              } else {
+                reject(Error(`Wrong status code (${response.statusCode})`))
+              }
             })
-            .on('end', () => {
-              // console.log('FetchEntries - testConnection - resolve')
-              resolve()
+            .on('login', (authInfo, callback) => {
+              callback(userName, password)
             })
-        } else {
-          reject(Error(`Wrong status code (${response.statusCode})`))
-        }
+            .on('error', reject)
+            .end()
+        })
       })
-      .on('login', (authInfo, callback) => { callback(userName, password) })
-      .on('error', reject)
-      .end()
-    )
+    })
   }
   /**
    * Get the current Ilias entries

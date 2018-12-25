@@ -2,3 +2,7 @@
 {{#if hasCourseDirectory}}
 <p class="ilias-entry-course-directory">{{#each courseDirectory}}{{this}}{{#unless @last}} >> {{/unless}}{{/each}}</p>
 {{/if}}
+
+<div class="container">
+    <object class="ilias-entry-file-icon" data="./images/ilias-entries/star-{{#if isSaved}}filled{{else}}border{{/if}}-icon.svg" type="image/svg+xml"></object>
+</div>

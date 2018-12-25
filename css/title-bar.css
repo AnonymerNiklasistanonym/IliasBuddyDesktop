@@ -20,27 +20,28 @@ div#title-bar {
     -webkit-app-region: drag;
 }
 
-div#title-bar.title-bar-full-screen, div#title-bar.title-bar-hidden {
+div#title-bar.title-bar-full-screen,
+div#title-bar.title-bar-hidden {
     display: none;
 }
 
 /*----------  << Invisible resize areas >> ----------*/
 
-div#title-bar > div.title-bar-resize-handle {
+div#title-bar>div.title-bar-resize-handle {
     /* Make the area absolute to the whole window */
     position: absolute;
     /* Enable window resizing by disabling drag */
     -webkit-app-region: no-drag;
 }
 
-div#title-bar > div.title-bar-resize-handle.title-bar-resize-handle-top {
+div#title-bar>div.title-bar-resize-handle.title-bar-resize-handle-top {
     /* Make the top handle as big as the window width */
     width: 100%;
     /* And as height as defined */
     height: var(--title-bar-width-resize-area);
 }
 
-div#title-bar > div.title-bar-resize-handle.title-bar-resize-handle-left {
+div#title-bar>div.title-bar-resize-handle.title-bar-resize-handle-left {
     /* Make the left handle as big as defined */
     width: var(--title-bar-width-resize-area);
     /* And as high as the title bar is */
@@ -53,6 +54,7 @@ div#title-bar > div.title-bar-resize-handle.title-bar-resize-handle-left {
 div#title-bar>div#title-bar-icon {
     float: left;
 }
+
 div#title-bar>div#title-bar-icon>svg {
     padding: calc(var(--title-bar-height) / 6);
     height: calc(var(--title-bar-height) /6 * 4);
@@ -73,11 +75,17 @@ div#title-bar>div#title-bar-actions {
     -webkit-app-region: no-drag;
 }
 
+div#title-bar>div#title-bar-menu {
+    /* Position all action buttons on the right*/
+    float: left;
+    /* Disable drag in this region */
+    -webkit-app-region: no-drag;
+}
+
+div#title-bar>div#title-bar-menu>div,
 div#title-bar>div#title-bar-actions>div {
     /* Position each action left next to each other on the same line */
     float: left;
-    /* Each button should have this width */
-    width: var(--title-bar-width-action);
     /* Each button should have this height */
     height: var(--title-bar-height);
     /* Center text in each button */
@@ -86,7 +94,17 @@ div#title-bar>div#title-bar-actions>div {
     line-height: var(--title-bar-height);
 }
 
-div#title-bar>div#title-bar-actions>div > svg {
+div#title-bar>div#title-bar-actions>div {
+    /* Each button should have this width */
+    width: var(--title-bar-width-action);
+}
+
+div#title-bar>div#title-bar-menu>div {
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+div#title-bar>div#title-bar-actions>div>svg {
     /* Set width and height of svg icon */
     width: var(--title-bar-width-height-action-icon);
     height: var(--title-bar-width-height-action-icon);
@@ -104,7 +122,7 @@ div#title-bar>div#title-bar-actions>div#title-bar-action-close:hover {
     background-color: rgb(255, 0, 0);
 }
 
-
+div#title-bar>div#title-bar-menu>div:hover,
 div#title-bar>div#title-bar-actions>div:not(#title-bar-action-close):hover {
     /* Make background dark when any action is hovered except close */
     background-color: rgba(0, 0, 0, 0.5);

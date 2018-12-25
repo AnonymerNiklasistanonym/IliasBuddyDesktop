@@ -1,0 +1,22 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {
+        "quotemark": [true, "single"],
+        "semicolon": [true, "never"],
+        "space-before-function-paren": true,
+        "trailing-comma": false,
+        "max-line-length": [true, 80],
+        "no-console": [true, "log"],
+        "object-literal-sort-keys": true
+    },
+    "rules": {
+        "no-namespace": false,
+        "interface-name": false,
+        "max-line-length": [true, 80],
+        "object-literal-sort-keys": true
+    },
+    "rulesDirectory": []
+}

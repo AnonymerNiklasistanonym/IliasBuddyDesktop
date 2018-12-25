@@ -46,8 +46,8 @@ class IliasBuddyManageEntriesApi {
   }
   checkForUpdates (fetchedEntries) {
     console.log('checkForUpdates', fetchedEntries.length)
-    if (fetchedEntries === undefined) throw Error('Latest entries cannot be undefined')
-    if (fetchedEntries.length === 0) throw Error('Latest entries cannot be empty')
+    if (fetchedEntries === undefined) { throw Error('Latest entries cannot be undefined') }
+    if (fetchedEntries.length === 0) { throw Error('Latest entries cannot be empty') }
 
     let newEntries = []
 

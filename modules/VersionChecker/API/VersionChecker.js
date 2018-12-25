@@ -16,27 +16,34 @@ module.exports = {
       net
         .request(githubLatestReleaseUrl)
         .on('response', response => {
-          response
-            // Save gotten response data into the buffer
-            .on('data', chunk => { responseDataBuffer.push(chunk) })
-            // When there is no more response data read buffer
-            .on('end', () => {
-              const jsonObjectString = Buffer.concat(responseDataBuffer).toString()
-              // Prepare buffer to be garbage collected
-              responseDataBuffer = null
-              // try to parse the response data into an json object
-              try {
-                jsonObject = JSON.parse(jsonObjectString)
-              } catch (err) {
-                reject(err)
-              }
-            })
-            // When an error occurs
-            .on('error', reject)
+          if (response.statusCode === 200) {
+            response
+              // Save gotten response data into the buffer
+              .on('data', chunk => { responseDataBuffer.push(chunk) })
+              // When there is no more response data read buffer
+              .on('end', () => {
+                const jsonObjectString = Buffer
+                  .concat(responseDataBuffer)
+                  .toString()
+                // Prepare buffer to be garbage collected
+                responseDataBuffer = null
+                // try to parse the response data into an json object
+                try {
+                  jsonObject = JSON.parse(jsonObjectString)
+                } catch (err) {
+                  reject(err)
+                }
+              })
+              // When an error occurs
+              .on('error', reject)
+          } else {
+            reject(Error('Status code error: ' + response.statusCode))
+          }
         })
         // When an error occurs
         .on('error', reject)
-        // When 'the last' event in the HTTP request-response transaction was done
+        // When 'the last' event in the HTTP request-response transaction
+        //  was done
         .on('close', () => { resolve(jsonObject) }).end()
     })
   },
@@ -49,10 +56,11 @@ module.exports = {
   checkIfTagIsNewer (oldTag, newTag) {
     return false
   },
+  // TODO
   /**
    * Check if there are any updates
    * @param {string} oldTag
-   * @returns {Promise<{ newerVersionAvailable: boolean, newerVersionInfo: string }>}
+   * @returns {Promise<import('./VersionCheckerTypes').LatestVersionCheck>}
    */
   checkForLatestVersion (oldTag) {
     return new Promise((resolve, reject) => {
