@@ -51,9 +51,27 @@ cd scripts
 
 ## Debug
 
-To easily debug the code you can use an IDE like Visual Studio Code (Insiders)
+### Debug > Logs
 
-### Debug > Visual Studio
+To easily read logs a log file reader like [`glogg`](https://glogg.bonnefon.org/download.html) is heavily recommended.
+
+#### Debug > Logs > `electron-log`
+
+The used library in this project is [`electron-log`](https://www.npmjs.com/package/electron-log).
+
+By default `electron-log` writes logs to the following locations:
+
+Platform | Path
+-------- | ----
+Linux    | `~/.config/ilias-buddy-desktop/log.log`
+OS X:    | `~/Library/Logs/ilias-buddy-desktop/log.log`
+Windows  | `%USERPROFILE%/AppData/Roaming/ilias-buddy-desktop/log.log` or `%AppData%/ilias-buddy-desktop/log.log`
+
+### Debug > Code
+
+To easily debug the code you can use an IDE like [Visual Studio Code (Insiders)](https://code.visualstudio.com/insiders/).
+
+#### Debug > Code > Visual Studio
 
 1. Select at the left side the Debug Icon (Ctrl + Shift + D)
 2. At the top of the window at the side should now be an entry called *Debug IliasBuddy Desktop*

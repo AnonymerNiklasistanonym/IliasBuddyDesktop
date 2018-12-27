@@ -11,7 +11,8 @@ class IliasBuddyApi {
    * @param {string} url Private Ilias RSS feed url
    * @param {string} userName Private Ilias RSS feed username
    * @param {string} password Private Ilias RSS feed password
-   * @param {function(*[]): void} newEntriesFoundCallback
+   * @param {function(import('../PARSER/RawEntryParserTypes')
+   * .IliasBuddyRawEntryParser.Entry[]): void} newEntriesFoundCallback
    */
   constructor (url, userName, password, newEntriesFoundCallback) {
     this.manageEntries = new ManageEntries(url, userName, password,
@@ -19,7 +20,8 @@ class IliasBuddyApi {
   }
   /**
    * Get the current Ilias entries
-   * @returns {Promise<import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]>}
+   * @returns {Promise<import('../PARSER/RawEntryParserTypes')
+   * .IliasBuddyRawEntryParser.Entry[]>}
    */
   getCurrentEntries () {
     return this.manageEntries.getCurrentEntries()
@@ -28,12 +30,12 @@ class IliasBuddyApi {
     return ManageEntries.getCachedEntries()
   }
   static testConnection (url, userName, password) {
-    console.log('API - testConnection')
     return ManageEntries.testConnection(url, userName, password)
   }
   /**
    * Get the current Ilias entries as HTML elements
-   * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry[]} entries
+   * @param {import('../PARSER/RawEntryParserTypes')
+   * .IliasBuddyRawEntryParser.Entry[]} entries
    * @returns {string[]}
    */
   static renderEntriesHtml (entries) {

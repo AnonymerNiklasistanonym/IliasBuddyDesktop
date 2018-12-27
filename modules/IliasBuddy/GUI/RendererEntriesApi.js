@@ -38,8 +38,8 @@ class Renderer {
   static render (entry) {
     return this.renderElementHbs({
       ...entry,
-      hasDescription: entry.description !== undefined && entry.description !== '',
-      hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory.length !== 0
+      hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory.length !== 0,
+      hasDescription: entry.description !== undefined && entry.description !== ''
     })
   }
   /**

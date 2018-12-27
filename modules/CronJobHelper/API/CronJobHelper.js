@@ -17,13 +17,15 @@ class CronJobHelper {
   /**
    * Get a human readable explanation string  of a cron job string
    * @param {string} cronJobString Cron job string
-   * @param {{use24HourTimeFormat?: boolean}} [options] Further options for parsing
+   * @param {{use24HourTimeFormat?: boolean}} [options] Further options
+   * for parsing
    * @returns {string} Explanation in string form
    */
   static cronJobStringToHumanReadableString (cronJobString, options) {
     if (this.cronJobStringIsValid(cronJobString)) {
       return cronstrue.toString(cronJobString, {
-        use24HourTimeFormat: options !== undefined && options.use24HourTimeFormat
+        use24HourTimeFormat: options !== undefined &&
+        options.use24HourTimeFormat
       })
     } else {
       return 'Cron job string is not valid'

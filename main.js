@@ -17,10 +17,17 @@ const path = require('path')
 const url = require('url')
 const AutoLaunch = require('auto-launch')
 const cron = require('node-cron')
+const log = require('electron-log')
 // custom modules
 const VersionChecker = require('./modules/VersionChecker/API/VersionChecker')
 const Settings = require('./modules/Settings/API/Settings')
 const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
+
+/* =====  Log levels  ====== */
+
+// error, warn, info, verbose, debug, silly
+log.transports.console.level = 'debug'
+log.transports.file.level = 'debug'
 
 /* =====  Startup checks  ====== */
 
@@ -110,12 +117,16 @@ function setCronJob (cronJobVar, enableIt, cronJobString, callback, options) {
   if (cronJobVar !== null) { cronJobVar.destroy() }
   // An then if wanted enable it again
   if (enableIt) {
-    gCronJobProgramUpdate = cron.schedule(cronJobString, () => { callback() })
+    gCronJobProgramUpdate = cron.schedule(cronJobString, () => {
+      callback()
+      log.info(`Cron Job was executed (${cronJobString})`)
+    })
     // Check further options
     if (options !== undefined) {
       // If wanted run callback instantly once
       if (options.runInitially !== undefined && options.runInitially) {
         callback()
+        log.info(`Cron Job was run initially (${cronJobString})`)
       }
     }
   }
@@ -142,7 +153,7 @@ function setCronJobFeedUpdate (runInitially = false) {
     Settings.getModifiable('checkForFeedCronJobConfiguration'),
     () => {
       if (gIliasApi !== null) {
-        gIliasApi.manageEntries.getCurrentEntries(true).catch(console.error)
+        gIliasApi.manageEntries.getCurrentEntries(true).catch(log.error)
       }
     }, { runInitially })
 }
@@ -227,7 +238,6 @@ function relaunchApp () {
   app.exit(0)
 }
 
-// TODO
 /**
  * Check if the credentials/internet connection are correct
  * @param {{ userName?: string; userName?: string; userName?: string; }} login
@@ -256,22 +266,31 @@ function checkIliasLogin (login) {
   })
 }
 
-// TODO
+/**
+ * Set `gIliasApi` variable (run this after a successful login check)
+ */
 function loginToIliasApi () {
   const settingsFeedUserName = Settings.getModifiable('userName')
   const settingsFeedPassword = Settings.getModifiable('userPassword')
   const settingsFeedUrl = Settings.getModifiable('userUrl')
-  gIliasApi = new IliasBuddyApi(settingsFeedUrl, settingsFeedUserName, settingsFeedPassword, newEntries => {
-    console.log('Main >> New entries >>', newEntries.length)
-    if (newEntries !== undefined && newEntries.length > 0) {
-      gMainWindow.webContents.send('new-entries', convertIliasEntriesForClient(newEntries))
-    }
-  })
+  gIliasApi = new IliasBuddyApi(settingsFeedUrl, settingsFeedUserName,
+    settingsFeedPassword, newEntries => {
+      log.error('Hello there')
+      // When new entries are found check first if there are even new entries
+      if (newEntries !== undefined && newEntries.length > 0) {
+        // If yes send them rendered to the renderer process
+        gMainWindow.webContents.send('new-entries',
+          convertIliasEntriesForClient(newEntries))
+      } else {
+        log.error('New entries callback was empty/undefined!')
+      }
+    })
 }
 
 /**
  * Convert Ilias API new entries to rendered HTML strings
- * @param {import("./modules/IliasBuddy/PARSER/RawEntryParserTypes").IliasBuddyRawEntryParser.Entry[]} entries
+ * @param {import("./modules/IliasBuddy/PARSER/RawEntryParserTypes")
+ * .IliasBuddyRawEntryParser.Entry[]} entries
  * @returns {string[]}
  */
 function convertIliasEntriesForClient (entries) {
@@ -294,7 +313,8 @@ function setupAfterWindowHasLoaded () {
     gMainWindow.show()
     gMainWindow.focus()
     // And send notification to index.js
-    gMainWindow.webContents.send('open-window', { screenId: restartInfo.screenId })
+    gMainWindow.webContents.send('open-window',
+      { screenId: restartInfo.screenId })
     // And overwrite settings object
     Settings.setHidden('restartInfo', { openScreen: false, screenId: 'none' })
   } else {
@@ -320,7 +340,7 @@ function setupAfterWindowHasLoaded () {
   // Check for feed updates on start
   if (gIliasApi !== null) {
     gIliasApi.manageEntries.getCurrentEntries(true)
-      .catch(console.error)
+      .catch(log.error)
   }
 
   // Start program update cron job if wanted
@@ -481,7 +501,7 @@ function createWindow () {
  */
 function saveSettings () {
   if (gIliasApi !== null) {
-    gIliasApi.manageEntries.saveCacheFile()
+    gIliasApi.manageEntries.saveCache()
   }
   Settings.setHidden('windowBounds', gMainWindow.getBounds())
 }
@@ -501,7 +521,7 @@ function checkForUpdates () {
       gVersionCheckPending = false
     })
     .catch(err => {
-      console.error(err)
+      log.error(err)
       gMainWindow.webContents.send('error-dialog', {
         message: err.message,
         title: 'Version check error'
@@ -517,21 +537,21 @@ function getLatestIliasEntries () {
         gMainWindow.webContents.send('render-elements-reply',
           convertIliasEntriesForClient(a))
       })
-      .catch(console.error)
+      .catch(log.error)
   } else {
-    console.error('IliasAPI is null or there was no successful login!')
+    log.error('IliasAPI is null or there was no successful login!')
   }
 }
 
 /**
  * This tester does not like "user-name:password@..."
  * @author https://www.regextester.com/94502
- * @param {string} string Url to be checked
+ * @param {string} urlToCheck Url to be checked
  * @returns {boolean} is valid url
  */
-function isValidURL (string) {
+function isValidURL (urlToCheck) {
   // tslint:disable-next-line:max-line-length
-  const res = string.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
+  const res = urlToCheck.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
   return !(res == null)
 }
 
@@ -581,10 +601,15 @@ function setSetting (arg) {
             setAutoLaunch()
           }
           if (arg.id === 'devMode') {
-            arg.value ? gMainWindow.webContents.openDevTools() : gMainWindow.webContents.closeDevTools()
+            arg.value ? gMainWindow.webContents.openDevTools()
+              : gMainWindow.webContents.closeDevTools()
           }
-          if (arg.id === 'checkForFeedCronJob') { setCronJobFeedUpdate(true) }
-          if (arg.id === 'checkForUpdatesCronJob') { setCronJobProgramUpdate(true) }
+          if (arg.id === 'checkForFeedCronJob') {
+            setCronJobFeedUpdate(true)
+          }
+          if (arg.id === 'checkForUpdatesCronJob') {
+            setCronJobProgramUpdate(true)
+          }
           break
         case 'text':
           if (arg.id === 'userName') { connectToIliasRssFeed() }
@@ -604,9 +629,8 @@ function setSetting (arg) {
           if (arg.id === 'userUrl') { connectToIliasRssFeed() }
       }
     }
-    gMainWindow.webContents.send('settings-set-answer', { ...arg, value: Settings.getModifiable(arg.id) })
-  } else {
-    console.log(`The setting "${arg.id}" did not change`)
+    gMainWindow.webContents.send('settings-set-answer',
+      { ...arg, value: Settings.getModifiable(arg.id) })
   }
 }
 
@@ -623,62 +647,80 @@ ipcMain
       gIliasOnlineIsReady = true
       connectToIliasRssFeed()
     })
-  .on('ilias-login-check',
-    /**
-     * When the renderer process asks if the login to the Ilias API was successful
-     * answer with true/false
-     */
-    event => event.sender.send('ilias-login-update', {
-      ready: gIliasApiIsReady,
-      iliasApiState: gIliasApi !== null
-    }))
+  .on('ilias-login-check', () => { broadcastIliasLoginUpdate() })
   .on('test-and-login',
     /**
      * When a message is send from the renderer process check credentials and if
      * everything is OK login to API
-     * @param {{ url: string, name: string, password: string }} message Message from renderer process
+     * @param {{ url: string, name: string, password: string }} message
+     * Message from renderer process
      */
     (event, message) => {
       // TODO - Type checks before checking for login
       checkIliasLogin(message.name, message.password, message.url)
         .then(() => {
-          setSetting({ id: 'userName', value: message.name, resetDocumentId: 'settings-value-id-userName', type: 'text', restart: false })
-          setSetting({ id: 'userPassword', value: message.password, resetDocumentId: 'settings-value-id-userPassword', type: 'text', restart: false })
-          setSetting({ id: 'userUrl', value: message.url, resetDocumentId: 'settings-value-id-userUrl', type: 'text', restart: false })
+          setSetting({
+            id: 'userName',
+            resetDocumentId: 'settings-value-id-userName',
+            restart: false,
+            type: 'text',
+            value: message.name
+          })
+          setSetting({
+            id: 'userPassword',
+            resetDocumentId: 'settings-value-id-userPassword',
+            restart: false,
+            type: 'text',
+            value: message.password
+          })
+          setSetting({
+            id: 'userUrl',
+            resetDocumentId: 'settings-value-id-userUrl',
+            restart: false,
+            type: 'text',
+            value: message.url
+          })
           connectToIliasRssFeed(true)
         })
         .catch(err => {
-          gMainWindow.webContents.send('error-dialog', { title: 'Ilias login error', message: err.message })
+          gMainWindow.webContents.send('error-dialog',
+            { title: 'Ilias login error', message: err.message })
         })
     })
   .on('render-process-to-main-message',
     /**
-     * When a message is send from the renderer process display it in the console
+     * When a message is send from the renderer process display it in the
+     * console
      * @param {string} message Message from renderer process
      */
     (event, message) => {
-      console.log('Message:', message)
-      event.sender.send('main-process-to-renderer-message', 'Hello from main.js to index.js')
+      console.info('Message:', message)
+      event.sender.send('main-process-to-renderer-message',
+        'Hello from main.js to index.js')
     })
   .on('render-elements',
     /**
-     * When the renderer process asks for the current Ilias entries send it to him
+     * When the renderer process asks for the current Ilias entries send it to
+     * him
      */
     event => {
       getLatestIliasEntries()
     })
   .on('get-cache',
     /**
-     * When the renderer process asks for the cached Ilias entries send it to him
+     * When the renderer process asks for the cached Ilias entries send it to
+     * him
      */
     event => {
-      // Attention, this cache file is only current at the start, later in the game
-      // it holds old information
-      event.sender.send('get-cache-reply', convertIliasEntriesForClient(IliasBuddyApi.getCache()))
+      // Attention, this cache file is only current at the start, later in the
+      // game it holds old information (not any more, but here a fixes to come)
+      event.sender.send('get-cache-reply',
+        convertIliasEntriesForClient(IliasBuddyApi.getCache()))
     })
   .on('getVersion', event => event.sender.send('version', app.getVersion()))
   .on('getName', event => event.sender.send('name', app.getName()))
-  .on('getSettings', event => event.sender.send('settings', Settings.getModifiableSettings()))
+  .on('getSettings', event => event.sender.send('settings',
+    Settings.getModifiableSettings()))
   .on('settings-set',
     /**
      * @param {import('./types').SettingsSet} arg
@@ -700,7 +742,7 @@ ipcMain
           valueDefault: settingsObject.valueDefault
         })
       } else {
-        console.error('Settings object not found!')
+        log.error('Settings object not found!')
       }
     })
   .on('show-and-focus-window', () => {
@@ -710,17 +752,18 @@ ipcMain
   .on('testSetSettings', (event, arg) => {
     // Check if any value has changed
     if (Settings.getModifiable(arg.id) !== arg.value) {
-      console.log('There was a change', JSON.stringify(arg))
       Settings.setModifiable(arg.id, arg.value)
     }
   })
   .on('relaunch', (event, arg) => {
     // Save current opened screen
-    Settings.setHidden('restartInfo', { openScreen: true, screenId: arg.screenId })
+    Settings.setHidden('restartInfo',
+      { openScreen: true, screenId: arg.screenId })
     relaunchApp()
   })
-  .on('native-title-bar-check', event => event.sender.send('set-native-title-bar',
-    Settings.getModifiable('nativeTitleBar')))
+  .on('native-title-bar-check', event => event.sender
+    .send('set-native-title-bar', Settings.getModifiable('nativeTitleBar')))
+  .on('new-version-check', () => { checkForUpdates() })
 
 /* =====  Electron app listeners  ====== */
 
@@ -735,11 +778,12 @@ app
   .on('ready', () => createWindow())
   // When all windows were closed, close the program
   .on('window-all-closed', () => {
-    // macOS: Applications keep their menu bar until the user quits explicitly with Cmd + Q
+    // macOS: Applications keep their menu bar until the user quits explicitly
+    // with Cmd + Q
     if (process.platform !== 'darwin') { app.quit() }
   })
   .on('activate', () => {
-    // macOS: Re-create a window in the app when the dock icon is clicked and there are no
-    // other open windows
+    // macOS: Re-create a window in the app when the dock icon is clicked and
+    // there are no other open windows
     if (gMainWindow === null) { createWindow() }
   })

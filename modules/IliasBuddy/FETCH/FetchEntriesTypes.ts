@@ -7,7 +7,13 @@ export namespace IliasBuddyFetchEntries {
           unix: number;
           humanReadable: string;
       };
+      /**
+       * Link to Ilias page of post/file
+       */
       link: string;
+      /**
+       * Course directory of post forum or file location
+       */
       courseDirectory: string[];
       description: string;
   }

@@ -186,8 +186,10 @@ function copyToClipboard (url) {
 /**
  * Set settings element
  * @param {string} documentId Settings id
- * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsTypeName} type Settings type
- * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsType} value Settings value
+ * @param {import('./modules/Settings/API/SettingsTypes')
+ * .Modifiable.SettingsTypeName} type Settings type
+ * @param {import('./modules/Settings/API/SettingsTypes')
+ * .Modifiable.SettingsType} value Settings value
  */
 function setSettingsElement (documentId, type, value) {
   const element = document.getElementById(documentId)
@@ -214,19 +216,23 @@ function setSettingsElement (documentId, type, value) {
 
 /**
  * Set settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {import('./types').SettingsResetInfoObject} infoObject Necessary information
- * @param {import('./modules/Settings/API/SettingsTypes').Modifiable.SettingsType} value New settings value
+ * @param {import('./types').SettingsResetInfoObject} infoObject Necessary
+ * information
+ * @param {import('./modules/Settings/API/SettingsTypes')
+ * .Modifiable.SettingsType} value New settings value
  */
 function setSettings (infoObject, value) {
   // Ask the main process to set the setting
   // FIXME
-  // TODO Determine with switch case and infoObject.documentId the current value to remove inline JS
+  // TODO Determine with switch case and infoObject.documentId the current value
+  // to remove inline JS
   ipcRenderer.send('settings-set', { ...infoObject, value })
 }
 
 /**
  * Reset settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {import('./types').SettingsResetInfoObject} infoObject Necessary information
+ * @param {import('./types').SettingsResetInfoObject} infoObject Necessary
+ * information
  */
 function resetSettings (infoObject) {
   // Ask the main process to send the default value of the setting
@@ -264,10 +270,14 @@ ipcRenderer
       console.info('ilias-login-update:', arg)
       if (arg.ready) {
         if (!arg.iliasApiState) {
-          Dialogs.toast('Ilias login was NOT successful', arg.errorMessage !== undefined ? arg.errorMessage : '')
-          const urlElement = document.getElementById('welcome-ilias-api-privateFeedUrl')
-          const nameElement = document.getElementById('welcome-ilias-api-privateFeedUserName')
-          const passwordElement = document.getElementById('welcome-ilias-api-privateFeedPassword')
+          Dialogs.toast('Ilias login was NOT successful',
+            arg.errorMessage !== undefined ? arg.errorMessage : '')
+          const urlElement = document
+            .getElementById('welcome-ilias-api-privateFeedUrl')
+          const nameElement = document
+            .getElementById('welcome-ilias-api-privateFeedUserName')
+          const passwordElement = document
+            .getElementById('welcome-ilias-api-privateFeedPassword')
           if (arg.url !== undefined) {
             urlElement.value = arg.url.value
             urlElement.placeholder = arg.url.valueDefault
@@ -295,16 +305,9 @@ ipcRenderer
      * Display an error
      * @param {{title: string, message: string }} arg
      */
-    (event, arg) => {
-      console.log(JSON.stringify(arg))
-      console.log(arg.title, arg.message)
-      Dialogs.error(arg.title, arg.message)
-    })
+    (event, arg) => { Dialogs.error(arg.title, arg.message) })
   .on('get-cache-reply', (event, arg) => {
     addRenderedIliasEntries(arg, false)
-  })
-  .on('cron-job-debug', (event, arg) => {
-    console.log('cron-job-debug', arg)
   })
   .on('settings', (event, arg) => {
     const list = document.getElementById('settings_entries')
@@ -346,7 +349,8 @@ ipcRenderer
   // Detect new version and ask user if he wants to download and install it
   .on('new-version-detected',
     /**
-     * @param {import('./modules/VersionChecker/API/VersionCheckerTypes').GitHubLatestTag} arg
+     * @param {import('./modules/VersionChecker/API/VersionCheckerTypes')
+     * .GitHubLatestTag} arg
      */
     (event, arg) => {
       Dialogs.question('Newer version detected ' +
@@ -411,6 +415,11 @@ tryToLoginButton.addEventListener('click', () => {
     url: document
       .getElementById('welcome-ilias-api-privateFeedUrl').value
   })
+})
+
+// Update checker button
+document.getElementById('check-for-updates').addEventListener('click', () => {
+  ipcRenderer.send('new-version-check')
 })
 
 /* =====  Keyboard input listener  ====== */
