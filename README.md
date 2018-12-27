@@ -64,7 +64,7 @@ By default `electron-log` writes logs to the following locations:
 Platform | Path
 -------- | ----
 Linux    | `~/.config/ilias-buddy-desktop/log.log`
-OS X:    | `~/Library/Logs/ilias-buddy-desktop/log.log`
+OS X     | `~/Library/Logs/ilias-buddy-desktop/log.log`
 Windows  | `%USERPROFILE%/AppData/Roaming/ilias-buddy-desktop/log.log` or `%AppData%/ilias-buddy-desktop/log.log`
 
 ### Debug > Code
@@ -84,7 +84,7 @@ To easily debug the code you can use an IDE like [Visual Studio Code (Insiders)]
 
 #### `cloc`
 
-1. Install it via `npm install cloc`
+1. Install it via `npm install cloc` or via [GitHub releases](https://github.com/AlDanial/cloc/releases)
 2. Run `cloc --vcs=git` to see all the files and lines of code that are tracked via this `git` repository
 3. Or check especially for a programming language with `cloc --vcs=git --include-lang=JavaScript` (For other languages replace *JavaScript* or if you want to view more than one add them with a comma like `cloc --vcs=git --include-lang=JavaScript,TypeScript`)
 
