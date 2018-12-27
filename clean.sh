@@ -6,6 +6,9 @@ cd ../../
 cd fonts/
 ./clean.sh
 cd ../
+cd tests/
+./clean.sh
+cd ../
 
 rm -rf dist
 rm -rf node_modules

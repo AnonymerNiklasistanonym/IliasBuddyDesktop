@@ -552,7 +552,7 @@ function getLatestIliasEntries () {
 function isValidURL (urlToCheck) {
   // tslint:disable-next-line:max-line-length
   const res = urlToCheck.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
-  return !(res == null)
+  return !(res === null)
 }
 
 /**

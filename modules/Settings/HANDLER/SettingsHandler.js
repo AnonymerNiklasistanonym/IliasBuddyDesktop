@@ -2,27 +2,32 @@ const fs = require('fs')
 const path = require('path')
 const FileManager = require('../../FileManager/API/FileManager')
 
-const defaultSettingsPath = path.join(__dirname, '../../../default_settings.json')
-const localSettingsPath = path.join('settings.json')
+const settingsPaths = {
+  default: path.join(__dirname, '../../../default_settings.json'),
+  local: path.join('settings.json')
+}
 
 // 1) Load default settings
 /**
  * @type {import('../API/SettingsTypes').SettingsJsonDefault}
  */
-const defaultSettings = JSON.parse(fs.readFileSync(defaultSettingsPath).toString())
+const defaultSettings = JSON.parse(fs.readFileSync(settingsPaths.default)
+  .toString())
 
 // 2) Load local settings
 // 2.1) Check if a local settings file is existing
-const localSettingsExist = FileManager.fileExistsSyncAppData(localSettingsPath)
-// 2.2)  If yes load them, else assign the empty settings object
+// 2.2) If yes load them, else assign the empty settings object
 /**
  * @type {import('../API/SettingsTypes').SettingsJsonLocal}
  */
-const localSettings = localSettingsExist ? JSON.parse(FileManager.readFileSyncAppData(localSettingsPath).toString()) : {}
+const localSettings = FileManager.fileExistsSyncAppData(settingsPaths.local)
+  ? JSON.parse(FileManager.readFileSyncAppData(settingsPaths.local).toString())
+  : {}
 
 class SettingsHandler {
   /**
-   * @param {import('../API/SettingsTypes').Hidden.SettingsId | import('../API/SettingsTypes').Modifiable.SettingsId} id
+   * @param {import('../API/SettingsTypes').Hidden.SettingsId |
+   * import('../API/SettingsTypes').Modifiable.SettingsId} id
    * @param {boolean} modifiable Specify if hidden or modifiable setting
    * @returns {*}
    */
@@ -40,14 +45,17 @@ class SettingsHandler {
   }
   /**
    * Get the local value of the setting or the default if no local one was found
-   * @param {import('../API/SettingsTypes').Hidden.SettingsId | import('../API/SettingsTypes').Modifiable.SettingsId} id
+   * @param {import('../API/SettingsTypes').Hidden.SettingsId |
+   * import('../API/SettingsTypes').Modifiable.SettingsId} id
    * @param {boolean} modifiable Specify if hidden or modifiable setting
-   * @returns {import('../API/SettingsTypes').Hidden.SettingsType | import('../API/SettingsTypes').Modifiable.SettingsType | undefined}
+   * @returns {import('../API/SettingsTypes').Hidden.SettingsType |
+   * import('../API/SettingsTypes').Modifiable.SettingsType | undefined}
    */
   static getLocalValue (id, modifiable = false) {
     if (localSettings.settings !== undefined) {
       const foundElement = modifiable
-        ? this.getSettingsObjectByIdHelper(localSettings.settings.modifiable, id)
+        ? this.getSettingsObjectByIdHelper(localSettings.settings.modifiable,
+          id)
         : this.getSettingsObjectByIdHelper(localSettings.settings.hidden, id)
       return foundElement !== undefined ? foundElement.value : undefined
     } else {
@@ -61,17 +69,21 @@ class SettingsHandler {
    * @returns {*}
    */
   static getSettingsObjectByIdHelper (settings, id) {
-    return settings !== undefined ? settings.find(el => el.id === id) : undefined
+    return settings !== undefined
+      ? settings.find(el => el.id === id)
+      : undefined
   }
   /**
    * Get the default value of the setting
-   * @param {import('../API/SettingsTypes').Hidden.SettingsId | import('../API/SettingsTypes').Modifiable.SettingsId} id
+   * @param {import('../API/SettingsTypes').Hidden.SettingsId |
+   * import('../API/SettingsTypes').Modifiable.SettingsId} id
    * @param {boolean} modifiable Specify if hidden or modifiable setting
    * @returns {*}
    */
   static getDefaultValue (id, modifiable = false) {
     const foundElement = modifiable
-      ? this.getSettingsObjectByIdHelper(defaultSettings.settings.modifiable, id)
+      ? this.getSettingsObjectByIdHelper(defaultSettings.settings.modifiable,
+        id)
       : this.getSettingsObjectByIdHelper(defaultSettings.settings.hidden, id)
     return foundElement !== undefined ? foundElement.valueDefault : undefined
   }
@@ -82,13 +94,17 @@ class SettingsHandler {
    */
   static checkIfIdIsAllowed (id, modifiable = false) {
     return (modifiable
-      ? this.getSettingsObjectByIdHelper(defaultSettings.settings.modifiable, id)
-      : this.getSettingsObjectByIdHelper(defaultSettings.settings.hidden, id)) !== undefined
+      ? this.getSettingsObjectByIdHelper(defaultSettings.settings.modifiable,
+        id)
+      : this.getSettingsObjectByIdHelper(defaultSettings.settings.hidden, id)
+    ) !== undefined
   }
   /**
    * Set hidden or modifiable settings
-   * @param {import('../API/SettingsTypes').Hidden.SettingsId | import('../API/SettingsTypes').Modifiable.SettingsId} id
-   * @param {import('../API/SettingsTypes').Hidden.SettingsType | import('../API/SettingsTypes').Modifiable.SettingsType} value
+   * @param {import('../API/SettingsTypes').Hidden.SettingsId |
+   * import('../API/SettingsTypes').Modifiable.SettingsId} id
+   * @param {import('../API/SettingsTypes').Hidden.SettingsType |
+   * import('../API/SettingsTypes').Modifiable.SettingsType} value
    * @param {boolean} modifiable Specify if hidden or modifiable setting
    */
   static setModifiableOrHidden (id, value, modifiable = false) {
@@ -101,10 +117,14 @@ class SettingsHandler {
       localSettings.settings = modifiable
         ? { modifiable: [{ id, value }] }
         : { hidden: [{ id, value }] }
-    } else if (localSettings.settings[modifiable ? 'modifiable' : 'hidden'] === undefined) {
-      localSettings.settings[modifiable ? 'modifiable' : 'hidden'] = [{ id, value }]
+    } else if (localSettings
+      .settings[modifiable ? 'modifiable' : 'hidden'] === undefined) {
+      localSettings.settings[modifiable ? 'modifiable' : 'hidden'] = [
+        { id, value }
+      ]
     } else {
-      const settings = localSettings.settings[modifiable ? 'modifiable' : 'hidden']
+      const settings = localSettings
+        .settings[modifiable ? 'modifiable' : 'hidden']
       // Check if there is an old entry for the same id
       const foundIndex = settings.findIndex(a => a.id === id)
       if (foundIndex >= 0) {
@@ -121,7 +141,8 @@ class SettingsHandler {
    * Save the current local settings to a local file
    */
   static save () {
-    FileManager.writeFileSyncAppData(localSettingsPath, JSON.stringify(localSettings))
+    FileManager.writeFileSyncAppData(settingsPaths.local,
+      JSON.stringify(localSettings))
   }
   /**
    * Get the current modifiable settings with the current local value

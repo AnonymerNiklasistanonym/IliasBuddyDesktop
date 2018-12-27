@@ -10,7 +10,13 @@
         "trailing-comma": false,
         "max-line-length": [true, 80],
         "no-console": [true, "log"],
-        "object-literal-sort-keys": true
+        "object-literal-sort-keys": true,
+        "no-string-throw": true,
+        "no-unused-expression": true,
+        "no-duplicate-variable": true,
+        "curly": true,
+        "class-name": true,
+        "triple-equals": true
     },
     "rules": {
         "no-namespace": false,

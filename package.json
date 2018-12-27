@@ -11,10 +11,11 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "car": "cat tests/tests_passed.txt",
     "build-win": "electron-builder . --win",
     "build-linux": "electron-builder . --linux",
     "debug": "electron --nolazy --inspect-brk=9229 .",
-    "test": "standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js && tslint --fix -c ./tslint.json -p ./tsconfig.json"
+    "test": "standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js && tslint --fix -c ./tslint.json -p ./tsconfig.json && node tests/test.js"
   },
   "devDependencies": {
     "@types/node-cron": "^2.0.0",

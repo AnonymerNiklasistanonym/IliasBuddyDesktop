@@ -3,7 +3,8 @@
   const { ipcRenderer } = require('electron')
 
   /**
-   * Send to main process changes of the network state (online=true/offline=false)
+   * Send to main process changes of the network state
+   * (online=true/offline=false)
    */
   const updateOnlineStatus = () => {
     console.info('New online state: online=' + navigator.onLine)

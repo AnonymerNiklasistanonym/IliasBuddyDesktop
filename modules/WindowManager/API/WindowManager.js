@@ -4,7 +4,8 @@
 class WindowManager {
   /**
    * Creates an instance of WindowManager
-   * @param {import('./WindowManagerTypes').WindowManager.Window[]} windowList List of all initial known windows
+   * @param {import('./WindowManagerTypes').WindowManager.Window[]} windowList
+   * List of all initial known windows
    * @param {string} startupWindowId Startup window id (main)
    */
   constructor (windowList, startupWindowId) {
@@ -35,9 +36,11 @@ class WindowManager {
       this.fullScreen = !this.fullScreen
     }
     if (this.fullScreen) {
-      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.add('window-manager-screen-full-screen'))
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId)
+        .classList.add('window-manager-screen-full-screen'))
     } else {
-      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.remove('window-manager-screen-full-screen'))
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId)
+        .classList.remove('window-manager-screen-full-screen'))
     }
   }
   /**
@@ -50,16 +53,20 @@ class WindowManager {
       this.titleBar = !this.titleBar
     }
     if (this.titleBar) {
-      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.add('window-manager-title-bar-screen'))
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId)
+        .classList.add('window-manager-title-bar-screen'))
     } else {
-      this.registeredWindows.forEach(a => document.getElementById(a.documentId).classList.remove('window-manager-title-bar-screen'))
+      this.registeredWindows.forEach(a => document.getElementById(a.documentId)
+        .classList.remove('window-manager-title-bar-screen'))
     }
   }
   /**
    * Get the name of the current window
    * @returns {string}
    */
-  getCurrentWindow () { return this.openWindowsStack[this.openWindowsStack.length - 1] }
+  getCurrentWindow () {
+    return this.openWindowsStack[this.openWindowsStack.length - 1]
+  }
   /**
    * Get the stack of open windows
    * @returns {string[]}
@@ -77,7 +84,8 @@ class WindowManager {
   /**
    * Show a window
    * @param {string} showNewWindowId
-   * @param {import('./WindowManagerTypes').WindowManager.ShowWindowOptions} [options]
+   * @param {import('./WindowManagerTypes').WindowManager
+   * .ShowWindowOptions} [options]
    */
   showWindow (showNewWindowId, options) {
     let newWindowIndex = this.getIndexOfRegisteredWindow(showNewWindowId)
@@ -90,7 +98,8 @@ class WindowManager {
       // No previous window, nothing to do
     } else {
       // Hide previous window
-      this.hideWindowTransition(this.registeredWindows[this.getIndexOfRegisteredWindow(this.getCurrentWindow())].documentId)
+      const prevWin = this.getIndexOfRegisteredWindow(this.getCurrentWindow())
+      this.hideWindowTransition(this.registeredWindows[prevWin].documentId)
 
       // Remove the old window if it's a popup window
       if (this.removeOpenPopUpWindow) {
@@ -101,8 +110,10 @@ class WindowManager {
       // Check further options
       if (options !== undefined) {
         // If this is true remove current window from window history
-        if (options.removeFromHistory !== undefined && options.removeFromHistory) {
-          // Check first if this window is not a popup window because it's already removed
+        if (options.removeFromHistory !== undefined &&
+          options.removeFromHistory) {
+          // Check first if this window is not a popup window because it's
+          // already removed
           if (!this.removeOpenPopUpWindow) {
             this.openWindowsStack.pop()
           }
@@ -117,17 +128,20 @@ class WindowManager {
     const registeredWindow = this.registeredWindows[newWindowIndex]
     this.showWindowTransition(registeredWindow.documentId)
     // Remove current window from open window stack history
-    this.openWindowsStack = this.openWindowsStack.filter(id => id !== showNewWindowId)
+    this.openWindowsStack = this.openWindowsStack
+      .filter(id => id !== showNewWindowId)
     // Add window to open window stack
     this.openWindowsStack.push(showNewWindowId)
   }
   /**
-   * @param {import('./WindowManagerTypes').WindowManager.ShowWindowOptions} [options]
+   * @param {import('./WindowManagerTypes').WindowManager
+   * .ShowWindowOptions} [options]
    */
   showPreviousWindow (options) {
     // Only do this if there is a previous window
     if (this.openWindowsStack.length >= 2) {
-      this.showWindow(this.openWindowsStack[this.openWindowsStack.length - 2], options)
+      const prevWinInd = this.openWindowsStack.length - 2
+      this.showWindow(this.openWindowsStack[prevWinInd], options)
     }
   }
   /**
@@ -135,10 +149,18 @@ class WindowManager {
    * @param {import('./WindowManagerTypes').WindowManager.Window} window
    */
   registerWindow (window) {
-    if (window === undefined) { throw Error('Window was undefined') }
-    if (window.documentId === undefined) { throw Error('Window.documentId was undefined') }
-    if (window.id === undefined) { throw Error('Window.id was undefined') }
-    if (document.getElementById(window.documentId) === null) { throw Error('Window.documentId was not found') }
+    if (window === undefined) {
+      throw Error('Window was undefined')
+    }
+    if (window.documentId === undefined) {
+      throw Error('Window.documentId was undefined')
+    }
+    if (window.id === undefined) {
+      throw Error('Window.id was undefined')
+    }
+    if (document.getElementById(window.documentId) === null) {
+      throw Error('Window.documentId was not found')
+    }
 
     // Initial window hide
     this.hideWindowTransition(window.documentId)
@@ -155,7 +177,8 @@ class WindowManager {
     if (windowObject === null) { throw Error('elementId was not found') }
 
     // Add classes to hide window
-    windowObject.classList.add('window-manager-screen', 'window-manager-screen-hide')
+    windowObject
+      .classList.add('window-manager-screen', 'window-manager-screen-hide')
   }
   /**
    * Show a window [GUI-DOM]

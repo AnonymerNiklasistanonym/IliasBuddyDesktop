@@ -8,10 +8,11 @@ const hbsPartialPath = path.join(hbsTemplatePath, 'partials')
 
 /**
  * Register a handlebars partial in partial directory
+ * @param {string} partialName
  */
-const registerPartial = nameOfPartial => {
-  const filePath = path.join(hbsPartialPath, nameOfPartial + '.hbs')
-  Handlebars.registerPartial(nameOfPartial, fs.readFileSync(filePath).toString())
+const registerPartial = partialName => {
+  const filePath = path.join(hbsPartialPath, partialName + '.hbs')
+  Handlebars.registerPartial(partialName, fs.readFileSync(filePath).toString())
 }
 
 /**
@@ -38,14 +39,16 @@ const templateToggle = compileTemplate('templateToggle')
 class Renderer {
   /**
    *
-   * @param {import('../API/SettingsTypes').Modifiable.SettingsObjectMerged} entry
+   * @param {import('../API/SettingsTypes').Modifiable
+   * .SettingsObjectMerged} entry
    * @returns {string}
    */
   static render (entry) {
     return this.renderElementHbs(entry)
   }
   /**
-   * @param {import('../API/SettingsTypes').Modifiable.SettingsObjectMerged} entry
+   * @param {import('../API/SettingsTypes')
+   * .Modifiable.SettingsObjectMerged} entry
    * @returns {string}
    */
   static renderElementHbs (entry) {
@@ -58,12 +61,14 @@ class Renderer {
       case 'cronJob':
         return templateCronJob({
           ...entry,
-          cronJobExplanation: CronJobHelper.cronJobStringToHumanReadableString(entry.value, { use24HourTimeFormat: true })
+          cronJobExplanation: CronJobHelper
+            .cronJobStringToHumanReadableString(entry.value,
+              { use24HourTimeFormat: true })
         })
       case 'password':
         return templatePassword(entry)
       default:
-        throw Error('Unknown type! (' + entry.type + ',' + JSON.stringify(entry) + ')')
+        throw Error(`Unknown type! (${entry.type}, ${JSON.stringify(entry)})`)
     }
   }
 }

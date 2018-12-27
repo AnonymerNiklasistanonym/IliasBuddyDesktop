@@ -8,17 +8,17 @@ const hbsPartialPath = path.join(hbsTemplatePath, 'partials')
 /**
  * Register a handlebars partial in partial directory
  */
-const registerPartial = nameOfPartial => {
-  const filePath = path.join(hbsPartialPath, nameOfPartial + '.hbs')
-  Handlebars.registerPartial(nameOfPartial, fs.readFileSync(filePath).toString())
+const registerPartial = partialName => {
+  const filePath = path.join(hbsPartialPath, partialName + '.hbs')
+  Handlebars.registerPartial(partialName, fs.readFileSync(filePath).toString())
 }
 
 /**
  * Compile a handlebars template in template directory
  * @returns {Handlebars.TemplateDelegate}
  */
-const compileTemplate = nameOfTemplate => {
-  const filePath = path.join(hbsTemplatePath, nameOfTemplate + '.hbs')
+const compileTemplate = templateName => {
+  const filePath = path.join(hbsTemplatePath, templateName + '.hbs')
   return Handlebars.compile(fs.readFileSync(filePath).toString())
 }
 
@@ -32,14 +32,17 @@ const templatePost = compileTemplate('templatePost')
 
 class Renderer {
   /**
-   * @param {import('../PARSER/RawEntryParserTypes').IliasBuddyRawEntryParser.Entry} entry
+   * @param {import('../PARSER/RawEntryParserTypes')
+   * .IliasBuddyRawEntryParser.Entry} entry
    * @returns {string}
    */
   static render (entry) {
     return this.renderElementHbs({
       ...entry,
-      hasCourseDirectory: entry.courseDirectory !== undefined && entry.courseDirectory.length !== 0,
-      hasDescription: entry.description !== undefined && entry.description !== ''
+      hasCourseDirectory: entry.courseDirectory !== undefined &&
+      entry.courseDirectory.length !== 0,
+      hasDescription: entry.description !== undefined &&
+      entry.description !== ''
     })
   }
   /**

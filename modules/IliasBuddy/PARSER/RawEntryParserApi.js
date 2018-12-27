@@ -9,7 +9,8 @@ class RawEntryParser {
    * - 4. Title
    *
    * Examples:
-   * - ["Course_title" > "directory_1 > directory_2"] "forum": "title" (https://regex101.com/r/TZTADg/1/)
+   * - ["Course_title" > "directory_1 > directory_2"] "forum": "title"
+   * (https://regex101.com/r/TZTADg/1/)
    *
    * @returns {RegExp} Regular expression to recognize groups
    */
@@ -32,29 +33,33 @@ class RawEntryParser {
   }
   /**
    * Function that converts raw entries to better ones
-   * @param {import('../FETCH/FetchEntriesTypes').IliasPrivateRssFeed.WholeThingRssChannelItem} rawEntry
-   * @returns {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries.RawEntry}
+   * @param {import('../FETCH/FetchEntriesTypes').IliasPrivateRssFeed
+   * .WholeThingRssChannelItem} rawEntry
+   * @returns {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries
+   * .RawEntry}
    */
   static parseRawEntry (rawEntry) {
     return {
-      title: rawEntry.title._text,
-      link: rawEntry.link._text,
       description: rawEntry.description._text,
+      guid: rawEntry.guid._text,
+      link: rawEntry.link._text,
       pubDate: rawEntry.pubDate._text,
-      guid: rawEntry.guid._text
+      title: rawEntry.title._text
     }
   }
   /**
-   * @param {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries.RawEntry} rawEntry
-   * @returns {import('./RawEntryParserTypes').IliasBuddyRawEntryParser.Entry} Entry
+   * @param {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries
+   * .RawEntry} rawEntry
+   * @returns {import('./RawEntryParserTypes').IliasBuddyRawEntryParser
+   * .Entry} Entry
    */
   static parseToIliasBuddyEntry (rawEntry) {
     let resultObject = {
       course: this.parseCourseTitle(rawEntry.title),
-      date: this.parseDate(rawEntry.pubDate),
-      link: this.parseLink(rawEntry.link),
       courseDirectory: this.parseCourseDirectory(rawEntry.title),
-      description: this.parseDescription(rawEntry.description)
+      date: this.parseDate(rawEntry.pubDate),
+      description: this.parseDescription(rawEntry.description),
+      link: this.parseLink(rawEntry.link)
     }
 
     const tempTitle = this.parseTitle(rawEntry.title)
@@ -65,22 +70,22 @@ class RawEntryParser {
     if (this.isFile(tempTitle)) {
       options = {
         ...options,
-        isPost: false,
-        isFile: true,
         file: {
           fileAdded: this.isFileAdded(tempTitle),
-          fileUpdated: this.isFileUpdated(tempTitle),
-          fileName: forumFileName
-        }
+          fileName: forumFileName,
+          fileUpdated: this.isFileUpdated(tempTitle)
+        },
+        isFile: true,
+        isPost: false
       }
     } else {
       options = {
         ...options,
-        isPost: true,
         isFile: false,
+        isPost: true,
         post: {
-          title: tempTitle,
-          forum: forumFileName
+          forum: forumFileName,
+          title: tempTitle
         }
       }
     }
@@ -95,8 +100,8 @@ class RawEntryParser {
   static parseDate (rawDate) {
     const time = moment(rawDate)
     return {
-      unix: time.unix(),
-      humanReadable: time.format('LLLL')
+      humanReadable: time.format('LLLL'),
+      unix: time.unix()
     }
   }
 
@@ -120,8 +125,8 @@ class RawEntryParser {
       const match = this.getRegex02().exec(rawTitle)
       return match[1]
     }
-    console.log('rawTitle:', '"' + rawTitle + '"')
-    throw Error('CourseTitle could not be parsed!')
+    throw Error('CourseTitle could not be parsed!',
+      `(rawTitle: "${rawTitle}")`)
   }
 
   /**
@@ -151,8 +156,8 @@ class RawEntryParser {
       return match[2]
     }
 
-    console.log('rawTitle:', '"' + rawTitle + '"')
-    throw Error('CourseForumFilename could not be parsed!')
+    throw Error('CourseForumFilename could not be parsed!',
+      `(rawTitle: "${rawTitle}")`)
   }
 
   /**
@@ -164,19 +169,22 @@ class RawEntryParser {
     if (rawDescription !== undefined) {
       // replace all <br> tags with newline characters
       return rawDescription.replace(/<br \/>/g, '<br>').replace(/\\n/g, '<br>')
-        .replace(/(<img.*?src=")(.*?)(".*?>)/g, (imgTag, imgTagBegin, link, imgTagEnd) => {
-          if (link.startsWith('./')) {
-            link = link.replace('./', 'https://ilias3.uni-stuttgart.de/')
-          }
-          return /* imgTagBegin + link + imgTagEnd + '<br>' + */ '<button onClick="openExternal(\'' + link + '\')">Link to picture</button>'
-        })
+        .replace(/(<img.*?src=")(.*?)(".*?>)/g,
+          (imgTag, imgTagBegin, link, imgTagEnd) => {
+            if (link.startsWith('./')) {
+              link = link.replace('./', 'https://ilias3.uni-stuttgart.de/')
+            }
+            /* imgTagBegin + link + imgTagEnd + '<br>' + */
+            return '<button onClick="openExternal(\'' + link +
+              '\')">Link to picture</button>'
+          })
     }
     if (rawDescription === undefined) {
       return ''
     }
 
-    console.log('rawDescription:', '"' + rawDescription + '"')
-    throw Error('Description could not be parsed!')
+    throw Error('Description could not be parsed!',
+      `(rawDescription: "${rawDescription}")`)
   }
 
   /**
@@ -190,8 +198,7 @@ class RawEntryParser {
       return match[2]
     }
 
-    console.log('rawTitle:', '"' + rawTitle + '"')
-    throw Error('Forum could not be parsed!')
+    throw Error('Forum could not be parsed!', `rawTitle: "${rawTitle}")`)
   }
 
   /**
@@ -204,8 +211,7 @@ class RawEntryParser {
       return match[3]
     }
 
-    console.log('rawTitle:', '"' + rawTitle + '"')
-    throw Error('Title could not be parsed!')
+    throw Error('Title could not be parsed!', `rawTitle: "${rawTitle}")`)
   }
 
   /**
@@ -221,7 +227,8 @@ class RawEntryParser {
    * @returns {boolean}
    */
   static isFileAdded (parsedTitle) {
-    return parsedTitle === 'File has been added.' || parsedTitle === 'Die Datei wurde hinzugefügt.'
+    return parsedTitle === 'File has been added.' ||
+      parsedTitle === 'Die Datei wurde hinzugefügt.'
   }
 
   /**
@@ -229,7 +236,8 @@ class RawEntryParser {
    * @returns {boolean}
    */
   static isFileUpdated (parsedTitle) {
-    return parsedTitle === 'File has been updated.' || parsedTitle === 'Die Datei wurde aktualisiert.'
+    return parsedTitle === 'File has been updated.' ||
+      parsedTitle === 'Die Datei wurde aktualisiert.'
   }
 }
 
