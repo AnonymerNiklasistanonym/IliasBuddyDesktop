@@ -1,0 +1,682 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ilias Buddy Desktop</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Ilias Buddy Desktop</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Ilias Buddy Desktop</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="iliasbuddydesktop">IliasBuddyDesktop</h1>
+				<p>Your private Ilias RSS feed in one app with notifications when a file gets uploaded or a post posted.</p>
+				<hr>
+				<p><strong>Currently not all features are supported. App is in production.</strong></p>
+				<hr>
+				<h2 id="build">Build</h2>
+				<p>Build executable files of this program for specified OSes.</p>
+				<h3 id="build-windows">Build &gt; Windows</h3>
+				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
+./win_build.sh</code></pre>
+				<h2 id="install">Install</h2>
+				<p>Install scripts that build and install this program on specified OSes.</p>
+				<h3 id="install-windows">Install &gt; Windows</h3>
+				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
+./win_install.sh</code></pre>
+				<h2 id="clean">Clean</h2>
+				<p>Clean scripts that remove all files that eventually get created by debugging or using this program on specified OSes.</p>
+				<h3 id="clean-not-necessary-files-for-archiving">Clean &gt; Not necessary files for archiving</h3>
+				<p>Remove always created files that are not necessary for archives on every operating system.</p>
+				<pre><code class="language-sh">./clean.sh</code></pre>
+				<h3 id="clean-windows">Clean &gt; Windows</h3>
+				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
+./win_clean_appData.ps1</code></pre>
+				<h2 id="debug">Debug</h2>
+				<h3 id="debug-logs">Debug &gt; Logs</h3>
+				<p>To easily read logs a log file reader like <a href="https://glogg.bonnefon.org/download.html"><code>glogg</code></a> is heavily recommended.</p>
+				<h4 id="debug-logs-electron-log">Debug &gt; Logs &gt; <code>electron-log</code></h4>
+				<p>The used library in this project is <a href="https://www.npmjs.com/package/electron-log"><code>electron-log</code></a>.</p>
+				<p>By default <code>electron-log</code> writes logs to the following locations:</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Platform</th>
+							<th>Path</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>Linux</td>
+							<td><code>~/.config/ilias-buddy-desktop/log.log</code></td>
+						</tr>
+						<tr>
+							<td>OS X</td>
+							<td><code>~/Library/Logs/ilias-buddy-desktop/log.log</code></td>
+						</tr>
+						<tr>
+							<td>Windows</td>
+							<td><code>%USERPROFILE%/AppData/Roaming/ilias-buddy-desktop/log.log</code> or <code>%AppData%/ilias-buddy-desktop/log.log</code></td>
+						</tr>
+				</tbody></table>
+				<h3 id="debug-code">Debug &gt; Code</h3>
+				<p>To easily debug the code you can use an IDE like <a href="https://code.visualstudio.com/insiders/">Visual Studio Code (Insiders)</a>.</p>
+				<h4 id="debug-code-visual-studio">Debug &gt; Code &gt; Visual Studio</h4>
+				<ol>
+					<li>Select at the left side the Debug Icon (Ctrl + Shift + D)</li>
+					<li>At the top of the window at the side should now be an entry called <em>Debug IliasBuddy Desktop</em></li>
+					<li>Select this and click run (Click F5)</li>
+					<li>You can now also set breakpoints like in any other debugger and debug code without 1000 <code>console.log</code> commands</li>
+				</ol>
+				<h2 id="docs">Docs</h2>
+				<h3 id="docs-mkdocs">Docs &gt; MkDocs</h3>
+				<p>To maintain an informative, good looking, easy to edit and easy to serve documentation this repository uses <a href="https://www.mkdocs.org/">MkDocs</a> in connection with the third party theme <a href="https://squidfunk.github.io/mkdocs-material/">Material</a>.</p>
+				<h4 id="docs-mkdocs-setup">Docs &gt; MkDocs &gt; Setup</h4>
+				<ol>
+					<li>Install MkDocs via Python: <code>python -m pip install mkdocs</code></li>
+					<li>Install Material theme for MkDocs via Python: <code>pip install mkdocs-material</code></li>
+					<li>Create project directory: <code>mkdocs new docs</code></li>
+					<li>Follow the <a href="https://www.mkdocs.org/#getting-started">instructions</a></li>
+				</ol>
+				<h4 id="docs-mkdocs-serve">Docs &gt; MkDocs &gt; Serve</h4>
+				<p>Serve the documentation with: <code>mkdocs serve</code></p>
+				<h4 id="docs-mkdocs-build">Docs &gt; MkDocs &gt; Build</h4>
+				<p>Build all files with: <code>mkdocs build</code></p>
+				<h3 id="docs-typedoc">Docs &gt; TypeDoc</h3>
+				<p>To maintain an informative, good looking and easy to serve documentation of the source code this repository uses <a href="https://typedoc.org/">TypeDoc</a>.</p>
+				<h4 id="docs-typedoc-build">Docs &gt; TypeDoc &gt; Build</h4>
+				<p>To get the source code documentation as a website hierarchy use the command: <code>typedoc --options docs/.typedoc.json --ignoreCompilerErrors ./</code></p>
+				<hr>
+				<p>TODO - Create <code>.typedoc.json</code> file that not only contains all types but also the <code>.js</code> modules</p>
+				<hr>
+				<h2 id="other">Other</h2>
+				<h3 id="what-is-this-source-code">What is this source code</h3>
+				<h4 id="cloc"><code>cloc</code></h4>
+				<ol>
+					<li>Install it via <code>npm install cloc</code> or via <a href="https://github.com/AlDanial/cloc/releases">GitHub releases</a></li>
+					<li>Run <code>cloc --vcs=git</code> to see all the files and lines of code that are tracked via this <code>git</code> repository</li>
+					<li>Or check especially for a programming language with <code>cloc --vcs=git --include-lang=JavaScript</code> (For other languages replace <em>JavaScript</em> or if you want to view more than one add them with a comma like <code>cloc --vcs=git --include-lang=JavaScript,TypeScript</code>)</li>
+				</ol>
+				<p>(<em>Example preview from 20.12.2018</em>)</p>
+				<pre><code class="language-sh">$ cloc --vcs=git
+
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JavaScript                      16            147            564           1297
+CSS                              6             67             52            357
+JSON                             2              0              0            286
+TypeScript                      10             21              0            279
+HTML                             1              4              5             78
+Handlebars                      14              4              0             71
+Bourne Shell                     8             17             14             53
+Markdown                         3             27              0             48
+-------------------------------------------------------------------------------
+SUM:                            60            287            635           2469
+-------------------------------------------------------------------------------</code></pre>
+				<h4 id="get-the-most-used-lines">Get the most used lines</h4>
+				<p>If you want to see what the most used constructs/calls are use the following command:</p>
+				<p>(<em>Example preview from 20.12.2018</em>)</p>
+				<pre><code class="language-sh">$ find -iname <span class="hljs-string">'*.js'</span> -not -path <span class="hljs-string">"./node_modules/*"</span> -not -path <span class="hljs-string">"./dist/*"</span> | xargs cat | sort | uniq -c | sort -nr | head -n 5
+
+146
+ 80   }
+ 56   /**
+ 56    */
+ 41     }</code></pre>
+				<p>Because the first some lines are always not that necessary (Whitespaces, parentheses, brackets, ...) just play around and probably add a tail to start off from the nth line:</p>
+				<p>(<em>Example preview from 20.12.2018</em>)</p>
+				<pre><code class="language-sh">$ find -iname <span class="hljs-string">'*.js'</span> -not -path <span class="hljs-string">"./node_modules/*"</span> -not -path <span class="hljs-string">"./dist/*"</span> | xargs cat | sort | uniq -c | sort -nr | head -n 21 |tail -n +14
+
+     10 const path = require(<span class="hljs-string">'path'</span>)
+     10    * @returns {string}
+      8      */
+      7       })
+      7       <span class="hljs-built_in">break</span>
+      7         })
+      6 })
+      6 const fs = require(<span class="hljs-string">'fs'</span>)</code></pre>
+				<h3 id="set-environmental-variables">Set environmental variables</h3>
+				<h4 id="powershell-windows-">Powershell (Windows)</h4>
+				<h5 id="set-variables">Set variables</h5>
+				<h6 id="temporary">Temporary</h6>
+				<pre><code class="language-powershell"><span class="hljs-variable">$env:TEMPORARY_VAR</span> = <span class="hljs-string">"A temporary test variable"</span>
+echo <span class="hljs-variable">$env:TEMPORARY_VAR</span></code></pre>
+				<h6 id="forever-run-terminal-with-admin-rights-">Forever (run terminal with admin rights)</h6>
+				<pre><code class="language-powershell"><span class="hljs-comment"># Set environmental variables</span>
+[Environment]::SetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_MACHINE"</span>, <span class="hljs-string">"A machine test variable"</span>, <span class="hljs-string">"Machine"</span>)
+[Environment]::SetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_USER"</span>, <span class="hljs-string">"A user test variable"</span>, <span class="hljs-string">"User"</span>)
+<span class="hljs-comment"># Update them in the current terminal</span>
+<span class="hljs-variable">$env:FOREVER_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
+<span class="hljs-variable">$env:FOREVER_VAR_USER</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_USER"</span>,<span class="hljs-string">"User"</span>)
+<span class="hljs-comment"># Echo them to the console</span>
+echo <span class="hljs-variable">$env:FOREVER_VAR_MACHINE</span>
+echo <span class="hljs-variable">$env:FOREVER_VAR_USER</span></code></pre>
+				<h4 id="remove-variables">Remove variables</h4>
+				<pre><code class="language-powershell"><span class="hljs-comment"># Set environmental variables</span>
+[Environment]::SetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>, <span class="hljs-string">"A machine test variable"</span>, <span class="hljs-string">"Machine"</span>)
+<span class="hljs-comment"># Update it in the current terminal</span>
+<span class="hljs-variable">$env:TEST_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
+<span class="hljs-comment"># Echo them to the console</span>
+echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span>
+
+<span class="hljs-comment"># Remove variable</span>
+[Environment]::SetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>, <span class="hljs-literal">$null</span>, <span class="hljs-string">"Machine"</span>)
+<span class="hljs-comment"># Update it in the current terminal</span>
+<span class="hljs-variable">$env:TEST_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
+<span class="hljs-comment"># Echo them to the console (Should be empty because the variable doesn't exist any more)</span>
+echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
+				<h5 id="update-variables-without-restarting-the-terminal">Update variables without restarting the terminal</h5>
+				<p>Update path variable:</p>
+				<pre><code class="language-powershell"><span class="hljs-variable">$env:Path</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"Path"</span>,<span class="hljs-string">"Machine"</span>) + <span class="hljs-string">";"</span> + [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"Path"</span>,<span class="hljs-string">"User"</span>)</code></pre>
+				<p>Update another variable you set in machine variables named <code>MACHINE_VARIABLE</code>:</p>
+				<pre><code class="language-powershell"><span class="hljs-variable">$env:MACHINE_VARIABLE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"MACHINE_VARIABLE"</span>,<span class="hljs-string">"Machine"</span>)</code></pre>
+				<p>Update another variable you set in user variables named <code>USER_VARIABLE</code>:</p>
+				<pre><code class="language-powershell"><span class="hljs-variable">$env:USER_VARIABLE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"USER_VARIABLE"</span>,<span class="hljs-string">"User"</span>)</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/hidden.html">Hidden</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/iliasbuddyfetchentries.html">Ilias<wbr>Buddy<wbr>Fetch<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/iliasbuddyrawentryparser.html">Ilias<wbr>Buddy<wbr>Raw<wbr>Entry<wbr>Parser</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/iliasprivaterssfeed.html">Ilias<wbr>Private<wbr>Rss<wbr>Feed</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/modifiable.html">Modifiable</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-module tsd-is-external">
+						<a href="modules/ipc.html">IPC</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/cronjobhelper.html" class="tsd-kind-icon">Cron<wbr>Job<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/dialogs.html" class="tsd-kind-icon">Dialogs</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/filemanager.html" class="tsd-kind-icon">File<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/iliasbuddyapi.html" class="tsd-kind-icon">Ilias<wbr>Buddy<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/iliasbuddyfetchentriesapi.html" class="tsd-kind-icon">Ilias<wbr>Buddy<wbr>Fetch<wbr>Entries<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/iliasbuddymanageentriesapi.html" class="tsd-kind-icon">Ilias<wbr>Buddy<wbr>Manage<wbr>Entries<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/rawentryparser.html" class="tsd-kind-icon">Raw<wbr>Entry<wbr>Parser</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/renderer.html" class="tsd-kind-icon">Renderer</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/settings.html" class="tsd-kind-icon">Settings</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/settingshandler.html" class="tsd-kind-icon">Settings<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/titlebarwin10.html" class="tsd-kind-icon">Title<wbr>Bar<wbr>Win10</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/windowmanager.html" class="tsd-kind-icon">Window<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/githublatesttag.html" class="tsd-kind-icon">Git<wbr>Hub<wbr>Latest<wbr>Tag</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/githublatesttagasset.html" class="tsd-kind-icon">Git<wbr>Hub<wbr>Latest<wbr>Tag<wbr>Asset</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/githublatesttagauthor.html" class="tsd-kind-icon">Git<wbr>Hub<wbr>Latest<wbr>Tag<wbr>Author</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/latestversioncheck.html" class="tsd-kind-icon">Latest<wbr>Version<wbr>Check</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/openwindow.html" class="tsd-kind-icon">Open<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/renderentry.html" class="tsd-kind-icon">Render<wbr>Entry</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/settingsjsondefault.html" class="tsd-kind-icon">Settings<wbr>Json<wbr>Default</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/settingsjsonlocal.html" class="tsd-kind-icon">Settings<wbr>Json<wbr>Local</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/settingsresetanswer.html" class="tsd-kind-icon">Settings<wbr>Reset<wbr>Answer</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/settingsresetinfoobject.html" class="tsd-kind-icon">Settings<wbr>Reset<wbr>Info<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/settingsset.html" class="tsd-kind-icon">Settings<wbr>Set</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#autolaunch" class="tsd-kind-icon">Auto<wbr>Launch</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#browserwindow" class="tsd-kind-icon">Browser<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#fetchentries" class="tsd-kind-icon">Fetch<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#handlebars" class="tsd-kind-icon">Handlebars</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#manageentries" class="tsd-kind-icon">Manage<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#menu" class="tsd-kind-icon">Menu</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#rendererentries" class="tsd-kind-icon">Renderer<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#tray" class="tsd-kind-icon">Tray</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#versionchecker" class="tsd-kind-icon">Version<wbr>Checker</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#app" class="tsd-kind-icon">app</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#cachedentries" class="tsd-kind-icon">cached<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#convert" class="tsd-kind-icon">convert</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#cron" class="tsd-kind-icon">cron</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#cronstrue" class="tsd-kind-icon">cronstrue</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#defaultsettings" class="tsd-kind-icon">default<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#dialog" class="tsd-kind-icon">dialog</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#electron" class="tsd-kind-icon">electron</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#fs" class="tsd-kind-icon">fs</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gautolaunch" class="tsd-kind-icon">g<wbr>Auto<wbr>Launch</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gcachefilepath" class="tsd-kind-icon">g<wbr>Cache<wbr>File<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gcronjobfeedupdate" class="tsd-kind-icon">g<wbr>Cron<wbr>Job<wbr>Feed<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gcronjobprogramupdate" class="tsd-kind-icon">g<wbr>Cron<wbr>Job<wbr>Program<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#giliasapi" class="tsd-kind-icon">g<wbr>Ilias<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#giliasapiisready" class="tsd-kind-icon">g<wbr>Ilias<wbr>Api<wbr>IsReady</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#giliasapipending" class="tsd-kind-icon">g<wbr>Ilias<wbr>Api<wbr>Pending</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#giliasonlineisready" class="tsd-kind-icon">g<wbr>Ilias<wbr>Online<wbr>IsReady</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gmainwindow" class="tsd-kind-icon">g<wbr>Main<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gonline" class="tsd-kind-icon">g<wbr>Online</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gversioncheckpending" class="tsd-kind-icon">g<wbr>Version<wbr>Check<wbr>Pending</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#hbspartialpath" class="tsd-kind-icon">hbs<wbr>Partial<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#hbstemplatepath" class="tsd-kind-icon">hbs<wbr>Template<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#infotoggled" class="tsd-kind-icon">info<wbr>Toggled</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#ipcmain" class="tsd-kind-icon">ipc<wbr>Main</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#ipcrenderer" class="tsd-kind-icon">ipc<wbr>Renderer</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#localsettings" class="tsd-kind-icon">local<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#log" class="tsd-kind-icon">log</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#mainwindow" class="tsd-kind-icon">main<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#moment" class="tsd-kind-icon">moment</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#nativeimage" class="tsd-kind-icon">native<wbr>Image</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#net" class="tsd-kind-icon">net</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#nodecron" class="tsd-kind-icon">node<wbr>Cron</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#notifier" class="tsd-kind-icon">notifier</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#path" class="tsd-kind-icon">path</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#remote" class="tsd-kind-icon">remote</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#reseteverythingbutton" class="tsd-kind-icon">reset<wbr>Everything<wbr>Button</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#runthemneveronlycallbacks" class="tsd-kind-icon">run<wbr>Them<wbr>Never<wbr>Only<wbr>Callbacks</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#savechangesbutton" class="tsd-kind-icon">save<wbr>Changes<wbr>Button</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#session" class="tsd-kind-icon">session</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#settingstoggled" class="tsd-kind-icon">settings<wbr>Toggled</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#shell" class="tsd-kind-icon">shell</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatecronjob" class="tsd-kind-icon">template<wbr>Cron<wbr>Job</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatefile" class="tsd-kind-icon">template<wbr>File</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templateother" class="tsd-kind-icon">template<wbr>Other</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatepassword" class="tsd-kind-icon">template<wbr>Password</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatepost" class="tsd-kind-icon">template<wbr>Post</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatetext" class="tsd-kind-icon">template<wbr>Text</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#templatetoggle" class="tsd-kind-icon">template<wbr>Toggle</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#titlebarwin10" class="tsd-kind-icon">title<wbr>Bar<wbr>Win10</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#trytologinbutton" class="tsd-kind-icon">try<wbr>ToLogin<wbr>Button</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#url" class="tsd-kind-icon">url</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#userdatapath" class="tsd-kind-icon">user<wbr>Data<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#windowmanager" class="tsd-kind-icon">window<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#addrenderediliasentries" class="tsd-kind-icon">add<wbr>Rendered<wbr>Ilias<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#broadcastiliasloginupdate" class="tsd-kind-icon">broadcast<wbr>Ilias<wbr>Login<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#checkforupdates" class="tsd-kind-icon">check<wbr>For<wbr>Updates</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#checkiliaslogin" class="tsd-kind-icon">check<wbr>Ilias<wbr>Login</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#compiletemplate" class="tsd-kind-icon">compile<wbr>Template</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#connecttoiliasrssfeed" class="tsd-kind-icon">connect<wbr>ToIlias<wbr>Rss<wbr>Feed</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#convertiliasentriesforclient" class="tsd-kind-icon">convert<wbr>Ilias<wbr>Entries<wbr>For<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#copytoclipboard" class="tsd-kind-icon">copy<wbr>ToClipboard</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#createwindow" class="tsd-kind-icon">create<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#cronjobtotext" class="tsd-kind-icon">cron<wbr>Job<wbr>ToText</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getlatestiliasentries" class="tsd-kind-icon">get<wbr>Latest<wbr>Ilias<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#isvalidurl" class="tsd-kind-icon">is<wbr>ValidURL</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#loadcachefile" class="tsd-kind-icon">load<wbr>Cache<wbr>File</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#logintoiliasapi" class="tsd-kind-icon">login<wbr>ToIlias<wbr>Api</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#openexternal" class="tsd-kind-icon">open<wbr>External</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#registerpartial" class="tsd-kind-icon">register<wbr>Partial</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#relaunchapp" class="tsd-kind-icon">relaunch<wbr>App</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#resetsettings" class="tsd-kind-icon">reset<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#savesettings" class="tsd-kind-icon">save<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setautolaunch" class="tsd-kind-icon">set<wbr>Auto<wbr>Launch</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setcronjob" class="tsd-kind-icon">set<wbr>Cron<wbr>Job</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setcronjobfeedupdate" class="tsd-kind-icon">set<wbr>Cron<wbr>Job<wbr>Feed<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setcronjobprogramupdate" class="tsd-kind-icon">set<wbr>Cron<wbr>Job<wbr>Program<wbr>Update</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setsetting" class="tsd-kind-icon">set<wbr>Setting</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setsettings" class="tsd-kind-icon">set<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setsettingselement" class="tsd-kind-icon">set<wbr>Settings<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setupafterwindowhasloaded" class="tsd-kind-icon">setup<wbr>After<wbr>Window<wbr>Has<wbr>Loaded</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#togglepopupscreen" class="tsd-kind-icon">toggle<wbr>Popup<wbr>Screen</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#updateonlinestatus" class="tsd-kind-icon">update<wbr>Online<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#settingspaths" class="tsd-kind-icon">settings<wbr>Paths</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
