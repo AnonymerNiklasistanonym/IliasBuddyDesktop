@@ -1,5 +1,10 @@
+/* =====  Imports  ====== */
+
+// npm modules
 const cronstrue = require('cronstrue')
 const nodeCron = require('node-cron')
+
+/* =====  Content  ====== */
 
 /**
  * Helper for cron job strings.
@@ -25,12 +30,14 @@ class CronJobHelper {
     if (this.cronJobStringIsValid(cronJobString)) {
       return cronstrue.toString(cronJobString, {
         use24HourTimeFormat: options !== undefined &&
-        options.use24HourTimeFormat
+                             options.use24HourTimeFormat
       })
     } else {
       return 'Cron job string is not valid'
     }
   }
 }
+
+/* =====  Exports  ====== */
 
 module.exports = CronJobHelper

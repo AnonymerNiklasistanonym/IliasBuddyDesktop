@@ -106,7 +106,7 @@ function setAutoLaunch () {
 
 /**
  * Enable/disable/change a cron job
- * @param {ScheduledTask} cronJobVar The global cron job variable
+ * @param {cron.ScheduledTask} cronJobVar The global cron job variable
  * @param {boolean} enableIt Should the cron job be enabled or destroyed
  * @param {string} cronJobString The cron job string expression
  * @param {Function} callback The callback that will be executed as cron job

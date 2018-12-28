@@ -1,0 +1,43 @@
+# Project information
+site_name: 'Ilias Buddy Desktop Docs'
+site_description: 'A Material Design themed instruction page powered by MkDocs'
+site_author: 'AnonymerNiklasistanonym'
+repo_url: 'https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/'
+
+nav:
+- Home: index.md
+- Instructions: instructions.md
+- Build:
+    - Electron: build-electron.md
+    - Documentation: build-docs.md
+- Debug:
+    - Logs: debug-logs.md
+    - Breakpoints: debug-breakpoints.md
+- FAQ: faq.md
+- About: about.md
+
+# Configuration
+theme:
+  name: 'material'
+  custom_dir: 'theme'
+  logo: 'assets/images/logo.svg'
+  language: 'en'
+  palette:
+    primary: 'indigo'
+    accent: 'amber'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+# Extensions
+markdown_extensions:
+    - admonition
+    - codehilite:
+        guess_lang: false
+    - toc:
+        permalink: true
+    - pymdownx.tasklist:
+        custom_checkbox: true
+
+extra_css:
+    - css/custom.css

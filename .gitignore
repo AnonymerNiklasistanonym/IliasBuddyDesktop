@@ -99,3 +99,9 @@ settings.json
 .vscode/*
 # but do not ignore the debug launch script
 !.vscode/launch.json
+
+# ignore documentation builds
+/docs/mkdocs/site
+/docs/typedoc/
+**/typedoc/
+/jsdoc/

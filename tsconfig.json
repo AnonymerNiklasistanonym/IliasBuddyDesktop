@@ -12,8 +12,15 @@
     },
     "include": [
       "modules/**/*",
+      "test/**/*",
       "js/**/*",
       "index.js",
       "main.js"
-    ]
+    ],
+    "typedocOptions": {
+      "ignoreCompilerErrors": true,
+      "mode": "file",
+      "out": "./typedoc",
+      "name": "Ilias Buddy Desktop"
+    }
   }

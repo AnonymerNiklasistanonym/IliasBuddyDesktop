@@ -1,71 +1,66 @@
+/* =====  Imports  ====== */
+
+// npm modules
 const notifier = require('node-notifier')
 const path = require('path')
 const { dialog } = require('electron').remote
+
+/* =====  Content  ====== */
 
 /**
  * GUI Dialog helping class
  */
 class Dialogs {
   /**
-   * Display an error box
-   * @param {string} message
-   * @param {string} err
+   * Dialog of an error
+   * @param {string} title Title of the dialog
+   * @param {string} message Error message
    */
-  static error (message, err) {
-    dialog.showErrorBox(message, err)
-  }
+  static error (title, message) { dialog.showErrorBox(title, message) }
   /**
    * Dialog with OK and CANCEL button
-   * @param {String} message - Message of the dialog
-   * @param {Function} okCallback - Function that will be executed on OK press
-   * @param {Function} cancelCallback - Function that will be executed on CANCEL
+   * @param {String} title Title of the dialog
+   * @param {String} message Question message
+   * @param {Function} okCallback Function that will be executed on OK
+   * @param {Function} cancelCallback Function that will be executed on CANCEL
    * press
    */
-  static question (message, okCallback, cancelCallback) {
-    dialog.showMessageBox(
-      { buttons: ['OK', 'CANCEL'], message, title: 'Confirm' },
+  static question (title, message, okCallback, cancelCallback) {
+    dialog.showMessageBox({ buttons: ['OK', 'CANCEL'], message, title },
       okWasPressed => {
         if (okWasPressed === 0) {
-          if (okCallback !== undefined) {
-            okCallback()
-          }
+          if (okCallback !== undefined) { okCallback() }
         } else {
-          if (cancelCallback !== undefined) {
-            cancelCallback()
-          }
+          if (cancelCallback !== undefined) { cancelCallback() }
         }
       })
   }
-
   /**
    * Notification with click and timeout listener
-   * @param {String} title Title text
-   * @param {String} message Message text
+   * @param {String} title Title of the toast
+   * @param {String} message Message of the toast
    * @param {Function} [clickCallback] Function that will be executed on click
    * @param {Function} [timeoutCallback] Function that will be executed on
    * timeout
    */
   static toast (title, message, clickCallback, timeoutCallback) {
     notifier.notify({
-      icon: path.join(__dirname, '../../images/favicon/favicon.ico'),
-      message: message,
+      icon: path.join(__dirname, '../../../images/favicon/favicon.ico'),
+      message,
       sound: true,
-      title: title,
+      title,
       wait: true
-    },
-    (err, response) => {
-      if (err) { return console.error(err) }
+    }, (err, response) => {
+      if (err) { throw err }
       if (response === 'the toast has timed out') {
-        if (timeoutCallback !== undefined) {
-          timeoutCallback()
-        }
+        if (timeoutCallback !== undefined) { timeoutCallback() }
       } else {
-        if (clickCallback !== undefined) {
-          clickCallback()
-        }
+        if (clickCallback !== undefined) { clickCallback() }
       }
     })
   }
 }
+
+/* =====  Exports  ====== */
 
 module.exports = Dialogs

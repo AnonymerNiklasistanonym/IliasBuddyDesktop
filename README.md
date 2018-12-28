@@ -78,6 +78,41 @@ To easily debug the code you can use an IDE like [Visual Studio Code (Insiders)]
 3. Select this and click run (Click F5)
 4. You can now also set breakpoints like in any other debugger and debug code without 1000 `console.log` commands
 
+## Docs
+
+### Docs > MkDocs
+
+To maintain an informative, good looking, easy to edit and easy to serve documentation this repository uses [MkDocs](https://www.mkdocs.org/) in connection with the third party theme [Material](https://squidfunk.github.io/mkdocs-material/).
+
+#### Docs > MkDocs > Setup
+
+1. Install MkDocs via Python: `python -m pip install mkdocs`
+2. Install Material theme for MkDocs via Python: `pip install mkdocs-material`
+3. Create project directory: `mkdocs new docs`
+4. Follow the [instructions](https://www.mkdocs.org/#getting-started)
+
+#### Docs > MkDocs > Serve
+
+Serve the documentation with: `mkdocs serve`
+
+#### Docs > MkDocs > Build
+
+Build all files with: `mkdocs build`
+
+### Docs > TypeDoc
+
+To maintain an informative, good looking and easy to serve documentation of the source code this repository uses [TypeDoc](https://typedoc.org/).
+
+#### Docs > TypeDoc > Build
+
+To get the source code documentation as a website hierarchy use the command: `typedoc --options docs/.typedoc.json --ignoreCompilerErrors ./`
+
+---
+
+TODO - Create `.typedoc.json` file that not only contains all types but also the `.js` modules
+
+---
+
 ## Other
 
 ### What is this source code

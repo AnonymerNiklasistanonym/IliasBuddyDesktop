@@ -69,28 +69,20 @@ const titleBarWin10 = new TitleBarWin10({
   appName: 'IliasBuddyDesktop',
   defaultCallbacks: {
     close: () => {
-      return new Promise(resolve => {
-        console.info('TitleBarWin10 > action > close')
-        resolve()
-      })
+      console.info('TitleBarWin10 > action > close')
+      return Promise.resolve()
     },
     maximize: () => {
-      return new Promise(resolve => {
-        console.info('TitleBarWin10 > action > maximize')
-        resolve()
-      })
+      console.info('TitleBarWin10 > action > maximize')
+      return Promise.resolve()
     },
     minimize: () => {
-      return new Promise(resolve => {
-        console.info('TitleBarWin10 > action > minimize')
-        resolve()
-      })
+      console.info('TitleBarWin10 > action > minimize')
+      return Promise.resolve()
     },
     restore: () => {
-      return new Promise(resolve => {
-        console.info('TitleBarWin10 > action > restore')
-        resolve()
-      })
+      console.info('TitleBarWin10 > action > restore')
+      return Promise.resolve()
     }
   },
   menu: [{
@@ -331,11 +323,12 @@ ipcRenderer
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.value)
       if (arg.restart) {
-        Dialogs.question('To see the changes the app needs to restart.' +
+        Dialogs.question('Confirm',
+          'To see the changes the app needs to restart.' +
           'Do you want to restart immediately?', () => {
-          ipcRenderer.send('relaunch',
-            { screenId: windowManager.getCurrentWindow() })
-        })
+            ipcRenderer.send('relaunch',
+              { screenId: windowManager.getCurrentWindow() })
+          })
       }
     })
   // Update settings value after a reset was requested
@@ -353,7 +346,7 @@ ipcRenderer
      * .GitHubLatestTag} arg
      */
     (event, arg) => {
-      Dialogs.question('Newer version detected ' +
+      Dialogs.question('Confirm', 'Newer version detected ' +
         `(${arg.tag_name}, ${arg.created_at}).\n` +
         'Do you want to download it?', () => {
         openExternal(arg.html_url)

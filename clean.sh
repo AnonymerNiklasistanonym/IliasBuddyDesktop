@@ -3,10 +3,16 @@
 cd images/favicon/
 ./clean.sh
 cd ../../
+
 cd fonts/
 ./clean.sh
 cd ../
+
 cd tests/
+./clean.sh
+cd ../
+
+cd docs/
 ./clean.sh
 cd ../
 
