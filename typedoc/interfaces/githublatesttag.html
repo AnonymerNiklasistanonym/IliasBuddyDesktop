@@ -66,6 +66,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Github latest release tag interface
+						(<a href="https://developer.github.com/v3/repos/releases/">https://developer.github.com/v3/repos/releases/</a>)</p>
+					</div>
+					<p>GET <code>https://api.github.com/repos/:owner/:repo/releases</code></p>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -87,16 +96,11 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#body" class="tsd-kind-icon">body</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#created_at" class="tsd-kind-icon">created_<wbr>at</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#html_url" class="tsd-kind-icon">html_<wbr>url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#prerelease" class="tsd-kind-icon">prerelease</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#published_at" class="tsd-kind-icon">published_<wbr>at</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#tag_name" class="tsd-kind-icon">tag_<wbr>name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#tarball_url" class="tsd-kind-icon">tarball_<wbr>url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#target_commitish" class="tsd-kind-icon">target_<wbr>commitish</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#upload_url" class="tsd-kind-icon">upload_<wbr>url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#url" class="tsd-kind-icon">url</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="githublatesttag.html#zipball_url" class="tsd-kind-icon">zipball_<wbr>url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -110,9 +114,14 @@
 					<div class="tsd-signature tsd-kind-icon">assets<span class="tsd-signature-symbol">:</span> <a href="githublatesttagasset.html" class="tsd-signature-type">GitHubLatestTagAsset</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L14">modules/VersionChecker/API/VersionCheckerTypes.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L59">modules/VersionChecker/API/VersionCheckerTypes.ts:59</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Assets of release</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="assets_url" class="tsd-anchor"></a>
@@ -120,9 +129,19 @@
 					<div class="tsd-signature tsd-kind-icon">assets_<wbr>url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L3">modules/VersionChecker/API/VersionCheckerTypes.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L22">modules/VersionChecker/API/VersionCheckerTypes.ts:22</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>API url to assets</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;<a href="https://api.github.com/repos/user/repo/releases/1/assets&quot;">https://api.github.com/repos/user/repo/releases/1/assets&quot;</a></p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="author" class="tsd-anchor"></a>
@@ -130,9 +149,14 @@
 					<div class="tsd-signature tsd-kind-icon">author<span class="tsd-signature-symbol">:</span> <a href="githublatesttagauthor.html" class="tsd-signature-type">GitHubLatestTagAuthor</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L10">modules/VersionChecker/API/VersionCheckerTypes.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L55">modules/VersionChecker/API/VersionCheckerTypes.ts:55</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Release author</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="body" class="tsd-anchor"></a>
@@ -140,9 +164,19 @@
 					<div class="tsd-signature tsd-kind-icon">body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L17">modules/VersionChecker/API/VersionCheckerTypes.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L37">modules/VersionChecker/API/VersionCheckerTypes.ts:37</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Description of the release</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;Description of the release&quot;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="created_at" class="tsd-anchor"></a>
@@ -150,9 +184,19 @@
 					<div class="tsd-signature tsd-kind-icon">created_<wbr>at<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L12">modules/VersionChecker/API/VersionCheckerTypes.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L46">modules/VersionChecker/API/VersionCheckerTypes.ts:46</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Date of release creation</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;2013-02-27T19:35:32Z&quot;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="html_url" class="tsd-anchor"></a>
@@ -160,19 +204,19 @@
 					<div class="tsd-signature tsd-kind-icon">html_<wbr>url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L5">modules/VersionChecker/API/VersionCheckerTypes.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L17">modules/VersionChecker/API/VersionCheckerTypes.ts:17</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L6">modules/VersionChecker/API/VersionCheckerTypes.ts:6</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Normal url to release</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;<a href="https://github.com/user/repo/releases/v1.0.0&quot;">https://github.com/user/repo/releases/v1.0.0&quot;</a></p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="name" class="tsd-anchor"></a>
@@ -180,9 +224,19 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L9">modules/VersionChecker/API/VersionCheckerTypes.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L32">modules/VersionChecker/API/VersionCheckerTypes.ts:32</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Github release name</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;v1.0.0&quot;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="prerelease" class="tsd-anchor"></a>
@@ -190,9 +244,14 @@
 					<div class="tsd-signature tsd-kind-icon">prerelease<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L11">modules/VersionChecker/API/VersionCheckerTypes.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L41">modules/VersionChecker/API/VersionCheckerTypes.ts:41</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Is a pre release</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="published_at" class="tsd-anchor"></a>
@@ -200,9 +259,19 @@
 					<div class="tsd-signature tsd-kind-icon">published_<wbr>at<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L13">modules/VersionChecker/API/VersionCheckerTypes.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L51">modules/VersionChecker/API/VersionCheckerTypes.ts:51</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Date of release publication</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;2013-02-27T19:35:32Z&quot;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="tag_name" class="tsd-anchor"></a>
@@ -210,39 +279,19 @@
 					<div class="tsd-signature tsd-kind-icon">tag_<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L7">modules/VersionChecker/API/VersionCheckerTypes.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L27">modules/VersionChecker/API/VersionCheckerTypes.ts:27</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="tarball_url" class="tsd-anchor"></a>
-					<h3>tarball_<wbr>url</h3>
-					<div class="tsd-signature tsd-kind-icon">tarball_<wbr>url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L15">modules/VersionChecker/API/VersionCheckerTypes.ts:15</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="target_commitish" class="tsd-anchor"></a>
-					<h3>target_<wbr>commitish</h3>
-					<div class="tsd-signature tsd-kind-icon">target_<wbr>commitish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L8">modules/VersionChecker/API/VersionCheckerTypes.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="upload_url" class="tsd-anchor"></a>
-					<h3>upload_<wbr>url</h3>
-					<div class="tsd-signature tsd-kind-icon">upload_<wbr>url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L4">modules/VersionChecker/API/VersionCheckerTypes.ts:4</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Github release tag name</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;v1.0.0&quot;</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="url" class="tsd-anchor"></a>
@@ -250,19 +299,19 @@
 					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L2">modules/VersionChecker/API/VersionCheckerTypes.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/63f6ba1/modules/VersionChecker/API/VersionCheckerTypes.ts#L12">modules/VersionChecker/API/VersionCheckerTypes.ts:12</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="zipball_url" class="tsd-anchor"></a>
-					<h3>zipball_<wbr>url</h3>
-					<div class="tsd-signature tsd-kind-icon">zipball_<wbr>url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/3cf8402/modules/VersionChecker/API/VersionCheckerTypes.ts#L16">modules/VersionChecker/API/VersionCheckerTypes.ts:16</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>API url to release</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>&quot;<a href="https://api.github.com/repos/user/repo/releases/1&quot;">https://api.github.com/repos/user/repo/releases/1&quot;</a></p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -300,9 +349,6 @@
 								<a href="githublatesttag.html#html_url" class="tsd-kind-icon">html_<wbr>url</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="githublatesttag.html#id" class="tsd-kind-icon">id</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="githublatesttag.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -315,19 +361,7 @@
 								<a href="githublatesttag.html#tag_name" class="tsd-kind-icon">tag_<wbr>name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="githublatesttag.html#tarball_url" class="tsd-kind-icon">tarball_<wbr>url</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="githublatesttag.html#target_commitish" class="tsd-kind-icon">target_<wbr>commitish</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="githublatesttag.html#upload_url" class="tsd-kind-icon">upload_<wbr>url</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="githublatesttag.html#url" class="tsd-kind-icon">url</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="githublatesttag.html#zipball_url" class="tsd-kind-icon">zipball_<wbr>url</a>
 							</li>
 						</ul>
 					</li>

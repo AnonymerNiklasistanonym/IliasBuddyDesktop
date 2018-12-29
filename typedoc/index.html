@@ -64,169 +64,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="iliasbuddydesktop">IliasBuddyDesktop</h1>
-				<p>Your private Ilias RSS feed in one app with notifications when a file gets uploaded or a post posted.</p>
-				<hr>
-				<p><strong>Currently not all features are supported. App is in production.</strong></p>
-				<hr>
-				<h2 id="build">Build</h2>
-				<p>Build executable files of this program for specified OSes.</p>
-				<h3 id="build-windows">Build &gt; Windows</h3>
-				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
-./win_build.sh</code></pre>
-				<h2 id="install">Install</h2>
-				<p>Install scripts that build and install this program on specified OSes.</p>
-				<h3 id="install-windows">Install &gt; Windows</h3>
-				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
-./win_install.sh</code></pre>
-				<h2 id="clean">Clean</h2>
-				<p>Clean scripts that remove all files that eventually get created by debugging or using this program on specified OSes.</p>
-				<h3 id="clean-not-necessary-files-for-archiving">Clean &gt; Not necessary files for archiving</h3>
-				<p>Remove always created files that are not necessary for archives on every operating system.</p>
-				<pre><code class="language-sh">./clean.sh</code></pre>
-				<h3 id="clean-windows">Clean &gt; Windows</h3>
-				<pre><code class="language-sh"><span class="hljs-built_in">cd</span> scripts
-./win_clean_appData.ps1</code></pre>
-				<h2 id="debug">Debug</h2>
-				<h3 id="debug-logs">Debug &gt; Logs</h3>
-				<p>To easily read logs a log file reader like <a href="https://glogg.bonnefon.org/download.html"><code>glogg</code></a> is heavily recommended.</p>
-				<h4 id="debug-logs-electron-log">Debug &gt; Logs &gt; <code>electron-log</code></h4>
-				<p>The used library in this project is <a href="https://www.npmjs.com/package/electron-log"><code>electron-log</code></a>.</p>
-				<p>By default <code>electron-log</code> writes logs to the following locations:</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Platform</th>
-							<th>Path</th>
-						</tr>
-					</thead>
-					<tbody><tr>
-							<td>Linux</td>
-							<td><code>~/.config/ilias-buddy-desktop/log.log</code></td>
-						</tr>
-						<tr>
-							<td>OS X</td>
-							<td><code>~/Library/Logs/ilias-buddy-desktop/log.log</code></td>
-						</tr>
-						<tr>
-							<td>Windows</td>
-							<td><code>%USERPROFILE%/AppData/Roaming/ilias-buddy-desktop/log.log</code> or <code>%AppData%/ilias-buddy-desktop/log.log</code></td>
-						</tr>
-				</tbody></table>
-				<h3 id="debug-code">Debug &gt; Code</h3>
-				<p>To easily debug the code you can use an IDE like <a href="https://code.visualstudio.com/insiders/">Visual Studio Code (Insiders)</a>.</p>
-				<h4 id="debug-code-visual-studio">Debug &gt; Code &gt; Visual Studio</h4>
-				<ol>
-					<li>Select at the left side the Debug Icon (Ctrl + Shift + D)</li>
-					<li>At the top of the window at the side should now be an entry called <em>Debug IliasBuddy Desktop</em></li>
-					<li>Select this and click run (Click F5)</li>
-					<li>You can now also set breakpoints like in any other debugger and debug code without 1000 <code>console.log</code> commands</li>
-				</ol>
-				<h2 id="docs">Docs</h2>
-				<h3 id="docs-mkdocs">Docs &gt; MkDocs</h3>
-				<p>To maintain an informative, good looking, easy to edit and easy to serve documentation this repository uses <a href="https://www.mkdocs.org/">MkDocs</a> in connection with the third party theme <a href="https://squidfunk.github.io/mkdocs-material/">Material</a>.</p>
-				<h4 id="docs-mkdocs-setup">Docs &gt; MkDocs &gt; Setup</h4>
-				<ol>
-					<li>Install MkDocs via Python: <code>python -m pip install mkdocs</code></li>
-					<li>Install Material theme for MkDocs via Python: <code>pip install mkdocs-material</code></li>
-					<li>Create project directory: <code>mkdocs new docs</code></li>
-					<li>Follow the <a href="https://www.mkdocs.org/#getting-started">instructions</a></li>
-				</ol>
-				<h4 id="docs-mkdocs-serve">Docs &gt; MkDocs &gt; Serve</h4>
-				<p>Serve the documentation with: <code>mkdocs serve</code></p>
-				<h4 id="docs-mkdocs-build">Docs &gt; MkDocs &gt; Build</h4>
-				<p>Build all files with: <code>mkdocs build</code></p>
-				<h3 id="docs-typedoc">Docs &gt; TypeDoc</h3>
-				<p>To maintain an informative, good looking and easy to serve documentation of the source code this repository uses <a href="https://typedoc.org/">TypeDoc</a>.</p>
-				<h4 id="docs-typedoc-build">Docs &gt; TypeDoc &gt; Build</h4>
-				<p>To get the source code documentation as a website hierarchy use the command: <code>typedoc --options docs/.typedoc.json --ignoreCompilerErrors ./</code></p>
-				<hr>
-				<p>TODO - Create <code>.typedoc.json</code> file that not only contains all types but also the <code>.js</code> modules</p>
-				<hr>
-				<h2 id="other">Other</h2>
-				<h3 id="what-is-this-source-code">What is this source code</h3>
-				<h4 id="cloc"><code>cloc</code></h4>
-				<ol>
-					<li>Install it via <code>npm install cloc</code> or via <a href="https://github.com/AlDanial/cloc/releases">GitHub releases</a></li>
-					<li>Run <code>cloc --vcs=git</code> to see all the files and lines of code that are tracked via this <code>git</code> repository</li>
-					<li>Or check especially for a programming language with <code>cloc --vcs=git --include-lang=JavaScript</code> (For other languages replace <em>JavaScript</em> or if you want to view more than one add them with a comma like <code>cloc --vcs=git --include-lang=JavaScript,TypeScript</code>)</li>
-				</ol>
-				<p>(<em>Example preview from 20.12.2018</em>)</p>
-				<pre><code class="language-sh">$ cloc --vcs=git
-
--------------------------------------------------------------------------------
-Language                     files          blank        comment           code
--------------------------------------------------------------------------------
-JavaScript                      16            147            564           1297
-CSS                              6             67             52            357
-JSON                             2              0              0            286
-TypeScript                      10             21              0            279
-HTML                             1              4              5             78
-Handlebars                      14              4              0             71
-Bourne Shell                     8             17             14             53
-Markdown                         3             27              0             48
--------------------------------------------------------------------------------
-SUM:                            60            287            635           2469
--------------------------------------------------------------------------------</code></pre>
-				<h4 id="get-the-most-used-lines">Get the most used lines</h4>
-				<p>If you want to see what the most used constructs/calls are use the following command:</p>
-				<p>(<em>Example preview from 20.12.2018</em>)</p>
-				<pre><code class="language-sh">$ find -iname <span class="hljs-string">'*.js'</span> -not -path <span class="hljs-string">"./node_modules/*"</span> -not -path <span class="hljs-string">"./dist/*"</span> | xargs cat | sort | uniq -c | sort -nr | head -n 5
-
-146
- 80   }
- 56   /**
- 56    */
- 41     }</code></pre>
-				<p>Because the first some lines are always not that necessary (Whitespaces, parentheses, brackets, ...) just play around and probably add a tail to start off from the nth line:</p>
-				<p>(<em>Example preview from 20.12.2018</em>)</p>
-				<pre><code class="language-sh">$ find -iname <span class="hljs-string">'*.js'</span> -not -path <span class="hljs-string">"./node_modules/*"</span> -not -path <span class="hljs-string">"./dist/*"</span> | xargs cat | sort | uniq -c | sort -nr | head -n 21 |tail -n +14
-
-     10 const path = require(<span class="hljs-string">'path'</span>)
-     10    * @returns {string}
-      8      */
-      7       })
-      7       <span class="hljs-built_in">break</span>
-      7         })
-      6 })
-      6 const fs = require(<span class="hljs-string">'fs'</span>)</code></pre>
-				<h3 id="set-environmental-variables">Set environmental variables</h3>
-				<h4 id="powershell-windows-">Powershell (Windows)</h4>
-				<h5 id="set-variables">Set variables</h5>
-				<h6 id="temporary">Temporary</h6>
-				<pre><code class="language-powershell"><span class="hljs-variable">$env:TEMPORARY_VAR</span> = <span class="hljs-string">"A temporary test variable"</span>
-echo <span class="hljs-variable">$env:TEMPORARY_VAR</span></code></pre>
-				<h6 id="forever-run-terminal-with-admin-rights-">Forever (run terminal with admin rights)</h6>
-				<pre><code class="language-powershell"><span class="hljs-comment"># Set environmental variables</span>
-[Environment]::SetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_MACHINE"</span>, <span class="hljs-string">"A machine test variable"</span>, <span class="hljs-string">"Machine"</span>)
-[Environment]::SetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_USER"</span>, <span class="hljs-string">"A user test variable"</span>, <span class="hljs-string">"User"</span>)
-<span class="hljs-comment"># Update them in the current terminal</span>
-<span class="hljs-variable">$env:FOREVER_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
-<span class="hljs-variable">$env:FOREVER_VAR_USER</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"FOREVER_VAR_USER"</span>,<span class="hljs-string">"User"</span>)
-<span class="hljs-comment"># Echo them to the console</span>
-echo <span class="hljs-variable">$env:FOREVER_VAR_MACHINE</span>
-echo <span class="hljs-variable">$env:FOREVER_VAR_USER</span></code></pre>
-				<h4 id="remove-variables">Remove variables</h4>
-				<pre><code class="language-powershell"><span class="hljs-comment"># Set environmental variables</span>
-[Environment]::SetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>, <span class="hljs-string">"A machine test variable"</span>, <span class="hljs-string">"Machine"</span>)
-<span class="hljs-comment"># Update it in the current terminal</span>
-<span class="hljs-variable">$env:TEST_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
-<span class="hljs-comment"># Echo them to the console</span>
-echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span>
-
-<span class="hljs-comment"># Remove variable</span>
-[Environment]::SetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>, <span class="hljs-literal">$null</span>, <span class="hljs-string">"Machine"</span>)
-<span class="hljs-comment"># Update it in the current terminal</span>
-<span class="hljs-variable">$env:TEST_VAR_MACHINE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"TEST_VAR_MACHINE"</span>,<span class="hljs-string">"Machine"</span>)
-<span class="hljs-comment"># Echo them to the console (Should be empty because the variable doesn't exist any more)</span>
-echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
-				<h5 id="update-variables-without-restarting-the-terminal">Update variables without restarting the terminal</h5>
-				<p>Update path variable:</p>
-				<pre><code class="language-powershell"><span class="hljs-variable">$env:Path</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"Path"</span>,<span class="hljs-string">"Machine"</span>) + <span class="hljs-string">";"</span> + [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"Path"</span>,<span class="hljs-string">"User"</span>)</code></pre>
-				<p>Update another variable you set in machine variables named <code>MACHINE_VARIABLE</code>:</p>
-				<pre><code class="language-powershell"><span class="hljs-variable">$env:MACHINE_VARIABLE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"MACHINE_VARIABLE"</span>,<span class="hljs-string">"Machine"</span>)</code></pre>
-				<p>Update another variable you set in user variables named <code>USER_VARIABLE</code>:</p>
-				<pre><code class="language-powershell"><span class="hljs-variable">$env:USER_VARIABLE</span> = [System.Environment]::GetEnvironmentVariable(<span class="hljs-string">"USER_VARIABLE"</span>,<span class="hljs-string">"User"</span>)</code></pre>
+				<p>This is a documentation of all the source code in this repository.</p>
+				<p>It is searchable and should contain all types that were specified in the source code.</p>
+				<p>To see all global variables visit the page <a href="./globals.html"><code>globals</code></a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -296,8 +136,14 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					<li class=" tsd-kind-class">
 						<a href="classes/titlebarwin10.html" class="tsd-kind-icon">Title<wbr>Bar<wbr>Win10</a>
 					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/versionchecker.html" class="tsd-kind-icon">Version<wbr>Checker</a>
+					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/windowmanager.html" class="tsd-kind-icon">Window<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/checkiliaslogin.html" class="tsd-kind-icon">Check<wbr>Ilias<wbr>Login</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/githublatesttag.html" class="tsd-kind-icon">Git<wbr>Hub<wbr>Latest<wbr>Tag</a>
@@ -312,10 +158,16 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 						<a href="interfaces/latestversioncheck.html" class="tsd-kind-icon">Latest<wbr>Version<wbr>Check</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/newversiondetected.html" class="tsd-kind-icon">New<wbr>Version<wbr>Detected</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/openwindow.html" class="tsd-kind-icon">Open<wbr>Window</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/renderentry.html" class="tsd-kind-icon">Render<wbr>Entry</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/setcronjoboptions.html" class="tsd-kind-icon">Set<wbr>Cron<wbr>Job<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/settingsjsondefault.html" class="tsd-kind-icon">Settings<wbr>Json<wbr>Default</a>
@@ -327,7 +179,7 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 						<a href="interfaces/settingsresetanswer.html" class="tsd-kind-icon">Settings<wbr>Reset<wbr>Answer</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="interfaces/settingsresetinfoobject.html" class="tsd-kind-icon">Settings<wbr>Reset<wbr>Info<wbr>Object</a>
+						<a href="interfaces/settingsresetquestion.html" class="tsd-kind-icon">Settings<wbr>Reset<wbr>Question</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/settingsset.html" class="tsd-kind-icon">Settings<wbr>Set</a>
@@ -337,6 +189,9 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#browserwindow" class="tsd-kind-icon">Browser<wbr>Window</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#cronhelper" class="tsd-kind-icon">Cron<wbr>Helper</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#fetchentries" class="tsd-kind-icon">Fetch<wbr>Entries</a>
@@ -355,9 +210,6 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#tray" class="tsd-kind-icon">Tray</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#versionchecker" class="tsd-kind-icon">Version<wbr>Checker</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#app" class="tsd-kind-icon">app</a>
@@ -382,6 +234,12 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#electron" class="tsd-kind-icon">electron</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#eventemitter" class="tsd-kind-icon">event<wbr>Emitter</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#events" class="tsd-kind-icon">events</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#fs" class="tsd-kind-icon">fs</a>
@@ -418,6 +276,9 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#gversioncheckpending" class="tsd-kind-icon">g<wbr>Version<wbr>Check<wbr>Pending</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gwindowsetupafterexecuted" class="tsd-kind-icon">g<wbr>Window<wbr>Setup<wbr>After<wbr>Executed</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#hbspartialpath" class="tsd-kind-icon">hbs<wbr>Partial<wbr>Path</a>
@@ -522,13 +383,22 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 						<a href="globals.html#addrenderediliasentries" class="tsd-kind-icon">add<wbr>Rendered<wbr>Ilias<wbr>Entries</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#broadcasterror" class="tsd-kind-icon">broadcast<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#broadcastiliasloginupdate" class="tsd-kind-icon">broadcast<wbr>Ilias<wbr>Login<wbr>Update</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#checkforupdates" class="tsd-kind-icon">check<wbr>For<wbr>Updates</a>
+						<a href="globals.html#broadcastopenscreen" class="tsd-kind-icon">broadcast<wbr>Open<wbr>Screen</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#checkiliaslogin" class="tsd-kind-icon">check<wbr>Ilias<wbr>Login</a>
+						<a href="globals.html#checkforfeedupdates" class="tsd-kind-icon">check<wbr>For<wbr>Feed<wbr>Updates</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#checkforprogramupdates" class="tsd-kind-icon">check<wbr>For<wbr>Program<wbr>Updates</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#checkifiliasloginispossible" class="tsd-kind-icon">check<wbr>IfIlias<wbr>Login<wbr>IsPossible</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#compiletemplate" class="tsd-kind-icon">compile<wbr>Template</a>
@@ -552,9 +422,6 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 						<a href="globals.html#getlatestiliasentries" class="tsd-kind-icon">get<wbr>Latest<wbr>Ilias<wbr>Entries</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#isvalidurl" class="tsd-kind-icon">is<wbr>ValidURL</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#loadcachefile" class="tsd-kind-icon">load<wbr>Cache<wbr>File</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
@@ -574,6 +441,9 @@ echo <span class="hljs-variable">$env:TEST_VAR_MACHINE</span></code></pre>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#savesettings" class="tsd-kind-icon">save<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#sendnewiliasentries" class="tsd-kind-icon">send<wbr>New<wbr>Ilias<wbr>Entries</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#setautolaunch" class="tsd-kind-icon">set<wbr>Auto<wbr>Launch</a>
