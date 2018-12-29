@@ -16,13 +16,23 @@
         "no-duplicate-variable": true,
         "curly": true,
         "class-name": true,
-        "triple-equals": true
+        "triple-equals": true,
+        "cyclomatic-complexity": [true, 10],
+        "prefer-const": true,
+        "align": [true, "parameters", "statements"],
+        "completed-docs": true,
+        "jsdoc-format": true,
+        "member-ordering": true
     },
     "rules": {
         "no-namespace": false,
         "interface-name": false,
         "max-line-length": [true, 80],
-        "object-literal-sort-keys": true
+        "object-literal-sort-keys": true,
+        "prefer-object-spread": true,
+        "completed-docs": true,
+        "interface-over-type-literal": true,
+        "jsdoc-format": true
     },
     "rulesDirectory": []
 }

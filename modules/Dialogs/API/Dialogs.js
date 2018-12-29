@@ -44,6 +44,8 @@ class Dialogs {
    * timeout
    */
   static toast (title, message, clickCallback, timeoutCallback) {
+    // FIXME Icon does not show when packaged
+    // Check this issue: https://github.com/mikaelbr/node-notifier/issues/264
     notifier.notify({
       icon: path.join(__dirname, '../../../images/favicon/favicon.ico'),
       message,

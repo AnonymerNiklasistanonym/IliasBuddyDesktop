@@ -14,4 +14,3 @@ typedoc --tsconfig ../tsconfig.json
 
 # Copy typedoc to final documentation
 cp -r typedoc mkdocs/site/typedoc
-

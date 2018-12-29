@@ -10,12 +10,20 @@
 // npm modules
 const { ipcRenderer, remote, shell } = require('electron')
 const path = require('path')
-
+const log = require('electron-log')
 // custom modules
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
 const CronJobHelper = require('./modules/CronJobHelper/API/CronJobHelper')
+
+/* =====  Logging  ====== */
+
+log.debugIndex = parameter => log.debug('[index] ' + parameter)
+log.errorIndex = error => {
+  log.error('[index] ' + error)
+  throw error
+}
 
 /* =====  Global variables  ====== */
 
@@ -69,19 +77,19 @@ const titleBarWin10 = new TitleBarWin10({
   appName: 'IliasBuddyDesktop',
   defaultCallbacks: {
     close: () => {
-      console.info('TitleBarWin10 > action > close')
+      log.debugIndex('TitleBarWin10 > action > close')
       return Promise.resolve()
     },
     maximize: () => {
-      console.info('TitleBarWin10 > action > maximize')
+      log.debugIndex('TitleBarWin10 > action > maximize')
       return Promise.resolve()
     },
     minimize: () => {
-      console.info('TitleBarWin10 > action > minimize')
+      log.debugIndex('TitleBarWin10 > action > minimize')
       return Promise.resolve()
     },
     restore: () => {
-      console.info('TitleBarWin10 > action > restore')
+      log.debugIndex('TitleBarWin10 > action > restore')
       return Promise.resolve()
     }
   },
@@ -114,16 +122,16 @@ function togglePopupScreen (popUpScreenId) {
       settingsToggled = true
     }
   } else if (popUpScreenId === 'info') {
+    infoToggled = !infoToggled
     if (windowManager.getCurrentWindow() === 'info') {
-      infoToggled = !infoToggled
       if (!infoToggled) {
         return windowManager.showPreviousWindow()
       }
     } else {
-      settingsToggled = true
+      infoToggled = true
     }
   } else {
-    throw Error('WTF')
+    throw Error(`This popup window id is not supported: "${popUpScreenId}"`)
   }
   windowManager.showWindow(popUpScreenId, { isPopUpWindow: true })
 }
@@ -144,21 +152,19 @@ function addRenderedIliasEntries (newEntries, notification = true) {
   // Show a notification if wanted
   if (notification && newEntries.length > 0) {
     Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {
-      mainWindow.show()
-      mainWindow.focus()
+      ipcRenderer.send('show-and-focus-window')
     })
   }
 }
 
 /**
- * Open link in external browser (for now)
- * @param {string} url
+ * Open a link in external browser
+ * @param {string} url The website URL that should be opened
+ * @returns {Promise<void>}
  */
 function openExternal (url) {
-  shell.openExternal(url, undefined, err => {
-    if (err) {
-      Dialogs.error('Could not open url in external browser', err.message)
-    }
+  return new Promise((resolve, reject) => {
+    shell.openExternal(url, undefined, err => { err ? reject(err) : resolve() })
   })
 }
 
@@ -208,7 +214,7 @@ function setSettingsElement (documentId, type, value) {
 
 /**
  * Set settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {import('./types').SettingsResetInfoObject} infoObject Necessary
+ * @param {import('./mainTypes').SettingsResetQuestion} infoObject Necessary
  * information
  * @param {import('./modules/Settings/API/SettingsTypes')
  * .Modifiable.SettingsType} value New settings value
@@ -223,7 +229,7 @@ function setSettings (infoObject, value) {
 
 /**
  * Reset settings onclick callback [Boiler plate from settings api RENDERER]
- * @param {import('./types').SettingsResetInfoObject} infoObject Necessary
+ * @param {import('./mainTypes').SettingsResetQuestion} infoObject Necessary
  * information
  */
 function resetSettings (infoObject) {
@@ -231,8 +237,16 @@ function resetSettings (infoObject) {
   ipcRenderer.send('settings-reset', { ...infoObject })
 }
 
-function cronJobToText (documentId, goalId) {
-  document.getElementById(goalId).value = CronJobHelper
+/**
+ * Get cron job string from one HTML element by id and copy an explanation
+ * string into another HTML element by "goal" id
+ * [Boiler plate from settings api RENDERER]
+ * @param {string} documentId HTML element id which contains the cron job string
+ * @param {string} goalDocumentIdId HTML element id which should get the
+ * explanation string
+ */
+function cronJobToText (documentId, goalDocumentIdId) {
+  document.getElementById(goalDocumentIdId).value = CronJobHelper
     .cronJobStringToHumanReadableString(
       document.getElementById(documentId).value, { use24HourTimeFormat: true })
 }
@@ -249,19 +263,27 @@ if (runThemNeverOnlyCallbacks) {
 
 ipcRenderer
   .on('main-process-to-renderer-message', (event, message) => {
-    console.info('Message:', message)
+    log.debugIndex(`Message: ${message}`)
   })
   .on('new-entries', (event, arg) => {
+    log.debugIndex(`New entries incoming (${arg.length})`)
     addRenderedIliasEntries(arg, true)
   })
   .on('ilias-login-update',
     /**
-     * @param {import('./types').IPC.IliasLoginUpdate} arg
+     * @param {import('./mainTypes').IPC.IliasLoginUpdate} arg
      */
     (event, arg) => {
       console.info('ilias-login-update:', arg)
       if (arg.ready) {
         if (!arg.iliasApiState) {
+          if (arg.errorMessage === undefined) {
+            throw Error('Error message is missing!')
+          }
+          if (arg.url === undefined || arg.name === undefined ||
+              arg.password === undefined) {
+            throw Error('URL/Name/Default password need all to defined!')
+          }
           Dialogs.toast('Ilias login was NOT successful',
             arg.errorMessage !== undefined ? arg.errorMessage : '')
           const urlElement = document
@@ -278,10 +300,7 @@ ipcRenderer
             nameElement.value = arg.name.value
             nameElement.placeholder = arg.name.valueDefault
           }
-          if (arg.password !== undefined) {
-            passwordElement.value = arg.password.value
-            passwordElement.placeholder = arg.password.valueDefault
-          }
+          passwordElement.value = ''
           windowManager.showWindow('welcome')
           ipcRenderer.send('show-and-focus-window')
         } else {
@@ -318,7 +337,7 @@ ipcRenderer
   // Update settings value after it was set
   .on('settings-set-answer',
     /**
-     * @param {import('./types').SettingsSet} arg
+     * @param {import('./mainTypes').SettingsSet} arg
      */
     (event, arg) => {
       setSettingsElement(arg.documentId, arg.type, arg.value)
@@ -334,7 +353,7 @@ ipcRenderer
   // Update settings value after a reset was requested
   .on('settings-reset-answer',
     /**
-     * @param {import('./types').SettingsResetAnswer} arg
+     * @param {import('./mainTypes').SettingsResetAnswer} arg
      */
     (event, arg) => {
       setSettingsElement(arg.resetDocumentId, arg.type, arg.valueDefault)
@@ -342,20 +361,20 @@ ipcRenderer
   // Detect new version and ask user if he wants to download and install it
   .on('new-version-detected',
     /**
-     * @param {import('./modules/VersionChecker/API/VersionCheckerTypes')
-     * .GitHubLatestTag} arg
+     * @param {import('./mainTypes').NewVersionDetected} info
      */
-    (event, arg) => {
+    (event, info) => {
       Dialogs.question('Confirm', 'Newer version detected ' +
-        `(${arg.tag_name}, ${arg.created_at}).\n` +
+        `(${info.newVersion}, ${info.date}).\n` +
         'Do you want to download it?', () => {
-        openExternal(arg.html_url)
+        openExternal(info.url).catch(err => Dialogs
+          .error('Website could not be opened', err.message))
       })
     })
   // Listen to the main process to open windows if the main process wants to
   .on('open-window',
     /**
-     * @param {import('./types').OpenWindow} arg
+     * @param {import('./mainTypes').OpenWindow} arg
      */
     (event, arg) => {
       windowManager.showWindow(arg.screenId)
@@ -417,6 +436,7 @@ document.getElementById('check-for-updates').addEventListener('click', () => {
 
 /* =====  Keyboard input listener  ====== */
 
+// tslint:disable-next-line: cyclomatic-complexity
 document.addEventListener('keydown', e => {
   switch (e.which) {
     case 122: // F11 - Fullscreen

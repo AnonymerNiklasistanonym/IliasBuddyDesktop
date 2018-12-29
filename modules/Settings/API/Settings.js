@@ -6,22 +6,25 @@ const Renderer = require('../RENDERER/Renderer')
  */
 class Settings {
   /**
-   * @param {import('./SettingsTypes').Hidden.SettingsId} id
-   * @returns {*}
+   * Get value of a hidden setting
+   * @param {import('./SettingsTypes').Hidden.SettingsId} id Unique id
+   * @returns {*} The value
    */
   static getHidden (id) {
     return SettingsHandler.getSettingsObject(id, false)
   }
   /**
-   * @param {import('./SettingsTypes').Modifiable.SettingsId} id
-   * @returns {*}
+   * Get value of a modifiable setting
+   * @param {import('./SettingsTypes').Modifiable.SettingsId} id Unique id
+   * @returns {*} The value
    */
   static getModifiable (id) {
     return SettingsHandler.getSettingsObject(id, true)
   }
   /**
-   * @param {import('./SettingsTypes').Modifiable.SettingsId} id
-   * @returns {*}
+   * Get the default value of a modifiable setting
+   * @param {import('./SettingsTypes').Modifiable.SettingsId} id Unique id
+   * @returns {*} The default value
    */
   static getModifiableDefault (id) {
     return SettingsHandler.getDefaultValue(id, true)
@@ -66,6 +69,14 @@ class Settings {
    */
   static save () {
     SettingsHandler.save()
+  }
+  /**
+   * Type check a setting
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsType} value
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsTypeName} type
+   */
+  static makeModifiableTypeChecks (type, value) {
+    SettingsHandler.makeModifiableTypeChecks(type, value)
   }
 }
 

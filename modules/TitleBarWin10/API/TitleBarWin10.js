@@ -2,6 +2,9 @@ const fs = require('fs')
 const path = require('path')
 const { remote } = require('electron')
 
+/**
+ * Windows 10 lookalike title bar helper
+ */
 class TitleBarWin10 {
   /**
    * Creates an instance of IliasBuddyApi.
@@ -25,6 +28,7 @@ class TitleBarWin10 {
     this.closeActionId = 'title-bar-action-close'
   }
   /**
+   * Add a action to the title bar (like close, minimize, ...)
    * @param {import('./TitleBarWin10Types').TitleBarWin10.OptionAction} action
    * @returns {HTMLDivElement}
    */
@@ -59,6 +63,7 @@ class TitleBarWin10 {
     return actionElement
   }
   /**
+   * Add a menu entry to the title bar (Like File, Edit, Help, ...)
    * @param {import('./TitleBarWin10Types').TitleBarWin10.OptionMenu} menu
    * @returns {HTMLDivElement}
    */
@@ -77,7 +82,9 @@ class TitleBarWin10 {
     }
     return menuElement
   }
+  // TODO Complexity is too high
   /**
+   * Add the generated title bar to the given HTML DIV element
    * @param {HTMLDivElement} titleBarDiv
    */
   addTitleBar (titleBarDiv) {
@@ -160,6 +167,7 @@ class TitleBarWin10 {
     this.electronWindowListener()
   }
   /**
+   * Remove title bar from the initial set HTML DIV element
    * @param {HTMLDivElement} titleBarDiv
    */
   removeTitleBar (titleBarDiv) {
@@ -168,6 +176,12 @@ class TitleBarWin10 {
       titleBarDiv.removeChild(titleBarDiv.firstChild)
     }
   }
+  /**
+   * Set default callbacks (close, minimize, ...)
+   * @param {import('./TitleBarWin10Types').TitleBarWin10
+   * .OptionDefaultCallbacks} defaultCallbacks
+   * @memberof TitleBarWin10
+   */
   defaultClickActions (defaultCallbacks) {
     const titleBarMinimize = document.getElementById(this.minimizeActionId)
     const titleBarResize = document.getElementById(this.resizeActionId)
@@ -227,6 +241,9 @@ class TitleBarWin10 {
       }
     })
   }
+  /**
+   * Setup listener to electron window actions
+   */
   electronWindowListener () {
     const titleBar = document.getElementById('title-bar')
     const titleBarResize = document.getElementById('title-bar-action-resize')

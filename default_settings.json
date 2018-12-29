@@ -48,8 +48,7 @@
                 "info": "FUTURE > TODO",
                 "valueDefault": [{
                     "ascending": false,
-                    "by": "date",
-                    "on": true
+                    "by": "date"
                 }]
             },
             {

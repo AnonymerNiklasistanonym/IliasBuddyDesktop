@@ -5,7 +5,8 @@
       "sourceMap": true,
       "outDir": "build",
       "lib": [
-        "es6"
+        "es6",
+        "dom"
       ],
       "allowJs": true,
       "target": "es6"
@@ -21,6 +22,8 @@
       "ignoreCompilerErrors": true,
       "mode": "file",
       "out": "./typedoc",
-      "name": "Ilias Buddy Desktop"
+      "name": "Ilias Buddy Desktop",
+      "readme": "./DOCS_README.md",
+      "verbose": true
     }
   }

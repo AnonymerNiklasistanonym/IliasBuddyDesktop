@@ -2,9 +2,13 @@
 
 const RendererEntries = require('../GUI/RendererEntriesApi')
 const ManageEntries = require('../MANAGER/ManageEntriesApi')
+const log = require('electron-log')
 
 /* ===== >> Imports << ====== */
 
+/**
+ * API to easily manage to get feed updates, cached entries, etc.
+ */
 class IliasBuddyApi {
   /**
    * Creates an instance of IliasBuddyApi
@@ -26,10 +30,21 @@ class IliasBuddyApi {
   getCurrentEntries () {
     return this.manageEntries.getCurrentEntries()
   }
+  /**
+   * Get the already cached entries
+   */
   static getCache () {
     return ManageEntries.getCachedEntries()
   }
+  /**
+   * Test if a connection with a `200` response can be established
+   * @param {string} url Private Ilias feed URL
+   * @param {string} userName Private Ilias feed user name for authentication
+   * @param {string} password Private Ilias feed password for authentication
+   * @returns {Promise<void>}
+   */
   static testConnection (url, userName, password) {
+    log.debug('IliasBuddyApi, testConnection')
     return ManageEntries.testConnection(url, userName, password)
   }
   /**

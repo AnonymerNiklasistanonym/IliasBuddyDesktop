@@ -15,9 +15,9 @@ A private Ilias RSS feed client written in Electron.
 
 ## Install
 
-- Either [build it yourself](build-electron.md) from source
+- Either [build it yourself](build-app.md) from source
 - or install it via the [GitHub release page](https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/releases)
 
 ## Source Code Documentation
 
-[Find the source code documentation here](typedoc/index.html)
+[Find the source code documentation here](typedoc/globals.html)

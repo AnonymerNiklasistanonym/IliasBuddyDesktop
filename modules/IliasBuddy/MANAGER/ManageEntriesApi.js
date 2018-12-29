@@ -7,12 +7,6 @@ const log = require('electron-log')
 const FetchEntries = require('../FETCH/FetchEntriesApi')
 const FileManager = require('../../FileManager/API/FileManager')
 
-/* =====  Log levels  ====== */
-
-// error, warn, info, verbose, debug, silly
-log.transports.console.level = 'debug'
-log.transports.file.level = 'debug'
-
 /* =====  Content  ====== */
 
 /**
@@ -61,6 +55,9 @@ class IliasBuddyManageEntriesApi {
     this.currentEntries = cachedEntries
     this.newEntriesFoundCallback = newEntriesFoundCallback
   }
+  /**
+   * Get the already cached entries
+   */
   static getCachedEntries () {
     return cachedEntries
   }
@@ -146,6 +143,7 @@ class IliasBuddyManageEntriesApi {
    * @returns {Promise<void>}
    */
   static testConnection (url, userName, password) {
+    log.debug('ManageEntries > test connection')
     return FetchEntries.testConnection(url, userName, password)
   }
   /**

@@ -1,14 +1,35 @@
 export namespace WindowManager {
     export interface Window {
+        /**
+         * HTML element id of window
+         */
         documentId: string;
+        /**
+         * Unique identifier to call the window
+         */
         id: string;
+        /**
+         * Additional window options
+         */
         options?: WindowOptions;
     }
 
     export interface WindowOptions {
+        /**
+         * CSS tags that the window gets when it's shown
+         */
         cssClassListShow: string[];
+        /**
+         * CSS tags that the window gets when it's hidden
+         */
         cssClassListHide: string[];
+        /**
+         * Callback when the window is shown
+         */
         callbackShow: () => void;
+        /**
+         * Callback when the window is hidden
+         */
         callbackHide: () => void;
     }
 

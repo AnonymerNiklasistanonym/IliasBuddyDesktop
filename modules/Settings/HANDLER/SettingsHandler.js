@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const FileManager = require('../../FileManager/API/FileManager')
+const CronHelper = require('../../CronJobHelper/API/CronJobHelper')
 
 const settingsPaths = {
   default: path.join(__dirname, '../../../default_settings.json'),
@@ -24,14 +25,18 @@ const localSettings = FileManager.fileExistsSyncAppData(settingsPaths.local)
   ? JSON.parse(FileManager.readFileSyncAppData(settingsPaths.local).toString())
   : {}
 
+/**
+ * handle settings (Set/Get them and their default values, ...)
+ */
 class SettingsHandler {
   /**
+   * Get settings object value
    * @param {import('../API/SettingsTypes').Hidden.SettingsId |
    * import('../API/SettingsTypes').Modifiable.SettingsId} id
    * @param {boolean} modifiable Specify if hidden or modifiable setting
    * @returns {*}
    */
-  static getSettingsObject (id, modifiable = false) {
+  static getValue (id, modifiable = false) {
     // 1) Check if the ID is in the default list
     if (!this.checkIfIdIsAllowed(id, modifiable)) {
       throw Error(`The id "${id}" is not allowed`)
@@ -150,8 +155,63 @@ class SettingsHandler {
    */
   static getModifiableSettingsWithCurrentValue () {
     return defaultSettings.settings.modifiable.map(a => ({
-      ...a, value: this.getSettingsObject(a.id, true)
+      ...a, value: this.getValue(a.id, true)
     }))
+  }
+  /**
+   * Type check a setting
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsType} value
+   * @param {import('../API/SettingsTypes').Modifiable.SettingsTypeName} type
+   */
+  // tslint:disable-next-line: cyclomatic-complexity
+  static makeModifiableTypeChecks (type, value) {
+    if (type === undefined) { throw Error('Type needs to be a string') }
+    switch (type) {
+      case 'toggle':
+        if (typeof value !== typeof true) {
+          throw Error('A toggle setting must be boolean! ' +
+                      `(${typeof value})`)
+        }
+        break
+      case 'text':
+      case 'password':
+        if (typeof value !== typeof '') {
+          throw Error('A text/password setting must be a string! ' +
+                      `(${typeof value})`)
+        }
+        break
+      case 'cronJob':
+        if (typeof value !== typeof '') {
+          throw Error('A cron job setting must be a string! ' +
+                      `(${typeof value})`)
+        }
+        if (!CronHelper.cronJobStringIsValid(value)) {
+          throw Error('The cron job setting is not valid! ' +
+                      `(${value})`)
+        }
+        break
+      case 'url':
+        if (typeof value !== typeof '') {
+          throw Error('A url setting can never not be a string!')
+        }
+        if (!this.isValidURL(value)) {
+          throw Error('The url setting is not valid!')
+        }
+        break
+      default:
+        throw Error(`This type is not supported! (${type})`)
+    }
+  }
+  /**
+   * This tester does not like "user-name:password@..."
+   * @author https://www.regextester.com/94502
+   * @param {string} urlToCheck Url to be checked
+   * @returns {boolean} is valid url
+   */
+  isValidURL (urlToCheck) {
+    // tslint:disable-next-line:max-line-length
+    const res = urlToCheck.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
+    return !(res === null)
   }
 }
 

@@ -27,11 +27,13 @@ class WindowManager {
     this.removeOpenPopUpWindow = false
   }
   /**
-   * @param {boolean} [on]
+   * Toggle full screen of GUI (adds `window-manager-screen-full-screen` class
+   * tag)
+   * @param {boolean} [fullScreen] True if full screen should be activated
    */
-  toggleFullScreen (on) {
-    if (on !== undefined) {
-      this.fullScreen = on
+  toggleFullScreen (fullScreen) {
+    if (fullScreen !== undefined) {
+      this.fullScreen = fullScreen
     } else {
       this.fullScreen = !this.fullScreen
     }
@@ -44,11 +46,12 @@ class WindowManager {
     }
   }
   /**
-   * @param {boolean} [on]
+   * Toggle title bar (adds `window-manager-title-bar-screen` class tag)
+   * @param {boolean} [showTitleBar] True if it should be shown
    */
-  toggleTitleBar (on) {
-    if (on !== undefined) {
-      this.titleBar = on
+  toggleTitleBar (showTitleBar) {
+    if (showTitleBar !== undefined) {
+      this.titleBar = showTitleBar
     } else {
       this.titleBar = !this.titleBar
     }
@@ -88,7 +91,7 @@ class WindowManager {
    * .ShowWindowOptions} [options]
    */
   showWindow (showNewWindowId, options) {
-    let newWindowIndex = this.getIndexOfRegisteredWindow(showNewWindowId)
+    const newWindowIndex = this.getIndexOfRegisteredWindow(showNewWindowId)
     if (newWindowIndex === -1) {
       throw Error('New window "' + showNewWindowId + '" is not registered!')
     }
@@ -134,6 +137,7 @@ class WindowManager {
     this.openWindowsStack.push(showNewWindowId)
   }
   /**
+   * Show the previous opened window or do nothing when only one window is open
    * @param {import('./WindowManagerTypes').WindowManager
    * .ShowWindowOptions} [options]
    */

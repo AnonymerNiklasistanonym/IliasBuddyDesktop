@@ -54,7 +54,7 @@ class RawEntryParser {
    * .Entry} Entry
    */
   static parseToIliasBuddyEntry (rawEntry) {
-    let resultObject = {
+    const resultObject = {
       course: this.parseCourseTitle(rawEntry.title),
       courseDirectory: this.parseCourseDirectory(rawEntry.title),
       date: this.parseDate(rawEntry.pubDate),

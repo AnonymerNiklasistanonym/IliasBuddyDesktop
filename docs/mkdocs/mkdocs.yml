@@ -8,7 +8,7 @@ nav:
 - Home: index.md
 - Instructions: instructions.md
 - Build:
-    - Electron: build-electron.md
+    - App: build-app.md
     - Documentation: build-docs.md
 - Debug:
     - Logs: debug-logs.md

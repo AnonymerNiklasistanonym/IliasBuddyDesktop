@@ -1,12 +1,15 @@
 const { net } = require('electron')
 
-module.exports = {
+/**
+ * Version checker helper
+ */
+class VersionChecker {
   /**
    * Get the latest GitHub tag
    * @param {string} githubLatestReleaseUrl
    * @returns {Promise<import('./VersionCheckerTypes').GitHubLatestTag>}
    */
-  getLatestTagGithub (githubLatestReleaseUrl) {
+  static getLatestTagGithub (githubLatestReleaseUrl) {
     return new Promise((resolve, reject) => {
       // Create a buffer in which all the chunks of data will be saved
       let responseDataBuffer = []
@@ -46,25 +49,30 @@ module.exports = {
         //  was done
         .on('close', () => { resolve(jsonObject) }).end()
     })
-  },
+  }
+  // TODO
   /**
    * Check if a tag is newer than the old tag
+   * @todo Write the documentation.
    * @param {string} oldTag
    * @param {string} newTag
    * @returns {boolean} Tag is newer
    */
-  checkIfTagIsNewer (oldTag, newTag) {
+  static checkIfTagIsNewer (oldTag, newTag) {
     return false
-  },
+  }
   // TODO
   /**
    * Check if there are any updates
+   * @todo Write the documentation.
    * @param {string} oldTag
    * @returns {Promise<import('./VersionCheckerTypes').LatestVersionCheck>}
    */
-  checkForLatestVersion (oldTag) {
+  static checkForLatestVersion (oldTag) {
     return new Promise((resolve, reject) => {
-      resolve({ newerVersionAvailable: false, newerVersionInfo: 'Nope' })
+      resolve({ newerVersionAvailable: false })
     })
   }
 }
+
+module.exports = VersionChecker

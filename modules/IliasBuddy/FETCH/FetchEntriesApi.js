@@ -2,7 +2,7 @@
 
 const { net, session } = require('electron')
 const convert = require('xml-js')
-// const fs = require('fs')
+const log = require('electron-log')
 const RawEntryParser = require('../PARSER/RawEntryParserApi')
 
 /* ===== >> Imports << ====== */
@@ -54,39 +54,45 @@ class IliasBuddyFetchEntriesApi {
    * @param {Promise<void>}
    */
   static testConnection (url, userName, password) {
+    log.debug('testConnection')
     // console.log('FetchEntries - testConnection')
-    return new Promise((resolve, reject) => {
-      // Do first clear the authentication cache
-      session.defaultSession.clearAuthCache({ password }, () => {
-        // Try this for now
-        // TODO
-        session.defaultSession.clearStorageData(undefined, () => {
-          net.request(url)
-            .on('response', response => {
-              // console.log('FetchEntries - testConnection .on(\'response\'')
-              if (response.statusCode === 200) {
-                response
-                  .on('data', chunk => { return undefined })
-                  .on('error', err => {
-                    // console.log('FetchEntries - testConnection - reject')
-                    reject(err)
-                  })
-                  .on('end', () => {
-                    // console.log('FetchEntries - testConnection - resolve')
-                    resolve()
-                  })
-              } else {
-                reject(Error(`Wrong status code (${response.statusCode})`))
-              }
-            })
-            .on('login', (authInfo, callback) => {
-              callback(userName, password)
-            })
-            .on('error', reject)
-            .end()
-        })
-      })
-    })
+    return new Promise((resolve, reject) =>
+      // Do first clear the authentication cache (not working right now)
+      // FIXME It should fail after changing userName/userPassword, but it
+      // somehow saves the authentication and so only a restart fails
+      session.defaultSession.clearAuthCache({ password }, () =>
+        session.defaultSession.clearStorageData(
+          { storages: ['localstorage', 'caches', 'indexdb'] },
+          () => {
+            // Make a request to get the page data of the URL
+            log.debug('testConnection > Make net request')
+            net.request(url)
+              .on('response', response => {
+                // On a server response check first that status code
+                log.debug('testConnection > Make net request > Response')
+                if (response.statusCode === 200) {
+                  log.debug('testConnection > Make net request > Response > OK')
+                  response
+                    .on('data', chunk => { /* needs to be called */ })
+                    .on('error', reject)
+                    .on('end', () => {
+                      // When connection was able to get data and ended resolve
+                      log.debug('testConnection > Make net request > end')
+                      resolve()
+                    })
+                } else {
+                  // If the status code is not OK reject
+                  reject(Error(`Wrong status code (${response.statusCode})`))
+                }
+              })
+              .on('login', (authInfo, callback) => {
+                callback(userName, password)
+              })
+              .on('error', reject)
+              .end()
+          })
+      )
+    )
   }
   /**
    * Get the current Ilias entries

@@ -13,11 +13,11 @@
     "start": "electron .",
     "generate-docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose",
     "build-win": "electron-builder . --win",
-    "build-linux": "electron-builder . --linux --ia32 --x64 --armv7l --arm64",
     "debug": "electron --nolazy --inspect-brk=9229 .",
-    "test": "standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js && tslint --fix -c ./lint/tslint.json -p ./lint/tsconfig.json && node tests/test.js"
+    "test": "standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js && tslint --fix -c ./tslint.json -p ./tsconfig.json && node tests/test.js"
   },
   "devDependencies": {
+    "@types/auto-launch": "^5.0.0",
     "@types/node-cron": "^2.0.0",
     "@types/node-notifier": "0.0.28",
     "electron": "^4.0.0",
@@ -74,6 +74,7 @@
         "modules/TitleBarWin10/**/*.svg",
         "fonts/**/*.woff2",
         "images/**/*.ico",
+        "images/favicon/favicon.ico",
         "images/**/*.png",
         "images/**/*.svg",
         "index.js",
@@ -85,17 +86,6 @@
         "nsis:ia32",
         "nsis:x64"
       ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb",
-        "snap",
-        "pacman"
-      ],
-      "icon": "images/favicon/favicon_32.png",
-      "synopsis": "single line synopsis",
-      "category": "Utility"
     },
     "nsis": {
       "artifactName": "${productName}_installer_v${version}_${os}_arch=${arch}.${ext}",

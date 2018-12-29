@@ -13,14 +13,48 @@ export namespace Hidden {
      * All defined settings values [Hidden settings]
      */
     export type SettingsType =
-        { openScreen: boolean, screenId: string } |
-        { height: number, width: number, x: number, y: number } |
-        { height: number, width: number } |
-        { options: [{ filter: boolean, id: string }], query: string } |
-        [{ ascending: boolean, by: string, on: boolean }] |
+        RestartInfo |
+        WindowBounds |
+        MinWindowBounds |
+        FutureIliasBuddySearch |
+        FutureIliasBuddySort[] |
         IliasBuddyFetchEntries.Entry[] |
-        [{ name: string, description: string, link: string }] |
+        FutureIliasBuddyLinkEntry[] |
         string;
+
+    interface RestartInfo {
+        openScreen: boolean;
+        screenId: string;
+    }
+
+    interface WindowBounds {
+        height: number;
+        width: number;
+        x: number;
+        y: number;
+    }
+
+    interface MinWindowBounds {
+        height: number;
+        width: number;
+    }
+
+    interface FutureIliasBuddyLinkEntry {
+        description: string;
+        link: string;
+        name: string;
+    }
+
+    type FutureIliasBuddySortOptions = "date" | "title" | "course";
+    interface FutureIliasBuddySort {
+        ascending: boolean;
+        by: FutureIliasBuddySortOptions;
+    }
+    type FutureIliasBuddyFilterOptions = "date" | "title" | "course";
+    interface FutureIliasBuddySearch {
+        filter: FutureIliasBuddyFilterOptions[];
+        query: string;
+    }
 
     /**
      * Settings object [Hidden settings]
@@ -73,8 +107,13 @@ export namespace Modifiable {
         id: SettingsId;
         valueDefault: SettingsType;
         type: SettingsType;
-        info: { description: string; name: string; };
+        info: SettingsObjectDefaultInfo;
         restart?: boolean;
+    }
+
+    interface SettingsObjectDefaultInfo {
+        description: string;
+        name: string;
     }
 
     /**
