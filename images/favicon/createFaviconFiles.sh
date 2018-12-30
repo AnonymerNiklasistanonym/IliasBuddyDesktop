@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+./clean.sh
+
+# Check if inkscape is installed
+if ! [ -x "$(command -v inkscape)" ]; then
+  echo 'Error: inkscape is not installed. https://inkscape.org/release' >&2
+  exit 1
+fi
+
+# Check if magick is installed
+if ! [ -x "$(command -v magick)" ]; then
+  echo 'Error: magick is not installed. https://www.imagemagick.org/script/download.php' >&2
+  exit 1
+fi
+
 # PNG export: Declare an array with the image sizes
 array=( 32 512 )
 for i in "${array[@]}"

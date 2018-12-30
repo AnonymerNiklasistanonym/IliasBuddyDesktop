@@ -2,6 +2,20 @@
 
 ./clean.sh
 
+# Check if wget is installed
+if ! [ -x "$(command -v wget)" ]; then
+  echo 'Error: wget is not installed. (Windows: https://eternallybored.org/misc/wget/)' >&2
+  exit 1
+fi
+
+# Check if unzip is installed
+if ! [ -x "$(command -v unzip)" ]; then
+  echo 'Error: unzip is not installed.' >&2
+  exit 1
+fi
+
+
+
 # Zip file downloads
 wget -O zippedFilesOpenSans.zip "http://google-webfonts-helper.herokuapp.com/api/fonts/open-sans?download=zip&subsets=latin&variants=regular&formats=woff2"
 wget -O zippedFilesRoboto.zip "http://google-webfonts-helper.herokuapp.com/api/fonts/roboto?download=zip&subsets=latin&variants=regular&formats=woff2"

@@ -13,6 +13,7 @@ Link to searchable instructions/documentation page: [https://anonymerniklasistan
 Link to uncompiled doc files: [`docs/mkdocs/docs/`](docs/mkdocs/docs/)
 
 - [Index](docs/mkdocs/docs/index.md)
+- [Instructions](docs/mkdocs/docs/instructions.md)
 - Build
   - [App](docs/mkdocs/docs/build-app.md)
   - [Documentation](docs/mkdocs/docs/build-documentation.md)
