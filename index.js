@@ -11,6 +11,7 @@
 const { ipcRenderer, remote, shell } = require('electron')
 const path = require('path')
 const log = require('electron-log')
+const moment = require('moment')
 // custom modules
 const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
@@ -20,33 +21,29 @@ const CronJobHelper = require('./modules/CronJobHelper/API/CronJobHelper')
 /* =====  Logging  ====== */
 
 log.debugIndex = parameter => log.debug('[index] ' + parameter)
-log.errorIndex = error => {
-  log.error('[index] ' + error)
-  throw error
-}
 
 /* =====  Global variables  ====== */
 
 /**
  * Indicate if info button was toggled
  */
-let infoToggled = false
+let gInfoPopupToggled = false
 /**
  * Indicate if settings button was toggled
  */
-let settingsToggled = false
+let gSettingsPopupToggled = false
 
 /* =====  Global constants  ====== */
 
 /**
  * The current window to launch remote commands
  */
-const mainWindow = remote.getCurrentWindow()
+const gMainWindow = remote.getCurrentWindow()
 
 /**
  * Window manager
  */
-const windowManager = new WindowManager([
+const gWindowManager = new WindowManager([
   { documentId: 'main', id: 'main' },
   { documentId: 'info', id: 'info' },
   { documentId: 'welcome', id: 'welcome' },
@@ -57,7 +54,7 @@ const windowManager = new WindowManager([
 /**
  * Title bar
  */
-const titleBarWin10 = new TitleBarWin10({
+const gTitleBar = new TitleBarWin10({
   actions: [{
     alt: 'settings',
     id: 'title-bar-action-settings',
@@ -94,14 +91,14 @@ const titleBarWin10 = new TitleBarWin10({
     }
   },
   menu: [{
-    onClickCallback: () => { windowManager.showWindow('main') },
+    onClickCallback: () => { gWindowManager.showWindow('main') },
     text: 'Feed'
   }, {
-    onClickCallback: () => { windowManager.showWindow('links') },
-    text: 'Links'
-  }, {
-    onClickCallback: () => { windowManager.showWindow('saved') },
+    onClickCallback: () => { gWindowManager.showWindow('saved') },
     text: 'Saved'
+  }, {
+    onClickCallback: () => { gWindowManager.showWindow('links') },
+    text: 'Links'
   }]
 })
 
@@ -109,51 +106,58 @@ const titleBarWin10 = new TitleBarWin10({
 
 /**
  * Toggle popup screens
- * @param {string} popUpScreenId
+ * @param {string} popUpScreenId Popup screen id
  */
 function togglePopupScreen (popUpScreenId) {
+  log.debugIndex(`togglePopupScreens (popUpScreenId=${popUpScreenId})`)
+  // If the popup window is the settings screen
   if (popUpScreenId === 'settings') {
-    settingsToggled = !settingsToggled
-    if (windowManager.getCurrentWindow() === 'settings') {
-      if (!settingsToggled) {
-        return windowManager.showPreviousWindow()
-      }
+    // And the current screen is not this screen
+    if (gWindowManager.getCurrentWindow() !== popUpScreenId) {
+      // Just set settings toggled true
+      gSettingsPopupToggled = true
     } else {
-      settingsToggled = true
+      // Else toggle settings toggled and show the previous window
+      gSettingsPopupToggled = !gSettingsPopupToggled
+      if (!gSettingsPopupToggled) { return gWindowManager.showPreviousWindow() }
     }
   } else if (popUpScreenId === 'info') {
-    infoToggled = !infoToggled
-    if (windowManager.getCurrentWindow() === 'info') {
-      if (!infoToggled) {
-        return windowManager.showPreviousWindow()
-      }
+    // Do the same with 'info'
+    if (gWindowManager.getCurrentWindow() !== popUpScreenId) {
+      // Just set info toggled true
+      gInfoPopupToggled = true
     } else {
-      infoToggled = true
+      // Else toggle info toggled and show the previous window
+      gInfoPopupToggled = !gInfoPopupToggled
+      if (!gInfoPopupToggled) { return gWindowManager.showPreviousWindow() }
     }
   } else {
     throw Error(`This popup window id is not supported: "${popUpScreenId}"`)
   }
-  windowManager.showWindow(popUpScreenId, { isPopUpWindow: true })
+  // If not a previous window was shown show now the popup window
+  gWindowManager.showWindow(popUpScreenId, { isPopUpWindow: true })
 }
 
 /**
- * Add already rendered ilias entries
- * @param {string[]} newEntries Rendered entries
+ * Add already rendered ilias entries to entries list (at the top)
+ * @param {string[]} newEntries Rendered Ilias entries
  * @param {boolean} notification Show notification about the new entries
  */
 function addRenderedIliasEntries (newEntries, notification = true) {
-  // Add the new entries to the list (at the top)
+  // First get the list that contains all entries
   const list = document.getElementById('ilias-entries')
+  // For each new entry add the rendered entry at the top
   newEntries.forEach(newEntry => {
     const wrapper = document.createElement('div')
     wrapper.innerHTML = newEntry
     list.insertBefore(wrapper.firstChild, list.firstChild)
   })
-  // Show a notification if wanted
-  if (notification && newEntries.length > 0) {
-    Dialogs.toast('New entries', newEntries.length + ' entries are new', () => {
-      ipcRenderer.send('show-and-focus-window')
-    })
+  // Show a notification if wanted and there are new elements
+  if (notification && Array.isArray(newEntries) && newEntries.length > 0) {
+    Dialogs.toast('New Ilias entries',
+      newEntries.length + ' entries are new', () => {
+        ipcRenderer.send('show-and-focus-window')
+      })
   }
 }
 
@@ -163,22 +167,20 @@ function addRenderedIliasEntries (newEntries, notification = true) {
  * @returns {Promise<void>}
  */
 function openExternal (url) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) =>
     shell.openExternal(url, undefined, err => { err ? reject(err) : resolve() })
-  })
+  )
 }
 
 /**
  * Copy link to clipboard
  * https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText
- * @param {string} url
+ * @param {string} url Url which should be copied to the clipboard
  */
 function copyToClipboard (url) {
-  navigator.clipboard.writeText(url).then(() => {
-    Dialogs.toast('Copying to clipboard successful', url)
-  }, err => {
-    Dialogs.error('Could not copy url', JSON.stringify(err, null, 4))
-  })
+  navigator.clipboard.writeText(url)
+    .then(() => { Dialogs.toast('Copying to clipboard successful', url) },
+      err => { Dialogs.error('Could not copy url', err.message) })
 }
 
 /**
@@ -189,7 +191,7 @@ function copyToClipboard (url) {
  * @param {import('./modules/Settings/API/SettingsTypes')
  * .Modifiable.SettingsType} value Settings value
  */
-function setSettingsElement (documentId, type, value) {
+const setSettingsElement = (documentId, type, value) => {
   const element = document.getElementById(documentId)
   switch (type) {
     case 'toggle':
@@ -273,8 +275,8 @@ ipcRenderer
     /**
      * @param {import('./mainTypes').IPC.IliasLoginUpdate} arg
      */
+    // tslint:disable-next-line: cyclomatic-complexity
     (event, arg) => {
-      console.info('ilias-login-update:', arg)
       if (arg.ready) {
         if (!arg.iliasApiState) {
           if (arg.errorMessage === undefined) {
@@ -300,12 +302,17 @@ ipcRenderer
             nameElement.value = arg.name.value
             nameElement.placeholder = arg.name.valueDefault
           }
+          if (arg.password !== undefined) {
+            passwordElement.placeholder = arg.password.valueDefault
+          }
           passwordElement.value = ''
-          windowManager.showWindow('welcome')
+          gWindowManager.showWindow('welcome')
           ipcRenderer.send('show-and-focus-window')
         } else {
           Dialogs.toast('Ilias login was successful', '')
-          windowManager.showWindow('main')
+          gWindowManager.showWindow('main')
+          // Get settings again
+          ipcRenderer.send('getSettings')
         }
       } else {
         console.info('API is not yet ready')
@@ -322,16 +329,19 @@ ipcRenderer
   })
   .on('settings', (event, arg) => {
     const list = document.getElementById('settings_entries')
+    // Remove all settings entries
+    while (list.firstChild) { list.removeChild(list.firstChild) }
+    // Add rendered settings entries
     arg.map(a => {
       const wrapper = document.createElement('div')
       wrapper.innerHTML = a
       list.appendChild(wrapper.firstChild)
     })
   })
-  .on('version', (event, arg) => {
+  .once('version', (event, arg) => {
     document.getElementById('app_version').innerText = arg
   })
-  .on('name', (event, arg) => {
+  .once('name', (event, arg) => {
     document.getElementById('app_name').innerText = arg
   })
   // Update settings value after it was set
@@ -346,7 +356,7 @@ ipcRenderer
           'To see the changes the app needs to restart.' +
           'Do you want to restart immediately?', () => {
             ipcRenderer.send('relaunch',
-              { screenId: windowManager.getCurrentWindow() })
+              { screenId: gWindowManager.getCurrentWindow() })
           })
       }
     })
@@ -365,10 +375,11 @@ ipcRenderer
      */
     (event, info) => {
       Dialogs.question('Confirm', 'Newer version detected ' +
-        `(${info.newVersion}, ${info.date}).\n` +
-        'Do you want to download it?', () => {
+        `(${info.newVersion}, ${moment(info.date).fromNow()}).\n` +
+        'Do you want to download it?\n\n' + 'Release notes:\n' +
+        info.releaseNotes, () => {
         openExternal(info.url).catch(err => Dialogs
-          .error('Website could not be opened', err.message))
+          .error('Release website could not be opened', err.message))
       })
     })
   // Listen to the main process to open windows if the main process wants to
@@ -377,99 +388,84 @@ ipcRenderer
      * @param {import('./mainTypes').OpenWindow} arg
      */
     (event, arg) => {
-      windowManager.showWindow(arg.screenId)
+      gWindowManager.showWindow(arg.screenId)
     })
   .on('set-native-title-bar', (event, nativeTitleBar) => {
-    titleBarWin10.removeTitleBar(document.querySelector('div#title-bar'))
-    windowManager.toggleTitleBar(!nativeTitleBar)
+    gTitleBar.removeTitleBar(document.querySelector('div#title-bar'))
+    gWindowManager.toggleTitleBar(!nativeTitleBar)
     if (!nativeTitleBar) {
-      titleBarWin10.addTitleBar(document.querySelector('div#title-bar'))
+      gTitleBar.addTitleBar(document.querySelector('div#title-bar'))
     }
   })
 
-/* =====  Inter process communication sender  ====== */
+/* =====  Content  ====== */
 
-// Debug
-ipcRenderer.send('render-process-to-main-message',
-  'Hello from index.js to main.js')
-
-// Check if a login exists
-ipcRenderer.send('ilias-login-check')
-
-// Request cached entries
+// Initially request cached entries
 ipcRenderer.send('get-cache')
 
 // Request settings for settings page
 ipcRenderer.send('getSettings')
 
-// Request version number and app name for info page
+// Request version number and app name for about page
 ipcRenderer.send('getVersion')
 ipcRenderer.send('getName')
 
 // Check if th Win10 title bar should be displayed
 ipcRenderer.send('native-title-bar-check')
 
-/* =====  Setup  ====== */
-
-// Special buttons to reset everything or set all changes
-// TODO Implement a "set all" and "reset all" button, hide buttons for now
-const saveChangesButton = document.getElementById('saveChanges')
-saveChangesButton.style.display = 'none'
-const resetEverythingButton = document.getElementById('resetEverything')
-resetEverythingButton.style.display = 'none'
-const tryToLoginButton = document.getElementById('welcome-ilias-api-submit')
-tryToLoginButton.addEventListener('click', () => {
-  ipcRenderer.send('test-and-login', {
-    name: document
-      .getElementById('welcome-ilias-api-privateFeedUserName').value,
-    password: document
-      .getElementById('welcome-ilias-api-privateFeedPassword').value,
-    url: document
-      .getElementById('welcome-ilias-api-privateFeedUrl').value
+// Try to login when the "try to login" button on the welcome page is clicked
+document.getElementById('welcome-ilias-api-submit')
+  .addEventListener('click', () => {
+    ipcRenderer.send('test-and-login', {
+      name: document
+        .getElementById('welcome-ilias-api-privateFeedUserName').value,
+      password: document
+        .getElementById('welcome-ilias-api-privateFeedPassword').value,
+      url: document
+        .getElementById('welcome-ilias-api-privateFeedUrl').value
+    })
   })
-})
 
-// Update checker button
-document.getElementById('check-for-updates').addEventListener('click', () => {
-  ipcRenderer.send('new-version-check')
-})
+// Check for a new program version when the "update checker" button on the about
+// page is clicked
+document.getElementById('check-for-updates')
+  .addEventListener('click', () => { ipcRenderer.send('new-version-check') })
 
-/* =====  Keyboard input listener  ====== */
-
+// Keyboard input listener
 // tslint:disable-next-line: cyclomatic-complexity
 document.addEventListener('keydown', e => {
   switch (e.which) {
     case 122: // F11 - Fullscreen
-      mainWindow.setFullScreen(!mainWindow.isFullScreen())
-      windowManager.toggleFullScreen(mainWindow.isFullScreen())
+      gMainWindow.setFullScreen(!gMainWindow.isFullScreen())
+      gWindowManager.toggleFullScreen(gMainWindow.isFullScreen())
       break
     case 116: // F5 - reload app
-      mainWindow.reload()
+      gMainWindow.reload()
       break
     case 123: // F12 - open dev tools
-      mainWindow.webContents.isDevToolsOpened()
-        ? mainWindow.webContents.closeDevTools()
-        : mainWindow.webContents.openDevTools()
+      gMainWindow.webContents.isDevToolsOpened()
+        ? gMainWindow.webContents.closeDevTools()
+        : gMainWindow.webContents.openDevTools()
       break
     case 37: // <-  - Screen switch left
-      switch (windowManager.getCurrentWindow()) {
-        case 'main':
-          windowManager.showWindow('saved')
-          break
+      switch (gWindowManager.getCurrentWindow()) {
         case 'links':
-          windowManager.showWindow('main')
+          gWindowManager.showWindow('saved')
+          break
+        case 'saved':
+          gWindowManager.showWindow('main')
           break
         default:
           // do nothing
       }
       break
     case 39: // -> - Screen switch right
-      switch (windowManager.getCurrentWindow()) {
+      switch (gWindowManager.getCurrentWindow()) {
         case 'main':
-          windowManager.showWindow('links')
+          gWindowManager.showWindow('saved')
           break
         case 'saved':
-          windowManager.showWindow('main')
+          gWindowManager.showWindow('links')
           break
         default:
           // do nothing

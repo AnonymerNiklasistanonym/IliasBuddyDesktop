@@ -11,7 +11,7 @@ class Settings {
    * @returns {*} The value
    */
   static getHidden (id) {
-    return SettingsHandler.getSettingsObject(id, false)
+    return SettingsHandler.getValue(id, false)
   }
   /**
    * Get value of a modifiable setting
@@ -19,7 +19,7 @@ class Settings {
    * @returns {*} The value
    */
   static getModifiable (id) {
-    return SettingsHandler.getSettingsObject(id, true)
+    return SettingsHandler.getValue(id, true)
   }
   /**
    * Get the default value of a modifiable setting

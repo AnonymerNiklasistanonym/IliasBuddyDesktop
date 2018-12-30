@@ -188,11 +188,14 @@ function checkForProgramUpdates () {
     .then(json => {
       // TODO Implement correct version comparison
       // For now just check if the version code is different
-      if (json.tag_name !== app.getVersion()) {
+      log.debugMain(`Current version: ${'v' + app.getVersion()}, ` +
+        `Fetched version: ${json.tag_name}`)
+      if (json.tag_name !== 'v' + app.getVersion()) {
         log.debugMain(`A new program version (${json.tag_name}) was detected`)
         gMainWindow.webContents.send('new-version-detected', {
           date: json.created_at,
           newVersion: json.tag_name,
+          releaseNotes: json.body,
           url: json.html_url
         })
       }
@@ -253,16 +256,16 @@ function broadcastIliasLoginUpdate (errorMessage) {
       errorMessage,
       iliasApiState,
       name: {
-        defaultValue: userNameDefault,
-        value: userName === userNameDefault ? '' : userName
+        value: userName === userNameDefault ? '' : userName,
+        valueDefault: userNameDefault
       },
       password: {
-        defaultValue: userPasswordDefault
+        valueDefault: userPasswordDefault
       },
       ready,
       url: {
-        defaultValue: userUrlDefault,
-        value: userUrl === userUrlDefault ? '' : userUrl
+        value: userUrl === userUrlDefault ? '' : userUrl,
+        valueDefault: userUrlDefault
       }
     })
   }
@@ -301,9 +304,12 @@ function connectToIliasRssFeed () {
           broadcastIliasLoginUpdate()
           resolve()
         })
-        .catch(reject)
-        .then(() => {
+        .catch(err => {
           gIliasApiIsReady = true
+          broadcastIliasLoginUpdate(err.message)
+          reject(err)
+        })
+        .then(() => {
           gIliasApiPending = false
         })
     })
@@ -422,7 +428,10 @@ function setupAfterWindowHasLoaded () {
         // Always check for feed updates on start
         checkForFeedUpdates()
       }).catch(err => {
-        broadcastError('Ilias login error', err)
+        // If there was an error connecting to the ilias feed do nothing but log
+        // it because the error is already dealt with via the method
+        // "connectToIliasRssFeed"
+        log.error(err)
       })
     }
   }
@@ -744,7 +753,11 @@ ipcMain
      */
     (event, message) => {
       // TODO - Type checks before checking for login
-      checkIfIliasLoginIsPossible(message.name, message.password, message.url)
+      checkIfIliasLoginIsPossible({
+        password: message.password,
+        userName: message.name,
+        userUrl: message.url
+      })
         .then(() => {
           setSetting({
             id: 'userName',
@@ -769,7 +782,7 @@ ipcMain
           })
           connectToIliasRssFeed(true)
         })
-        .catch(err => { broadcastError('Ilias login error', err) })
+        .catch(err => { broadcastError('Ilias login error ???', err) })
     })
   .on('render-process-to-main-message',
     /**

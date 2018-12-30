@@ -109,6 +109,11 @@ export namespace Modifiable {
         type: SettingsType;
         info: SettingsObjectDefaultInfo;
         restart?: boolean;
+        // TODO - FUTURE
+        /**
+         * The default value cannot be the value
+         */
+        noDefaultValueAsValue?: boolean;
     }
 
     interface SettingsObjectDefaultInfo {

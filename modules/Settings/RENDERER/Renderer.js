@@ -36,9 +36,12 @@ const templateText = compileTemplate('templateText')
 const templateCronJob = compileTemplate('templateCronJob')
 const templateToggle = compileTemplate('templateToggle')
 
+/**
+ * Settings renderer helper
+ */
 class Renderer {
   /**
-   *
+   * Render a settings element
    * @param {import('../API/SettingsTypes').Modifiable
    * .SettingsObjectMerged} entry
    * @returns {string}
@@ -47,6 +50,7 @@ class Renderer {
     return this.renderElementHbs(entry)
   }
   /**
+   * Render a setting element via compiled handlebars templates
    * @param {import('../API/SettingsTypes')
    * .Modifiable.SettingsObjectMerged} entry
    * @returns {string}
@@ -57,6 +61,12 @@ class Renderer {
         return templateToggle(entry)
       case 'text':
       case 'url':
+        // TODO add settings option - "no default value as value"
+        if (entry.id === 'userName' || entry.id === 'userUrl') {
+          if (entry.value === entry.valueDefault) {
+            entry.value = ''
+          }
+        }
         return templateText(entry)
       case 'cronJob':
         return templateCronJob({
@@ -66,6 +76,11 @@ class Renderer {
               { use24HourTimeFormat: true })
         })
       case 'password':
+        if (entry.id === 'userPassword') {
+          if (entry.value === entry.valueDefault) {
+            entry.value = ''
+          }
+        }
         return templatePassword(entry)
       default:
         throw Error(`Unknown type! (${entry.type}, ${JSON.stringify(entry)})`)

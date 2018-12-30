@@ -89,7 +89,7 @@ export namespace IPC {
         /**
          * The default value
          */
-        defaultValue: string;
+        valueDefault: string;
     }
     interface IliasLoginUpdateValueUrl {
         /**
@@ -99,13 +99,13 @@ export namespace IPC {
         /**
          * The default value
          */
-        defaultValue: string;
+        valueDefault: string;
     }
     interface IliasLoginUpdateValuePassword {
         /**
          * The default value
          */
-        defaultValue: string;
+        valueDefault: string;
     }
 }
 
@@ -137,4 +137,8 @@ export interface NewVersionDetected {
      * Link to download page of new version
      */
     url: string;
+    /**
+     * Release notes string
+     */
+    releaseNotes: string;
 }
