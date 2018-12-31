@@ -15,6 +15,9 @@ nav:
 - Debug:
     - Logs: debug-logs.md
     - Breakpoints: debug-breakpoints.md
+- Other:
+    - What is this source code: other-what-is-this-source-code.md
+    - Set env variables: other-set-env-variables.md
 - Contribute: contribute.md
 - FAQ: faq.md
 - About: about.md
