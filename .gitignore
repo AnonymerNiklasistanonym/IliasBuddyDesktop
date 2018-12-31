@@ -101,7 +101,5 @@ settings.json
 !.vscode/launch.json
 
 # ignore documentation builds
-/docs/mkdocs/site
+/docs/site
 /docs/typedoc/
-**/typedoc/
-/jsdoc/
