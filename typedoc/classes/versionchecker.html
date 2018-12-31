@@ -88,7 +88,6 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="versionchecker.html#checkforlatestversion" class="tsd-kind-icon">check<wbr>For<wbr>Latest<wbr>Version</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="versionchecker.html#checkiftagisnewer" class="tsd-kind-icon">check<wbr>IfTag<wbr>IsNewer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="versionchecker.html#getlatesttaggithub" class="tsd-kind-icon">get<wbr>Latest<wbr>Tag<wbr>Github</a></li>
 							</ul>
@@ -99,39 +98,6 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-					<a name="checkforlatestversion" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> check<wbr>For<wbr>Latest<wbr>Version</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">check<wbr>For<wbr>Latest<wbr>Version<span class="tsd-signature-symbol">(</span>oldTag<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/latestversioncheck.html" class="tsd-signature-type">LatestVersionCheck</a><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/1ffa8f0/modules/VersionChecker/API/VersionChecker.js#L71">modules/VersionChecker/API/VersionChecker.js:71</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Check if there are any updates</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>todo</dt>
-									<dd><p>Write the documentation.</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>oldTag: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/latestversioncheck.html" class="tsd-signature-type">LatestVersionCheck</a><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
 					<a name="checkiftagisnewer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> check<wbr>IfTag<wbr>IsNewer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
@@ -141,7 +107,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/1ffa8f0/modules/VersionChecker/API/VersionChecker.js#L61">modules/VersionChecker/API/VersionChecker.js:61</a></li>
+									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/VersionChecker/API/VersionChecker.js#L74">modules/VersionChecker/API/VersionChecker.js:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -149,8 +115,32 @@
 									<p>Check if a tag is newer than the old tag</p>
 								</div>
 								<dl class="tsd-comment-tags">
-									<dt>todo</dt>
-									<dd><p>Write the documentation.</p>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;1&#39;, &#39;2&#39;) // true</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;2&#39;, &#39;1&#39;) // false</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;2&#39;, &#39;2&#39;) // false</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;v2&#39;, &#39;2&#39;) // false</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;v2.0.0&#39;, &#39;2.0.0&#39;) // false</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;v0.0.1&#39;, &#39;2.0.0&#39;) // true</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;v0.0.1&#39;, &#39;v2.0.0&#39;) // true</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;0.1&#39;, &#39;0.0.1&#39;) // false</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>checkIfTagIsNewer(&#39;0.0.1&#39;, &#39;0.1&#39;) // true</p>
 									</dd>
 								</dl>
 							</div>
@@ -158,9 +148,15 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>oldTag: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The old version tag</p>
+									</div>
 								</li>
 								<li>
 									<h5>newTag: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The new version tag</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -178,7 +174,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/1ffa8f0/modules/VersionChecker/API/VersionChecker.js#L12">modules/VersionChecker/API/VersionChecker.js:12</a></li>
+									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/VersionChecker/API/VersionChecker.js#L18">modules/VersionChecker/API/VersionChecker.js:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -213,9 +209,6 @@
 					<li class="current tsd-kind-class tsd-is-not-exported">
 						<a href="versionchecker.html" class="tsd-kind-icon">Version<wbr>Checker</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-								<a href="versionchecker.html#checkforlatestversion" class="tsd-kind-icon">check<wbr>For<wbr>Latest<wbr>Version</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
 								<a href="versionchecker.html#checkiftagisnewer" class="tsd-kind-icon">check<wbr>IfTag<wbr>IsNewer</a>
 							</li>
