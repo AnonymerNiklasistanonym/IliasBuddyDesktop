@@ -15,6 +15,7 @@ nav:
 - Debug:
     - Logs: debug-logs.md
     - Breakpoints: debug-breakpoints.md
+- Contribute: contribute.md
 - FAQ: faq.md
 - About: about.md
 

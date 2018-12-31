@@ -217,6 +217,7 @@ const setSettingsElement = (documentId, type, value) => {
 
 // TODO
 /**
+ * TODO
  * Save entry (change later link to guid or let it be)
  * @param {string} link
  */

@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
+    "compare-versions": "^3.4.0",
     "cronstrue": "^1.58.0",
     "electron-log": "^2.2.17",
     "handlebars": "^4.0.12",

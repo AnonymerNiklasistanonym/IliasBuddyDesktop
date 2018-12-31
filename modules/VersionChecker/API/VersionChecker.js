@@ -1,4 +1,10 @@
+/* =====  Imports  ====== */
+
+// npm modules
 const { net } = require('electron')
+const compareVersions = require('compare-versions')
+
+/* =====  Module  ====== */
 
 /**
  * Version checker helper
@@ -50,29 +56,26 @@ class VersionChecker {
         .on('close', () => { resolve(jsonObject) }).end()
     })
   }
-  // TODO
   /**
    * Check if a tag is newer than the old tag
-   * @todo Write the documentation.
-   * @param {string} oldTag
-   * @param {string} newTag
+   * @param {string} oldTag The old version tag
+   * @param {string} newTag The new version tag
+   * @example checkIfTagIsNewer('1', '2') // true
+   * @example checkIfTagIsNewer('2', '1') // false
+   * @example checkIfTagIsNewer('2', '2') // false
+   * @example checkIfTagIsNewer('v2', '2') // false
+   * @example checkIfTagIsNewer('v2.0.0', '2.0.0') // false
+   * @example checkIfTagIsNewer('v0.0.1', '2.0.0') // true
+   * @example checkIfTagIsNewer('v0.0.1', 'v2.0.0') // true
+   * @example checkIfTagIsNewer('0.1', '0.0.1') // false
+   * @example checkIfTagIsNewer('0.0.1', '0.1') // true
    * @returns {boolean} Tag is newer
    */
   static checkIfTagIsNewer (oldTag, newTag) {
-    return false
-  }
-  // TODO
-  /**
-   * Check if there are any updates
-   * @todo Write the documentation.
-   * @param {string} oldTag
-   * @returns {Promise<import('./VersionCheckerTypes').LatestVersionCheck>}
-   */
-  static checkForLatestVersion (oldTag) {
-    return new Promise((resolve, reject) => {
-      resolve({ newerVersionAvailable: false })
-    })
+    return compareVersions(newTag, oldTag) === 1
   }
 }
+
+/* =====  Exports  ====== */
 
 module.exports = VersionChecker

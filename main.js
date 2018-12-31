@@ -183,15 +183,16 @@ function checkForProgramUpdates () {
   if (gVersionCheckPending) { return }
   gVersionCheckPending = true
 
+  // Get the latest GitHub release tag information
   VersionChecker.getLatestTagGithub(
     Settings.getHidden('githubLatestReleaseUrl'))
     .then(json => {
-      // TODO Implement correct version comparison
-      // For now just check if the version code is different
       log.debugMain(`Current version: ${'v' + app.getVersion()}, ` +
         `Fetched version: ${json.tag_name}`)
-      if (json.tag_name !== 'v' + app.getVersion()) {
-        log.debugMain(`A new program version (${json.tag_name}) was detected`)
+      // Check if the release tag version is newer than the app version
+      if (VersionChecker.checkIfTagIsNewer(app.getVersion(), json.tag_name)) {
+        log.debugMain(`<broadcast> "new-version-detected" (${json.tag_name})`)
+        // If yes broadcast information
         gMainWindow.webContents.send('new-version-detected', {
           date: json.created_at,
           newVersion: json.tag_name,
@@ -200,9 +201,7 @@ function checkForProgramUpdates () {
         })
       }
     })
-    .catch(err => {
-      broadcastError('Version check error', err)
-    })
+    .catch(err => { broadcastError('Version check error', err) })
     .then(() => {
       // Always do the following at the end
       gVersionCheckPending = false
@@ -215,7 +214,7 @@ function checkForProgramUpdates () {
  * @param {Error} err Error
  */
 function broadcastError (title, err) {
-  log.debugMain(`<broadcast> Error (${title})`)
+  log.debugMain(`<broadcast> "error-dialog" (${title})`)
   log.error(err)
   gMainWindow.webContents.send('error-dialog', { message: err.message, title })
 }
@@ -238,7 +237,7 @@ function checkForFeedUpdates () {
  * @param {string} [errorMessage] Error message if there was an error
  */
 function broadcastIliasLoginUpdate (errorMessage) {
-  log.debugMain('<broadcast> Ilias login update')
+  log.debugMain('<broadcast> "ilias-login-update"')
   // Determine the current state of the gIliasApi and if it is even ready
   const ready = gIliasApiIsReady
   const iliasApiState = gIliasApi !== null
@@ -494,7 +493,7 @@ function setupAfterWindowHasLoaded () {
  * Broadcast app to open a screen
  */
 function broadcastOpenScreen (screenId) {
-  log.debugMain(`<broadcast> Open screen (screenId=${screenId})`)
+  log.debugMain(`<broadcast> "open-window" (screenId=${screenId})`)
   gMainWindow.webContents.send('open-window', { screenId })
 }
 

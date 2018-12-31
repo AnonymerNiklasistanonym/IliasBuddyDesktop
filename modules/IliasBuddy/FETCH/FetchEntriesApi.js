@@ -33,10 +33,14 @@ class IliasBuddyFetchEntriesApi {
           .on('end', () => {
             const rssString = Buffer.concat(responseDataBuffer).toString()
             // Parse raw feed
-            const result = JSON.parse(convert.xml2json(rssString,
-              { compact: true }))
-            // Return parsed feed raw
-            resolve(result)
+            try {
+              const result = JSON.parse(convert.xml2json(rssString,
+                { compact: true }))
+              // Return parsed feed raw
+              resolve(result)
+            } catch (e) {
+              reject(e)
+            }
           })
       })
       .on('login', (authInfo, callback) => {
@@ -102,8 +106,17 @@ class IliasBuddyFetchEntriesApi {
   getCurrentEntries () {
     return new Promise((resolve, reject) => {
       this.getCurrentEntriesRaw()
-        .then(entries => entries.rss.channel.item
-          .map(RawEntryParser.parseRawEntry))
+        .then(entries => {
+          // Double check if currently any entries are even available
+          if (entries.rss.channel.item !== undefined) {
+            return entries.rss.channel.item.map(RawEntryParser.parseRawEntry)
+          } else {
+            // Log it but don't display an error, because these things can
+            // happen
+            log.debug('No current entries were found!')
+            return []
+          }
+        })
         .then(entries => entries
           .map(RawEntryParser.parseToIliasBuddyEntry.bind(RawEntryParser)))
         .then(resolve)
