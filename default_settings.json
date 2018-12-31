@@ -197,6 +197,14 @@
                 },
                 "type": "toggle",
                 "valueDefault": true
+            },{
+                "id": "globalShortcutShow",
+                "info": {
+                    "description": "Open/Hide the app with a global keyboard shortcut",
+                    "name": "Keyboard shortcut 'show app'"
+                },
+                "type": "keyboardShortcut",
+                "valueDefault": "Control+Alt+I"
             }
         ]
     },

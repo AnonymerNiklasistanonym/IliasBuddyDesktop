@@ -45,7 +45,7 @@ li.ilias-entry>div.container-link-date {
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
     grid-column-gap: 1em;
-    grid-template-areas: "linkButtonBrowser linkButtonClipboard date";
+    grid-template-areas: "linkButtonBrowser linkButtonClipboard date linkButtonSave";
 }
 
 li.ilias-entry>div.container-link-date>p.ilias-entry-date {
@@ -112,4 +112,8 @@ li.ilias-entry>div.container-link-date>button.ilias-entry-link-button.browser {
 
 li.ilias-entry>div.container-link-date>button.ilias-entry-link-button.clipboard {
     grid-area: linkButtonClipboard;
+}
+
+li.ilias-entry>div.container-link-date>button.ilias-entry-link-button.save {
+    grid-area: linkButtonSave;
 }

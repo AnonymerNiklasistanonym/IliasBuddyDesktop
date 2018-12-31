@@ -198,6 +198,11 @@ class SettingsHandler {
           throw Error('The url setting is not valid!')
         }
         break
+      case 'keyboardShortcut':
+        if (typeof value !== typeof '') {
+          throw Error('A keyboard shortcut setting can never not be a string!')
+        }
+        break
       default:
         throw Error(`This type is not supported! (${type})`)
     }

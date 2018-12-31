@@ -35,6 +35,7 @@ const templatePassword = compileTemplate('templatePassword')
 const templateText = compileTemplate('templateText')
 const templateCronJob = compileTemplate('templateCronJob')
 const templateToggle = compileTemplate('templateToggle')
+const templateKeyboardShortcut = compileTemplate('templateKeyboardShortcut')
 
 /**
  * Settings renderer helper
@@ -55,6 +56,7 @@ class Renderer {
    * .Modifiable.SettingsObjectMerged} entry
    * @returns {string}
    */
+  // tslint:disable-next-line: cyclomatic-complexity
   static renderElementHbs (entry) {
     switch (entry.type) {
       case 'toggle':
@@ -68,6 +70,8 @@ class Renderer {
           }
         }
         return templateText(entry)
+      case 'keyboardShortcut':
+        return templateKeyboardShortcut(entry)
       case 'cronJob':
         return templateCronJob({
           ...entry,

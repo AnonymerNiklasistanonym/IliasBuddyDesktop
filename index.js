@@ -202,6 +202,7 @@ const setSettingsElement = (documentId, type, value) => {
     case 'password':
     case 'cronJob':
     case 'url':
+    case 'keyboardShortcut':
     // @ts-ignore
       element.value = value
       break
@@ -212,6 +213,15 @@ const setSettingsElement = (documentId, type, value) => {
     document.getElementById(documentId + '-text').value = CronJobHelper
       .cronJobStringToHumanReadableString(value, { use24HourTimeFormat: true })
   }
+}
+
+// TODO
+/**
+ * Save entry (change later link to guid or let it be)
+ * @param {string} link
+ */
+function save (link) {
+  log.debugIndex('FUTURE > Save entry: ' + link)
 }
 
 /**
@@ -314,9 +324,7 @@ ipcRenderer
           // Get settings again
           ipcRenderer.send('getSettings')
         }
-      } else {
-        console.info('API is not yet ready')
-      }
+      } else { log.debugIndex('API is not yet ready') }
     })
   .on('error-dialog',
     /**
@@ -366,7 +374,7 @@ ipcRenderer
      * @param {import('./mainTypes').SettingsResetAnswer} arg
      */
     (event, arg) => {
-      setSettingsElement(arg.resetDocumentId, arg.type, arg.valueDefault)
+      setSettingsElement(arg.documentId, arg.type, arg.valueDefault)
     })
   // Detect new version and ask user if he wants to download and install it
   .on('new-version-detected',
@@ -388,7 +396,11 @@ ipcRenderer
      * @param {import('./mainTypes').OpenWindow} arg
      */
     (event, arg) => {
-      gWindowManager.showWindow(arg.screenId)
+      if (arg.screenId === 'info' || arg.screenId === 'settings') {
+        togglePopupScreen(arg.screenId)
+      } else {
+        gWindowManager.showWindow(arg.screenId)
+      }
     })
   .on('set-native-title-bar', (event, nativeTitleBar) => {
     gTitleBar.removeTitleBar(document.querySelector('div#title-bar'))

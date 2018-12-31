@@ -11,7 +11,7 @@
 /* =====  Imports  ====== */
 
 // npm modules
-const { app, BrowserWindow, dialog, ipcMain,
+const { app, BrowserWindow, dialog, globalShortcut, ipcMain,
   Menu, nativeImage, shell, Tray } = require('electron')
 const path = require('path')
 const url = require('url')
@@ -416,6 +416,9 @@ function setupAfterWindowHasLoaded () {
   }
   gWindowSetupAfterExecuted = true
 
+  // Register keyboard shortcut to show/hide app
+  setGlobalKeyboardShortShowApp()
+
   // Try to login to ilias API
   const tryIliasLogin = () => {
     log.debugMain(`tryIliasLogin > online-state-callback (online=${gOnline})`)
@@ -535,18 +538,23 @@ function createWindow () {
 
   // Menu bar with links to all available screens
   Menu.setApplicationMenu(Menu.buildFromTemplate([{
+    accelerator: 'CmdOrCtrl+1',
     click () { broadcastOpenScreen('main') },
     label: 'Current Feed'
   }, {
+    accelerator: 'CmdOrCtrl+2',
     click () { broadcastOpenScreen('saved') },
     label: 'Saved Feed'
   }, {
+    accelerator: 'CmdOrCtrl+L',
     click () { broadcastOpenScreen('links') },
     label: 'Links'
   }, {
+    accelerator: 'CmdOrCtrl+S',
     click () { broadcastOpenScreen('settings') },
     label: 'Settings'
   }, {
+    accelerator: 'F1',
     click () { broadcastOpenScreen('info') },
     label: 'About'
   }]))
@@ -663,6 +671,18 @@ function getLatestIliasEntries () {
 }
 
 /**
+ * Show/Hide window (toggle)
+ */
+function showHideWindow () {
+  if (gMainWindow.isVisible()) {
+    gMainWindow.hide()
+  } else {
+    gMainWindow.show()
+    gMainWindow.focus()
+  }
+}
+
+/**
  * Set a setting
  * @param {import('./mainTypes').SettingsSet} arg Setting information
  */
@@ -672,6 +692,8 @@ function setSetting (arg) {
   if (Settings.getModifiable(arg.id) === arg.value) { return }
   // Than make type checks
   Settings.makeModifiableTypeChecks(arg.type, arg.value)
+    // TODO Save current value and reset setting when there was any error
+  const oldValue = Settings.getModifiable(arg.id)
   // Set setting
   Settings.setModifiable(arg.id, arg.value)
   // Check for additional options
@@ -720,11 +742,43 @@ function setSetting (arg) {
             broadcastError('Settings update, user URL error', err)
           })
         }
+        break
+      case 'keyboardShortcut':
+        if (arg.id === 'globalShortcutShow') {
+          setGlobalKeyboardShortShowApp(oldValue)
+        }
     }
   }
   // Finally send message to the renderer process
   gMainWindow.webContents.send('settings-set-answer',
     { ...arg, value: Settings.getModifiable(arg.id) })
+}
+
+/**
+ * Set global keyboard shortcut to show/hide app with one combination
+ * @param {string} [oldValue]
+ */
+function setGlobalKeyboardShortShowApp (oldValue) {
+  if (oldValue !== undefined) {
+    try { globalShortcut.unregister(oldValue) } catch (e) {
+      log.debugMain('Shortcut could not be unregistered: ' + e.message)
+    }
+  }
+  // Try to set new shortcut
+  const shortcutValue = Settings.getModifiable('globalShortcutShow')
+  try {
+    globalShortcut.register(shortcutValue, () => {
+      log.debugMain(`|${shortcutValue}| Show/Hide app shortcut`)
+      showHideWindow()
+    })
+  } catch (e) {
+    broadcastError('Keyboard shortcut (Show app) could not be registered', e)
+    if (oldValue !== undefined) {
+      // Register old shortcut again and reset setting
+      Settings.setModifiable('globalShortcutShow', oldValue)
+      setGlobalKeyboardShortShowApp()
+    }
+  }
 }
 
 /* =====  Inter process communication listeners  ====== */
@@ -836,8 +890,14 @@ ipcMain
       log.debugMain('<request> settings-reset')
       const settingsObject = Settings.getModifiableSetting(arg.id)
       if (settingsObject !== undefined) {
+        // Do only return empty strings for user name/password/url
+        if (settingsObject.id === 'userName' ||
+            settingsObject.id === 'userPassword' ||
+            settingsObject.id === 'userUrl') {
+          settingsObject.valueDefault = ''
+        }
         event.sender.send('settings-reset-answer', {
-          documentId: arg.resetDocumentId,
+          documentId: arg.documentId,
           id: arg.id,
           type: settingsObject.type,
           valueDefault: settingsObject.valueDefault

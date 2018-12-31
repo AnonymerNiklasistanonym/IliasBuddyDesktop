@@ -17,6 +17,7 @@
     height: 30px;
 }
 
+.settings-entry-keyboard-shortcut input,
 .settings-entry-cron-job input,
 .settings-entry-text input,
 .settings-entry-password input {
@@ -33,6 +34,7 @@
     border: none;
 }
 
+.settings-entry-keyboard-shortcut input:focus,
 .settings-entry-cron-job input:focus,
 .settings-entry-text input:focus,
 .settings-entry-password input:focus {

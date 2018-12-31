@@ -89,12 +89,13 @@ export namespace Modifiable {
         "userPassword" | "minimizeToSystemTray" | "devMode" |
         "checkForUpdatesOnStartup" | "checkForUpdatesCronJob" |
         "checkForUpdatesCronJobConfiguration" | "checkForFeedCronJob" |
-        "checkForFeedCronJobConfiguration" | "autoLaunch";
+        "checkForFeedCronJobConfiguration" | "autoLaunch" |
+        "globalShortcutShow";
     /**
      * All defined settings types [Modifiable settings]
      */
     export type SettingsTypeName = "toggle" | "text" | "password" | "cronJob" |
-        "url";
+        "url" | "keyboardShortcut";
     /**
      * All defined settings values [Modifiable settings]
      */
