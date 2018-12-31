@@ -10,10 +10,12 @@
   },
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "build-win": "electron-builder . --win",
-    "debug": "electron --nolazy --inspect-brk=9229 .",
-    "test": "standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js && tslint --fix -c ./tslint.json -p ./tsconfig.json && node tests/test.js"
+    "start": "./node_modules/.bin/electron .",
+    "build-win": "./node_modules/.bin/electron-builder . --win",
+    "debug": "./node_modules/.bin/electron --nolazy --inspect-brk=9229 .",
+    "test": "npm run test-standard && npm run test-tslint && node tests/test.js",
+    "test-standard": "./node_modules/.bin/standard --fix ./index.js ./main.js ./modules/**/*.js ./js/**/*.js ./tests/**/*.js",
+    "test-tslint": "./node_modules/.bin/tslint --fix -c ./tslint.json -p ./tsconfig.json"
   },
   "devDependencies": {
     "@types/auto-launch": "^5.0.0",

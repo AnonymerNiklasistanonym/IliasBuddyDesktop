@@ -41,3 +41,15 @@ To further customize it you can even configure it in the vscode `settings.json` 
 ],
 ...
 ```
+
+## Test code before contribution (or to help)
+
+To test you code style or check for obvious errors you can just run
+
+```sh
+npm run test
+```
+
+Through this some errors are automatically fixed and the ones that exist will be displayed.
+
+This will also run the test suite in `tests` (`tests/test.js`) and check if any tests are written if there are any errors.

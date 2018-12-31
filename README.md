@@ -20,5 +20,6 @@ Link to uncompiled doc files: [`docs/docs/`](docs/docs/)
 - Debug
   - [Logs](docs/docs/debug-logs.md)
   - [Breakpoints](docs/docs/debug-breakpoints.md)
+- [Contribute](docs/docs/contribute.md)
 - [FAQ](docs/docs/faq.md)
 - [About](docs/docs/about.md)

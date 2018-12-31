@@ -62,6 +62,17 @@ class IliasBuddyManageEntriesApi {
     return cachedEntries
   }
   /**
+   * Test if a connection with a `200` response can be established
+   * @param {string} url Private Ilias feed URL
+   * @param {string} userName Private Ilias feed user name for authentication
+   * @param {string} password Private Ilias feed password for authentication
+   * @returns {Promise<void>}
+   */
+  static testConnection (url, userName, password) {
+    log.debug('ManageEntries > test connection')
+    return FetchEntries.testConnection(url, userName, password)
+  }
+  /**
    * Check if in a list of fetched entries new entries can be found
    * @param {import('../FETCH/FetchEntriesTypes')
    * .IliasBuddyFetchEntries.Entry[]} fetchedEntries
@@ -134,17 +145,6 @@ class IliasBuddyManageEntriesApi {
 
     // Also return all new entries
     return newEntries
-  }
-  /**
-   * Test if a connection with a `200` response can be established
-   * @param {string} url Private Ilias feed URL
-   * @param {string} userName Private Ilias feed user name for authentication
-   * @param {string} password Private Ilias feed password for authentication
-   * @returns {Promise<void>}
-   */
-  static testConnection (url, userName, password) {
-    log.debug('ManageEntries > test connection')
-    return FetchEntries.testConnection(url, userName, password)
   }
   /**
    * Get the current feed entries

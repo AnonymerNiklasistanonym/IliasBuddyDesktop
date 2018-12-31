@@ -270,6 +270,7 @@ if (runThemNeverOnlyCallbacks) {
   setSettings(undefined)
   copyToClipboard(undefined)
   cronJobToText(undefined, undefined)
+  save(undefined)
 }
 
 /* =====  Inter process communication listeners  ====== */

@@ -23,14 +23,6 @@ class IliasBuddyApi {
       newEntriesFoundCallback)
   }
   /**
-   * Get the current Ilias entries
-   * @returns {Promise<import('../PARSER/RawEntryParserTypes')
-   * .IliasBuddyRawEntryParser.Entry[]>}
-   */
-  getCurrentEntries () {
-    return this.manageEntries.getCurrentEntries()
-  }
-  /**
    * Get the already cached entries
    */
   static getCache () {
@@ -55,6 +47,14 @@ class IliasBuddyApi {
    */
   static renderEntriesHtml (entries) {
     return entries.map(RendererEntries.render.bind(RendererEntries))
+  }
+  /**
+   * Get the current Ilias entries
+   * @returns {Promise<import('../PARSER/RawEntryParserTypes')
+   * .IliasBuddyRawEntryParser.Entry[]>}
+   */
+  getCurrentEntries () {
+    return this.manageEntries.getCurrentEntries()
   }
 }
 

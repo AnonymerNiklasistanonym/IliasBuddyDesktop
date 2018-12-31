@@ -1,5 +1,15 @@
+
+/* =====  Imports  ====== */
+
+// npm modules
 const moment = require('moment')
 
+/* =====  Module  ====== */
+
+/**
+ * Module to parse raw Ilias entries (meaning entries that have a different
+ * structure then in the RSS feed but the data is the same)
+ */
 class RawEntryParser {
   /**
    * Groups if match:
@@ -48,6 +58,8 @@ class RawEntryParser {
     }
   }
   /**
+   * Parse a raw entry to an Ilias entry which has all data parsed and analyzed
+   * to easily be used
    * @param {import('../FETCH/FetchEntriesTypes').IliasBuddyFetchEntries
    * .RawEntry} rawEntry
    * @returns {import('./RawEntryParserTypes').IliasBuddyRawEntryParser
@@ -202,7 +214,9 @@ class RawEntryParser {
   }
 
   /**
+   * Parse the raw post title of an Ilias entry post
    * @param {string} rawTitle
+   * @example parseTitle('["Course_title"] "forum": "title"')
    * @returns {string}
    */
   static parseTitle (rawTitle) {
@@ -215,16 +229,18 @@ class RawEntryParser {
   }
 
   /**
-   * @param {string} parsedTitle
-   * @returns {boolean}
+   * Check if an entry is a file entry or not
+   * @param {string} parsedTitle The parsed title ('File was updated.', ...)
+   * @returns {boolean} Is File
    */
   static isFile (parsedTitle) {
     return this.isFileAdded(parsedTitle) || this.isFileUpdated(parsedTitle)
   }
 
   /**
-   * @param {string} parsedTitle
-   * @returns {boolean}
+   * Checks if entry is a File added post
+   * @param {string} parsedTitle The parsed title ('File has been added.', ...)
+   * @returns {boolean} File was added
    */
   static isFileAdded (parsedTitle) {
     return parsedTitle === 'File has been added.' ||
@@ -232,8 +248,9 @@ class RawEntryParser {
   }
 
   /**
-   * @param {string} parsedTitle
-   * @returns {boolean}
+   * Checks if entry is a File updated post
+   * @param {string} parsedTitle The parsed title ('File was updated.', ...)
+   * @returns {boolean} File was updated
    */
   static isFileUpdated (parsedTitle) {
     return parsedTitle === 'File has been updated.' ||

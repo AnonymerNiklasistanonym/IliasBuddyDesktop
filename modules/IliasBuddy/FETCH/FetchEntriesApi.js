@@ -1,12 +1,17 @@
-/* ===== << Imports >> ====== */
+/* =====  Imports  ====== */
 
+// npm modules
 const { net, session } = require('electron')
 const convert = require('xml-js')
 const log = require('electron-log')
+// custom modules
 const RawEntryParser = require('../PARSER/RawEntryParserApi')
 
-/* ===== >> Imports << ====== */
+/* =====  Modules  ====== */
 
+/**
+ * Module to easily fetch Ilias entries / test connection to RSS feed / ...
+ */
 class IliasBuddyFetchEntriesApi {
   /**
    * Creates an instance of IliasBuddyFetchEntriesApi
@@ -20,37 +25,6 @@ class IliasBuddyFetchEntriesApi {
     this.password = password
   }
   /**
-   * @returns {Promise<import('./FetchEntriesTypes')
-   * .IliasPrivateRssFeed.WholeThing>}
-   */
-  getCurrentEntriesRaw () {
-    return new Promise((resolve, reject) => net.request(this.url)
-      .on('response', response => {
-        const responseDataBuffer = []
-        response
-          .on('data', chunk => { responseDataBuffer.push(chunk) })
-          .on('error', reject)
-          .on('end', () => {
-            const rssString = Buffer.concat(responseDataBuffer).toString()
-            // Parse raw feed
-            try {
-              const result = JSON.parse(convert.xml2json(rssString,
-                { compact: true }))
-              // Return parsed feed raw
-              resolve(result)
-            } catch (e) {
-              reject(e)
-            }
-          })
-      })
-      .on('login', (authInfo, callback) => {
-        callback(this.userName, this.password)
-      })
-      .on('error', reject)
-      .end()
-    )
-  }
-  /**
    * Test if a successful connection can be established
    * @param {string} url Private Ilias RSS feed url
    * @param {string} userName Private Ilias RSS feed username
@@ -61,12 +35,12 @@ class IliasBuddyFetchEntriesApi {
     log.debug('testConnection')
     // console.log('FetchEntries - testConnection')
     return new Promise((resolve, reject) =>
-      // Do first clear the authentication cache (not working right now)
-      // FIXME It should fail after changing userName/userPassword, but it
-      // somehow saves the authentication and so only a restart fails
+      // Do first clear the authentication cache
+      // FIXME It should fail after changing userName/userPassword!
+      // TODO Remove the saved authentication before checking the connection!
       session.defaultSession.clearAuthCache({ password }, () =>
         session.defaultSession.clearStorageData(
-          { storages: ['localstorage', 'caches', 'indexdb'] },
+          {},
           () => {
             // Make a request to get the page data of the URL
             log.debug('testConnection > Make net request')
@@ -99,6 +73,39 @@ class IliasBuddyFetchEntriesApi {
     )
   }
   /**
+   * Get the current entries "Raw" which means parsed as JSON but not modified
+   * in any way
+   * @returns {Promise<import('./FetchEntriesTypes')
+   * .IliasPrivateRssFeed.WholeThing>}
+   */
+  getCurrentEntriesRaw () {
+    return new Promise((resolve, reject) => net.request(this.url)
+      .on('response', response => {
+        const responseDataBuffer = []
+        response
+          .on('data', chunk => { responseDataBuffer.push(chunk) })
+          .on('error', reject)
+          .on('end', () => {
+            const rssString = Buffer.concat(responseDataBuffer).toString()
+            // Parse raw feed
+            try {
+              const result = JSON.parse(convert.xml2json(rssString,
+                { compact: true }))
+              // Return parsed feed raw
+              resolve(result)
+            } catch (e) {
+              reject(e)
+            }
+          })
+      })
+      .on('login', (authInfo, callback) => {
+        callback(this.userName, this.password)
+      })
+      .on('error', reject)
+      .end()
+    )
+  }
+  /**
    * Get the current Ilias entries
    * @returns {Promise<import('../PARSER/RawEntryParserTypes')
    * .IliasBuddyRawEntryParser.Entry[]>}
@@ -127,5 +134,7 @@ class IliasBuddyFetchEntriesApi {
     })
   }
 }
+
+/* =====  Exports  ====== */
 
 module.exports = IliasBuddyFetchEntriesApi

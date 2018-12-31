@@ -87,6 +87,7 @@ class TitleBarWin10 {
    * Add the generated title bar to the given HTML DIV element
    * @param {HTMLDivElement} titleBarDiv
    */
+  // tslint:disable-next-line: cyclomatic-complexity
   addTitleBar (titleBarDiv) {
     titleBarDiv.classList.remove('title-bar-hidden')
 

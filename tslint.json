@@ -22,7 +22,21 @@
         "align": [true, "parameters", "statements"],
         "completed-docs": true,
         "jsdoc-format": true,
-        "member-ordering": true
+        "member-ordering": [true, { "order": [
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "constructor",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method"]
+            }]
     },
     "rules": {
         "no-namespace": false,

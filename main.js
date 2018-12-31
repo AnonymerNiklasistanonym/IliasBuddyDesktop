@@ -691,7 +691,7 @@ function setSetting (arg) {
   if (Settings.getModifiable(arg.id) === arg.value) { return }
   // Than make type checks
   Settings.makeModifiableTypeChecks(arg.type, arg.value)
-    // TODO Save current value and reset setting when there was any error
+  // TODO Save current value and reset setting when there was any error
   const oldValue = Settings.getModifiable(arg.id)
   // Set setting
   Settings.setModifiable(arg.id, arg.value)
