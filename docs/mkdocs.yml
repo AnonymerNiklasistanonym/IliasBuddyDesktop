@@ -4,6 +4,8 @@ site_description: 'A Material Design themed instruction page powered by MkDocs'
 site_author: 'AnonymerNiklasistanonym'
 repo_url: 'https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/'
 
+edit_uri: edit/master/docs/docs/
+
 nav:
 - Home: index.md
 - Instructions: instructions.md
