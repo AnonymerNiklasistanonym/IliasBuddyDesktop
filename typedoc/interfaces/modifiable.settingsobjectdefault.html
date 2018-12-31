@@ -98,7 +98,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#info" class="tsd-kind-icon">info</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#nodefaultvalueasvalue" class="tsd-kind-icon">no<wbr>Default<wbr>Value<wbr>AsValue</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#restart" class="tsd-kind-icon">restart</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#type" class="tsd-kind-icon">type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="modifiable.settingsobjectdefault.html#valuedefault" class="tsd-kind-icon">value<wbr>Default</a></li>
@@ -115,9 +114,14 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <a href="../modules/modifiable.html#settingsid" class="tsd-signature-type">SettingsId</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L108">modules/Settings/API/SettingsTypes.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/a538aee/modules/Settings/API/SettingsTypes.ts#L188">modules/Settings/API/SettingsTypes.ts:188</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The id of the setting</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="info" class="tsd-anchor"></a>
@@ -125,22 +129,12 @@
 					<div class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">:</span> <a href="modifiable.settingsobjectdefaultinfo.html" class="tsd-signature-type">SettingsObjectDefaultInfo</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L111">modules/Settings/API/SettingsTypes.ts:111</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="nodefaultvalueasvalue" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> no<wbr>Default<wbr>Value<wbr>AsValue</h3>
-					<div class="tsd-signature tsd-kind-icon">no<wbr>Default<wbr>Value<wbr>AsValue<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L117">modules/Settings/API/SettingsTypes.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/a538aee/modules/Settings/API/SettingsTypes.ts#L200">modules/Settings/API/SettingsTypes.ts:200</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The default value cannot be the value</p>
+							<p>Information object about the setting</p>
 						</div>
 					</div>
 				</section>
@@ -150,29 +144,44 @@
 					<div class="tsd-signature tsd-kind-icon">restart<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L112">modules/Settings/API/SettingsTypes.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/a538aee/modules/Settings/API/SettingsTypes.ts#L204">modules/Settings/API/SettingsTypes.ts:204</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Is a restart needed after changing this setting</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../modules/modifiable.html#settingstype" class="tsd-signature-type">SettingsType</a></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../modules/modifiable.html#settingstypename" class="tsd-signature-type">SettingsTypeName</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L110">modules/Settings/API/SettingsTypes.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/a538aee/modules/Settings/API/SettingsTypes.ts#L196">modules/Settings/API/SettingsTypes.ts:196</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The type of the setting</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="valuedefault" class="tsd-anchor"></a>
 					<h3>value<wbr>Default</h3>
-					<div class="tsd-signature tsd-kind-icon">value<wbr>Default<span class="tsd-signature-symbol">:</span> <a href="../modules/modifiable.html#settingstype" class="tsd-signature-type">SettingsType</a></div>
+					<div class="tsd-signature tsd-kind-icon">value<wbr>Default<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/c830718/modules/Settings/API/SettingsTypes.ts#L109">modules/Settings/API/SettingsTypes.ts:109</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/a538aee/modules/Settings/API/SettingsTypes.ts#L192">modules/Settings/API/SettingsTypes.ts:192</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The default value of the setting</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -222,9 +231,6 @@
 								<a href="modifiable.settingsobjectdefault.html#info" class="tsd-kind-icon">info</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="modifiable.settingsobjectdefault.html#nodefaultvalueasvalue" class="tsd-kind-icon">no<wbr>Default<wbr>Value<wbr>AsValue</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="modifiable.settingsobjectdefault.html#restart" class="tsd-kind-icon">restart</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
@@ -248,9 +254,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/modifiable.html#settingsid" class="tsd-kind-icon">Settings<wbr>Id</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/modifiable.html#settingstype" class="tsd-kind-icon">Settings<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/modifiable.html#settingstypename" class="tsd-kind-icon">Settings<wbr>Type<wbr>Name</a>
