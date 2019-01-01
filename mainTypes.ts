@@ -20,7 +20,7 @@ export interface SettingsResetAnswer extends SettingsResetQuestion {
     /**
      * The default value
      */
-    valueDefault: Modifiable.SettingsType;
+    valueDefault: any;
 }
 
 export interface SettingsSet extends SettingsResetQuestion {
@@ -31,7 +31,7 @@ export interface SettingsSet extends SettingsResetQuestion {
     /**
      * Value of the setting
      */
-    value: Modifiable.SettingsType;
+    value: any;
 }
 
 export interface OpenWindow {

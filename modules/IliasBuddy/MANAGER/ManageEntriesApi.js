@@ -12,7 +12,8 @@ const FileManager = require('../../FileManager/API/FileManager')
 /**
  * The cache file path
  */
-const gCacheFilePath = path.join('cache.json')
+const gCacheFilePath = path.join('cache_ilias_entries.json')
+// TODO Implement function that can delete the cache file
 
 /**
  * Load cache file content
@@ -42,7 +43,8 @@ class IliasBuddyManageEntriesApi {
    * @param {string} url Private Ilias RSS feed url
    * @param {string} userName Private Ilias RSS feed username
    * @param {string} password Private Ilias RSS feed password
-   * @param {function(*[]): void} newEntriesFoundCallback
+   * @param {import('../API/IliasBuddyTypes').IliasBuddyApi
+   * .NewEntriesFoundCallback} newEntriesFoundCallback
    */
   constructor (url, userName, password, newEntriesFoundCallback) {
     this.fetchEntries = new FetchEntries(url, userName, password)
@@ -149,8 +151,8 @@ class IliasBuddyManageEntriesApi {
   /**
    * Get the current feed entries
    * @param {boolean} [callback=false] Should the set callback be executed
-   * @returns `{Promise<import('../FETCH/FetchEntriesTypes')
-   * .IliasBuddyFetchEntries.Entry[]>}`
+   * @returns {Promise<import('../FETCH/FetchEntriesTypes')
+   * .IliasBuddyFetchEntries.Entry[]>}
    */
   getCurrentEntries (callback = false) {
     return new Promise((resolve, reject) => this.fetchEntries

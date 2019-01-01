@@ -17,6 +17,7 @@ const TitleBarWin10 = require('./modules/TitleBarWin10/API/TitleBarWin10')
 const WindowManager = require('./modules/WindowManager/API/WindowManager')
 const Dialogs = require('./modules/Dialogs/API/Dialogs')
 const CronJobHelper = require('./modules/CronJobHelper/API/CronJobHelper')
+const SearchManager = require('./modules/SearchManager/API/SearchManager')
 
 /* =====  Logging  ====== */
 
@@ -101,6 +102,13 @@ const gTitleBar = new TitleBarWin10({
     text: 'Links'
   }]
 })
+
+const gSearchManagerIliasEntries = new SearchManager(
+  document.getElementById('ilias-entries-search'),
+  document.getElementById('ilias-entries'),
+  [{ name: 'description', querySelector: 'div.ilias-entry-description' }])
+// TODO Implement search manager better, this is just a prototype
+gSearchManagerIliasEntries.search('')
 
 /* =====  Global functions  ====== */
 

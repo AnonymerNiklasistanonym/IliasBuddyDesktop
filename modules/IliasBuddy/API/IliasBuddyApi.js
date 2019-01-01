@@ -15,8 +15,8 @@ class IliasBuddyApi {
    * @param {string} url Private Ilias RSS feed url
    * @param {string} userName Private Ilias RSS feed username
    * @param {string} password Private Ilias RSS feed password
-   * @param {function(import('../PARSER/RawEntryParserTypes')
-   * .IliasBuddyRawEntryParser.Entry[]): void} newEntriesFoundCallback
+   * @param {import('../API/IliasBuddyTypes').IliasBuddyApi
+   * .NewEntriesFoundCallback} newEntriesFoundCallback
    */
   constructor (url, userName, password, newEntriesFoundCallback) {
     this.manageEntries = new ManageEntries(url, userName, password,
@@ -49,12 +49,13 @@ class IliasBuddyApi {
     return entries.map(RendererEntries.render.bind(RendererEntries))
   }
   /**
-   * Get the current Ilias entries
-   * @returns {Promise<import('../PARSER/RawEntryParserTypes')
-   * .IliasBuddyRawEntryParser.Entry[]>}
+   * Get the current feed entries
+   * @param {boolean} [callback=false] Should the set callback be executed
+   * @returns {Promise<import('../FETCH/FetchEntriesTypes')
+   * .IliasBuddyFetchEntries.Entry[]>}
    */
-  getCurrentEntries () {
-    return this.manageEntries.getCurrentEntries()
+  getCurrentEntries (callback = false) {
+    return this.manageEntries.getCurrentEntries(callback)
   }
 }
 

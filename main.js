@@ -179,6 +179,11 @@ function setCronJobFeedUpdate (runInitially = false) {
  */
 function checkForProgramUpdates () {
   log.debugMain('Check for program updates')
+  // If not online do nothing
+  if (!gOnline) {
+    log.debugMain('Program update stopped because the device is not online')
+    return
+  }
   // Stop instantly if a version check is already running
   if (gVersionCheckPending) { return }
   gVersionCheckPending = true
@@ -224,12 +229,19 @@ function broadcastError (title, err) {
  */
 function checkForFeedUpdates () {
   log.debugMain('Check for feed updates')
-  if (gIliasApi !== null) {
-    gIliasApi.manageEntries.getCurrentEntries(true).catch(err => {
-      log.error(err)
-      broadcastError('Check current feed error', err)
-    })
+  // If not online do nothing
+  if (!gOnline) {
+    log.debugMain('Feed update stopped because the device is not online')
+    return
   }
+  // If Ilias API is null return
+  if (gIliasApi === null) {
+    log.debugMain('Feed update stopped because the Ilias API is not configured')
+    return
+  }
+  // Else get the current feed
+  gIliasApi.getCurrentEntries(true)
+    .catch(err => { broadcastError('Check current feed error', err) })
 }
 
 /**
@@ -438,12 +450,12 @@ function setupAfterWindowHasLoaded () {
     }
   }
   // If online state is not yet clear wait till online state is clear
-  if (gIliasOnlineIsReady) {
+  if (gIliasOnlineIsReady && gOnline) {
     log.debugMain(`online-state was already ready ${gOnline}`)
     tryIliasLogin()
   } else {
     log.debugMain('wait for online-state')
-    eventEmitter.once('online-state-change', tryIliasLogin)
+    eventEmitter.once('device-is-online', tryIliasLogin)
   }
 
   // Create auto launch object
@@ -648,27 +660,6 @@ function saveSettings () {
   Settings.setHidden('windowBounds', gMainWindow.getBounds())
 }
 
-// TODO Why does this exist?
-/**
- * Get the latest ilias entries
- * @returns {Promise<void>}
- */
-function getLatestIliasEntries () {
-  log.debugMain('getLatestIliasEntries')
-  if (gIliasApi !== null && gMainWindow !== null) {
-    return new Promise((resolve, reject) => gIliasApi.getCurrentEntries()
-      .then(a => {
-        gMainWindow.webContents.send('render-elements-reply',
-          convertIliasEntriesForClient(a))
-        resolve()
-      })
-      .catch(reject))
-  } else {
-    return Promise.reject(
-      Error('IliasAPI is null or there was no successful login!'))
-  }
-}
-
 /**
  * Show/Hide window (toggle)
  */
@@ -793,8 +784,10 @@ ipcMain
       gOnline = onlineStatus
       // Mark online state is safe to evaluate
       gIliasOnlineIsReady = true
-      // Fire event that online state is ready
-      eventEmitter.emit('online-state-change')
+      // Fire event that online state is ready an true
+      if (gOnline) {
+        eventEmitter.emit('device-is-online')
+      }
     })
   .on('ilias-login-check', () => { broadcastIliasLoginUpdate() })
   .on('test-and-login',
@@ -847,16 +840,6 @@ ipcMain
       console.info('Message:', message)
       event.sender.send('main-process-to-renderer-message',
         'Hello from main.js to index.js')
-    })
-  .on('render-elements',
-    /**
-     * When the renderer process asks for the current Ilias entries send it to
-     * him
-     */
-    event => {
-      getLatestIliasEntries().catch(err => {
-        broadcastError('get latest ilias entries', err)
-      })
     })
   .on('get-cache',
     /**
