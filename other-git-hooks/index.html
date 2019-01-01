@@ -669,14 +669,37 @@ npm run docs
 rm -r ../IliasBuddyDesktopDocs/*
 cp -r ./docs/site/* ../IliasBuddyDesktopDocs/
 
-<span class="c1"># Instantly commit updated documentation and push</span>
+<span class="c1"># Ask if the current progress should be pushed</span>
+<span class="nb">read</span> -p <span class="s2">&quot;Do you want to push the current progress &quot;</span> -n <span class="m">1</span> -r
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$REPLY</span> <span class="o">=</span>~ ^<span class="o">[</span>Yy<span class="o">]</span>$ <span class="o">]]</span>
+<span class="k">then</span>
+    <span class="c1"># Commit and push the current progress</span>
+    git push
+<span class="k">else</span>
+    <span class="c1"># Else exit</span>
+    <span class="nb">exit</span> <span class="m">0</span>
+<span class="k">fi</span>
+
+<span class="c1"># If user pushed current progress commit/push updated documentation</span>
 <span class="nb">cd</span> ../IliasBuddyDesktopDocs/
 git add .
-git commit -S -m <span class="s2">&quot;Updated to latest master&quot;</span>
-git push
+
+<span class="c1"># Ask if everything should be pushed</span>
+<span class="nb">read</span> -p <span class="s2">&quot;Do you want to push the documentation &quot;</span> -n <span class="m">1</span> -r
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$REPLY</span> <span class="o">=</span>~ ^<span class="o">[</span>Yy<span class="o">]</span>$ <span class="o">]]</span>
+<span class="k">then</span>
+    <span class="c1"># Commit and push current documentation</span>
+    git commit -S -m <span class="s2">&quot;Updated to latest master&quot;</span>
+    git push
+<span class="k">fi</span>
 </pre></div>
 
 
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>This example is not working on Windows computers because <code>read</code> can't be found.
+A port of the GNU utility <code>read</code> for Windows is needed (I couldn't find any port myself).</p>
+</div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>This example is used by the maintainer of this repository to automatically update the documentation.
