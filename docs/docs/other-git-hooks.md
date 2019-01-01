@@ -111,6 +111,10 @@ then
 fi
 ```
 
+!!! bug
+    This example is not working on Windows computers because `read` can't be found.
+    A port of the GNU utility `read` for Windows is needed (I couldn't find any port myself).
+
 !!! hint
     This example is used by the maintainer of this repository to automatically update the documentation.
     Do not forget that you need to `git push` the initial commit.
