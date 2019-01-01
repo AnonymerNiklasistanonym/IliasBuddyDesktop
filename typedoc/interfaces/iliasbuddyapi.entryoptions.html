@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IliasLoginUpdate | Ilias Buddy Desktop</title>
+	<title>EntryOptions | Ilias Buddy Desktop</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,31 +56,24 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/ipc.html">IPC</a>
+					<a href="../classes/iliasbuddyapi.html">IliasBuddyApi</a>
 				</li>
 				<li>
-					<a href="ipc.iliasloginupdate.html">IliasLoginUpdate</a>
+					<a href="iliasbuddyapi.entryoptions.html">EntryOptions</a>
 				</li>
 			</ul>
-			<h1>Interface IliasLoginUpdate</h1>
+			<h1>Interface EntryOptions</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Ilias login update object</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IliasLoginUpdate</span>
+						<span class="target">EntryOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -88,109 +81,79 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-external">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#errormessage" class="tsd-kind-icon">error<wbr>Message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#iliasapistate" class="tsd-kind-icon">ilias<wbr>Api<wbr>State</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#password" class="tsd-kind-icon">password</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#ready" class="tsd-kind-icon">ready</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="ipc.iliasloginupdate.html#url" class="tsd-kind-icon">url</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyapi.entryoptions.html#file" class="tsd-kind-icon">file</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyapi.entryoptions.html#isfile" class="tsd-kind-icon">is<wbr>File</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyapi.entryoptions.html#ispost" class="tsd-kind-icon">is<wbr>Post</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyapi.entryoptions.html#post" class="tsd-kind-icon">post</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="errormessage" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error<wbr>Message</h3>
-					<div class="tsd-signature tsd-kind-icon">error<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="file" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> file</h3>
+					<div class="tsd-signature tsd-kind-icon">file<span class="tsd-signature-symbol">:</span> <a href="iliasbuddyapi.entryoptionsfile.html" class="tsd-signature-type">EntryOptionsFile</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L70">mainTypes.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyTypes.ts#L66">modules/IliasBuddy/API/IliasBuddyTypes.ts:66</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Optional error message in case of a wrong login</p>
+							<p>If the entry is a file in here is additional information to the
+							default data</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="iliasapistate" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> ilias<wbr>Api<wbr>State</h3>
-					<div class="tsd-signature tsd-kind-icon">ilias<wbr>Api<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="isfile" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>File</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>File<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L66">mainTypes.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyTypes.ts#L61">modules/IliasBuddy/API/IliasBuddyTypes.ts:61</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Ilias API state (state is known)</p>
+							<p>Specifies if the entry is a file</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="name" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> name</h3>
-					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <a href="ipc.iliasloginupdatevalueusername.html" class="tsd-signature-type">IliasLoginUpdateValueUserName</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="ispost" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>Post</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Post<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L82">mainTypes.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyTypes.ts#L57">modules/IliasBuddy/API/IliasBuddyTypes.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The user name information of the Ilias login</p>
+							<p>Specifies if the entry is a post</p>
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="password" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> password</h3>
-					<div class="tsd-signature tsd-kind-icon">password<span class="tsd-signature-symbol">:</span> <a href="ipc.iliasloginupdatevaluepassword.html" class="tsd-signature-type">IliasLoginUpdateValuePassword</a></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="post" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> post</h3>
+					<div class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">:</span> <a href="iliasbuddyapi.entryoptionspost.html" class="tsd-signature-type">EntryOptionsPost</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L78">mainTypes.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyTypes.ts#L71">modules/IliasBuddy/API/IliasBuddyTypes.ts:71</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The password information of the Ilias login</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="ready" class="tsd-anchor"></a>
-					<h3>ready</h3>
-					<div class="tsd-signature tsd-kind-icon">ready<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L62">mainTypes.ts:62</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Ilias API is ready (state is known)</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="url" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> url</h3>
-					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <a href="ipc.iliasloginupdatevalueurl.html" class="tsd-signature-type">IliasLoginUpdateValueUrl</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/mainTypes.ts#L74">mainTypes.ts:74</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The URL information of the Ilias login</p>
+							<p>If the entry is a post in here is additional information to the
+							default data</p>
 						</div>
 					</div>
 				</section>
@@ -202,70 +165,66 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/hidden.html">Hidden</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/iliasbuddyfetchentries.html">Ilias<wbr>Buddy<wbr>Fetch<wbr>Entries</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/iliasbuddyrawentryparser.html">Ilias<wbr>Buddy<wbr>Raw<wbr>Entry<wbr>Parser</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/iliasprivaterssfeed.html">Ilias<wbr>Private<wbr>Rss<wbr>Feed</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/modifiable.html">Modifiable</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class="current tsd-kind-module tsd-is-external">
-						<a href="../modules/ipc.html">IPC</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-external">
-						<a href="ipc.iliasloginupdate.html" class="tsd-kind-icon">Ilias<wbr>Login<wbr>Update</a>
+					<li class="current tsd-kind-class">
+						<a href="../classes/iliasbuddyapi.html" class="tsd-kind-icon">Ilias<wbr>Buddy<wbr>Api</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#errormessage" class="tsd-kind-icon">error<wbr>Message</a>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="iliasbuddyapi.entry.html" class="tsd-kind-icon">Entry</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#iliasapistate" class="tsd-kind-icon">ilias<wbr>Api<wbr>State</a>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="iliasbuddyapi.entrydate.html" class="tsd-kind-icon">Entry<wbr>Date</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#name" class="tsd-kind-icon">name</a>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="iliasbuddyapi.entryoptions.html" class="tsd-kind-icon">Entry<wbr>Options</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="iliasbuddyapi.entryoptions.html#file" class="tsd-kind-icon">file</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="iliasbuddyapi.entryoptions.html#isfile" class="tsd-kind-icon">is<wbr>File</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="iliasbuddyapi.entryoptions.html#ispost" class="tsd-kind-icon">is<wbr>Post</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="iliasbuddyapi.entryoptions.html#post" class="tsd-kind-icon">post</a>
+									</li>
+								</ul>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#password" class="tsd-kind-icon">password</a>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="iliasbuddyapi.entryoptionsfile.html" class="tsd-kind-icon">Entry<wbr>Options<wbr>File</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#ready" class="tsd-kind-icon">ready</a>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="iliasbuddyapi.entryoptionspost.html" class="tsd-kind-icon">Entry<wbr>Options<wbr>Post</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="ipc.iliasloginupdate.html#url" class="tsd-kind-icon">url</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="../classes/iliasbuddyapi.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-class">
+								<a href="../classes/iliasbuddyapi.html#newentriesfoundcallback" class="tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="../classes/iliasbuddyapi.html#getcurrententries" class="tsd-kind-icon">get<wbr>Current<wbr>Entries</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="../classes/iliasbuddyapi.html#getcache" class="tsd-kind-icon">get<wbr>Cache</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="../classes/iliasbuddyapi.html#renderentrieshtml" class="tsd-kind-icon">render<wbr>Entries<wbr>Html</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="../classes/iliasbuddyapi.html#testconnection" class="tsd-kind-icon">test<wbr>Connection</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-external tsd-is-not-exported">
-						<a href="ipc.iliasloginupdatevaluepassword.html" class="tsd-kind-icon">Ilias<wbr>Login<wbr>Update<wbr>Value<wbr>Password</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-external tsd-is-not-exported">
-						<a href="ipc.iliasloginupdatevalueurl.html" class="tsd-kind-icon">Ilias<wbr>Login<wbr>Update<wbr>Value<wbr>Url</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-external tsd-is-not-exported">
-						<a href="ipc.iliasloginupdatevalueusername.html" class="tsd-kind-icon">Ilias<wbr>Login<wbr>Update<wbr>Value<wbr>User<wbr>Name</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

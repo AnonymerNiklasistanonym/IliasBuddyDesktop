@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EntryOptions | Ilias Buddy Desktop</title>
+	<title>SearchManager | Ilias Buddy Desktop</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,24 +56,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/iliasbuddyfetchentries.html">IliasBuddyFetchEntries</a>
-				</li>
-				<li>
-					<a href="iliasbuddyfetchentries.entryoptions.html">EntryOptions</a>
+					<a href="searchmanager.html">SearchManager</a>
 				</li>
 			</ul>
-			<h1>Interface EntryOptions</h1>
+			<h1>Class SearchManager</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Class that enables to search a list of elements with the same data</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EntryOptions</span>
+						<span class="target">SearchManager</span>
 					</li>
 				</ul>
 			</section>
@@ -81,81 +85,90 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyfetchentries.entryoptions.html#file" class="tsd-kind-icon">file</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyfetchentries.entryoptions.html#isfile" class="tsd-kind-icon">is<wbr>File</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyfetchentries.entryoptions.html#ispost" class="tsd-kind-icon">is<wbr>Post</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iliasbuddyfetchentries.entryoptions.html#post" class="tsd-kind-icon">post</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#search" class="tsd-kind-icon">search</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="file" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> file</h3>
-					<div class="tsd-signature tsd-kind-icon">file<span class="tsd-signature-symbol">:</span> <a href="iliasbuddyfetchentries.entryoptionsfile.html" class="tsd-signature-type">EntryOptionsFile</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/FETCH/FetchEntriesTypes.ts#L54">modules/IliasBuddy/FETCH/FetchEntriesTypes.ts:54</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>If the entry is a file in here is additional information to the default
-							data</p>
-						</div>
-					</div>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Search<wbr>Manager<span class="tsd-signature-symbol">(</span>inputElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLInputElement</span>, listElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLUListElement</span>, listElementFormat<span class="tsd-signature-symbol">?: </span><a href="../interfaces/searchmanagerlistformat.html" class="tsd-signature-type">SearchManagerListFormat</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="searchmanager.html" class="tsd-signature-type">SearchManager</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/SearchManager/API/SearchManager.js#L4">modules/SearchManager/API/SearchManager.js:4</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an instance of Search manager</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>inputElement: <span class="tsd-signature-type">HTMLInputElement</span></h5>
+								</li>
+								<li>
+									<h5>listElement: <span class="tsd-signature-type">HTMLUListElement</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> listElementFormat: <a href="../interfaces/searchmanagerlistformat.html" class="tsd-signature-type">SearchManagerListFormat</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="searchmanager.html" class="tsd-signature-type">SearchManager</a></h4>
+						</li>
+					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="isfile" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>File</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>File<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/FETCH/FetchEntriesTypes.ts#L49">modules/IliasBuddy/FETCH/FetchEntriesTypes.ts:49</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Specifies if the entry is a file</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="ispost" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is<wbr>Post</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Post<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/FETCH/FetchEntriesTypes.ts#L45">modules/IliasBuddy/FETCH/FetchEntriesTypes.ts:45</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Specifies if the entry is a post</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="post" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> post</h3>
-					<div class="tsd-signature tsd-kind-icon">post<span class="tsd-signature-symbol">:</span> <a href="iliasbuddyfetchentries.entryoptionspost.html" class="tsd-signature-type">EntryOptionsPost</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/FETCH/FetchEntriesTypes.ts#L59">modules/IliasBuddy/FETCH/FetchEntriesTypes.ts:59</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>If the entry is a post in here is additional information to the default
-							data</p>
-						</div>
-					</div>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+					<a name="search" class="tsd-anchor"></a>
+					<h3>search</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">search<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/SearchManager/API/SearchManager.js#L27">modules/SearchManager/API/SearchManager.js:27</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Do a search which automatically hides not results and sorts them
+									accordingly</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>query: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -165,70 +178,25 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/hidden.html">Hidden</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/iliasbuddyfetchentries.html">Ilias<wbr>Buddy<wbr>Fetch<wbr>Entries</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/iliasbuddyrawentryparser.html">Ilias<wbr>Buddy<wbr>Raw<wbr>Entry<wbr>Parser</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/iliasprivaterssfeed.html">Ilias<wbr>Private<wbr>Rss<wbr>Feed</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/modifiable.html">Modifiable</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-module tsd-is-external">
-						<a href="../modules/ipc.html">IPC</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.entry.html" class="tsd-kind-icon">Entry</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.entrydate.html" class="tsd-kind-icon">Entry<wbr>Date</a>
-					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.entryoptions.html" class="tsd-kind-icon">Entry<wbr>Options</a>
+					<li class="current tsd-kind-class tsd-is-not-exported">
+						<a href="searchmanager.html" class="tsd-kind-icon">Search<wbr>Manager</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iliasbuddyfetchentries.entryoptions.html#file" class="tsd-kind-icon">file</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
+								<a href="searchmanager.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iliasbuddyfetchentries.entryoptions.html#isfile" class="tsd-kind-icon">is<wbr>File</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iliasbuddyfetchentries.entryoptions.html#ispost" class="tsd-kind-icon">is<wbr>Post</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iliasbuddyfetchentries.entryoptions.html#post" class="tsd-kind-icon">post</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
+								<a href="searchmanager.html#search" class="tsd-kind-icon">search</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.entryoptionsfile.html" class="tsd-kind-icon">Entry<wbr>Options<wbr>File</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.entryoptionspost.html" class="tsd-kind-icon">Entry<wbr>Options<wbr>Post</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="iliasbuddyfetchentries.rawentry.html" class="tsd-kind-icon">Raw<wbr>Entry</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
