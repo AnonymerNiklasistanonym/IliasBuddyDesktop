@@ -448,8 +448,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#update-documentation-after-any-commit" title="Update documentation after any commit" class="md-nav__link">
-    Update documentation after any commit
+  <a href="#update-documentation-after-any-post" title="Update documentation after any post" class="md-nav__link">
+    Update documentation after any post
   </a>
   
 </li>
@@ -566,8 +566,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#update-documentation-after-any-commit" title="Update documentation after any commit" class="md-nav__link">
-    Update documentation after any commit
+  <a href="#update-documentation-after-any-post" title="Update documentation after any post" class="md-nav__link">
+    Update documentation after any post
   </a>
   
 </li>
@@ -657,7 +657,7 @@ npm run <span class="nb">test</span>
 <p class="admonition-title">Hint</p>
 <p>This example is used by the maintainer of this repository to only let commits through that at least pass all tests.</p>
 </div>
-<h3 id="update-documentation-after-any-commit">Update documentation after any commit<a class="headerlink" href="#update-documentation-after-any-commit" title="Permanent link">&para;</a></h3>
+<h3 id="update-documentation-after-any-post">Update documentation after any post<a class="headerlink" href="#update-documentation-after-any-post" title="Permanent link">&para;</a></h3>
 <p>You can use the Git hook file <code>post-commit</code> to execute a custom script after a commit is made.</p>
 <p>A useful example could be to update to documentation:</p>
 <div class="codehilite"><pre><span></span><span class="ch">#!/bin/sh</span>
@@ -665,15 +665,23 @@ npm run <span class="nb">test</span>
 <span class="c1"># Create documentation</span>
 npm run docs
 
-<span class="c1"># Move documentation to custom place</span>
+<span class="c1"># Move documentation to custom place (documentation repository)</span>
 rm -r ../IliasBuddyDesktopDocs/*
 cp -r ./docs/site/* ../IliasBuddyDesktopDocs/
+
+<span class="c1"># Instantly commit updated documentation and push</span>
+<span class="nb">cd</span> ../IliasBuddyDesktopDocs/
+git add .
+git commit -S -m <span class="s2">&quot;Updated to latest master&quot;</span>
+git push
 </pre></div>
 
 
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
-<p>This example is used by the maintainer of this repository to automatically update the documentation.</p>
+<p>This example is used by the maintainer of this repository to automatically update the documentation.
+Do not forget that you need to <code>git push</code> the initial commit.
+The documentation is only pushed because there is sadly no <code>post-push</code> hook in Git.</p>
 </div>
                 
                   
