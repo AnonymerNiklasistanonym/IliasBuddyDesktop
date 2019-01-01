@@ -86,11 +86,29 @@ npm run docs
 rm -r ../IliasBuddyDesktopDocs/*
 cp -r ./docs/site/* ../IliasBuddyDesktopDocs/
 
-# Instantly commit updated documentation and push
+# Ask if the current progress should be pushed
+read -p "Do you want to push the current progress " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    # Commit and push the current progress
+    git push
+else
+    # Else exit
+    exit 0
+fi
+
+# If user pushed current progress commit/push updated documentation
 cd ../IliasBuddyDesktopDocs/
 git add .
-git commit -S -m "Updated to latest master"
-git push
+
+# Ask if everything should be pushed
+read -p "Do you want to push the documentation " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    # Commit and push current documentation
+    git commit -S -m "Updated to latest master"
+    git push
+fi
 ```
 
 !!! hint
