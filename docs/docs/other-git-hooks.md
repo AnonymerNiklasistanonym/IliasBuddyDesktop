@@ -70,7 +70,7 @@ exit 0
 !!! hint
     This example is used by the maintainer of this repository to only let commits through that at least pass all tests.
 
-### Update documentation after any commit
+### Update documentation after any post
 
 You can use the Git hook file `post-commit` to execute a custom script after a commit is made.
 
@@ -82,10 +82,18 @@ A useful example could be to update to documentation:
 # Create documentation
 npm run docs
 
-# Move documentation to custom place
+# Move documentation to custom place (documentation repository)
 rm -r ../IliasBuddyDesktopDocs/*
 cp -r ./docs/site/* ../IliasBuddyDesktopDocs/
+
+# Instantly commit updated documentation and push
+cd ../IliasBuddyDesktopDocs/
+git add .
+git commit -S -m "Updated to latest master"
+git push
 ```
 
 !!! hint
     This example is used by the maintainer of this repository to automatically update the documentation.
+    Do not forget that you need to `git push` the initial commit.
+    The documentation is only pushed because there is sadly no `post-push` hook in Git.
