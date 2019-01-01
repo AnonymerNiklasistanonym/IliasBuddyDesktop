@@ -96,15 +96,15 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
+							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="iliasbuddyapi.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class"><a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Functions</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-class"><a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="iliasbuddyapi.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -120,18 +120,63 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class">
+					<a name="newentriesfoundcallback" class="tsd-anchor"></a>
+					<h3>New<wbr>Entries<wbr>Found<wbr>Callback</h3>
+					<div class="tsd-signature tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in modules/IliasBuddy/API/IliasBuddyTypes.ts:8</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>New entries found callback</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The new entries from the latest feed to the current
+								cached ones</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>newEntries<span class="tsd-signature-symbol">: </span><a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>newEntries: <a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Ilias<wbr>Buddy<wbr>Api<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, newEntriesFoundCallback<span class="tsd-signature-symbol">: </span><a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-signature-type">NewEntriesFoundCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iliasbuddyapi.html" class="tsd-signature-type">IliasBuddyApi</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Ilias<wbr>Buddy<wbr>Api<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, userName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, newEntriesFoundCallback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="iliasbuddyapi.html" class="tsd-signature-type">IliasBuddyApi</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyApi.js#L12">modules/IliasBuddy/API/IliasBuddyApi.js:12</a></li>
+									<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:12</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -166,45 +211,28 @@
 									</div>
 								</li>
 								<li>
-									<h5>newEntriesFoundCallback: <a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-signature-type">NewEntriesFoundCallback</a></h5>
+									<h5>newEntriesFoundCallback: <span class="tsd-signature-type">function</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>newEntries<span class="tsd-signature-symbol">: </span><a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>newEntries: <a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="iliasbuddyapi.html" class="tsd-signature-type">IliasBuddyApi</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-class">
-					<a name="newentriesfoundcallback" class="tsd-anchor"></a>
-					<h3>New<wbr>Entries<wbr>Found<wbr>Callback</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback<span class="tsd-signature-symbol">(</span>newEntries<span class="tsd-signature-symbol">: </span><a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyTypes.ts#L8">modules/IliasBuddy/API/IliasBuddyTypes.ts:8</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>New entries found callback</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>newEntries: <a href="../interfaces/iliasbuddyapi.entry.html" class="tsd-signature-type">Entry</a><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>The new entries from the latest feed to the current
-										cached ones</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -221,7 +249,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyApi.js#L57">modules/IliasBuddy/API/IliasBuddyApi.js:57</a></li>
+									<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:57</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -251,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyApi.js#L28">modules/IliasBuddy/API/IliasBuddyApi.js:28</a></li>
+									<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:28</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyApi.js#L48">modules/IliasBuddy/API/IliasBuddyApi.js:48</a></li>
+									<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:48</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -301,7 +329,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/0b2cdbc/modules/IliasBuddy/API/IliasBuddyApi.js#L38">modules/IliasBuddy/API/IliasBuddyApi.js:38</a></li>
+									<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:38</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,11 +394,11 @@
 							<li class=" tsd-kind-interface tsd-parent-kind-class">
 								<a href="../interfaces/iliasbuddyapi.entryoptionspost.html" class="tsd-kind-icon">Entry<wbr>Options<wbr>Post</a>
 							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class">
+								<a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback</a>
+							</li>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="iliasbuddyapi.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-class">
-								<a href="iliasbuddyapi.html#newentriesfoundcallback" class="tsd-kind-icon">New<wbr>Entries<wbr>Found<wbr>Callback</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="iliasbuddyapi.html#getcurrententries" class="tsd-kind-icon">get<wbr>Current<wbr>Entries</a>

@@ -40,7 +40,7 @@
     
     
       
-        <title>FAQ - Ilias Buddy Desktop Docs</title>
+        <title>Git hooks - Ilias Buddy Desktop Docs</title>
       
     
     
@@ -103,7 +103,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#faq" tabindex="1" class="md-skip">
+      <a href="#git-hooks" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -129,7 +129,7 @@
                 Ilias Buddy Desktop Docs
               </span>
               <span class="md-header-nav__topic">
-                FAQ
+                Git hooks
               </span>
             
           
@@ -364,10 +364,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
     <label class="md-nav__link" for="nav-5">
       Other
@@ -395,11 +397,76 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../other-git-hooks/" title="Git hooks" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Git hooks
+      </label>
+    
+    <a href="./" title="Git hooks" class="md-nav__link md-nav__link--active">
       Git hooks
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-hook" title="Create a hook" class="md-nav__link">
+    Create a hook
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modify-the-commit-message" title="Modify the commit message" class="md-nav__link">
+    Modify the commit message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-checks-before-a-commit" title="(Safety-)Checks before a commit" class="md-nav__link">
+    (Safety-)Checks before a commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-documentation-after-any-commit" title="Update documentation after any commit" class="md-nav__link">
+    Update documentation after any commit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -436,20 +503,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-    <a href="./" title="FAQ" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../faq/" title="FAQ" class="md-nav__link">
       FAQ
     </a>
-    
   </li>
 
     
@@ -482,6 +540,49 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-a-hook" title="Create a hook" class="md-nav__link">
+    Create a hook
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modify-the-commit-message" title="Modify the commit message" class="md-nav__link">
+    Modify the commit message
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safety-checks-before-a-commit" title="(Safety-)Checks before a commit" class="md-nav__link">
+    (Safety-)Checks before a commit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-documentation-after-any-commit" title="Update documentation after any commit" class="md-nav__link">
+    Update documentation after any commit
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -492,13 +593,87 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/edit/master/docs/docs/faq.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/edit/master/docs/docs/other-git-hooks.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="faq">FAQ<a class="headerlink" href="#faq" title="Permanent link">&para;</a></h1>
-<div class="admonition todo">
-<p class="admonition-title">Todo</p>
-<p>Add later when questions are coming in</p>
+                <h1 id="git-hooks">Git hooks<a class="headerlink" href="#git-hooks" title="Permanent link">&para;</a></h1>
+<p>Git hooks help you to automate things to have less work by executing custom scripts at certain Git events.</p>
+<h2 id="create-a-hook">Create a hook<a class="headerlink" href="#create-a-hook" title="Permanent link">&para;</a></h2>
+<p>Git hooks are located in the directory <code>.git/hooks</code> of any Git repository.</p>
+<p>From the start there are some sample scripts that you can check out.</p>
+<h3 id="modify-the-commit-message">Modify the commit message<a class="headerlink" href="#modify-the-commit-message" title="Permanent link">&para;</a></h3>
+<p>Create in this directory the file <code>prepare-commit-msg</code> with the follwoing content:</p>
+<div class="codehilite"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="c1"># Get commit info</span>
+<span class="nv">COMMIT_MSG_FILE</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="c1"># Create a text that will be pushed to the commit message file</span>
+<span class="nv">PREPARE_COMMIT_MSG</span><span class="o">=</span><span class="s2">&quot;# Summarize changes in around 50 characters or less</span>
+
+<span class="s2"># More detailed explanatory text, if necessary.</span>
+<span class="s2"># Wrap it to about 72 characters or so.</span>
+<span class="s2"># A blank line to the summary is necessary to get a paragraph!</span>
+<span class="s2">#</span>
+<span class="s2"># More info if needed (again, don&#39;t forget one blank line!)</span>
+<span class="s2"># - Lists/Bullet points are okay, leave a line between each bullet</span>
+<span class="s2">#   point and one above the list</span>
+<span class="s2">#</span>
+<span class="s2"># For issue trackers, put references to them at the bottom, like:</span>
+<span class="s2"># (don&#39;t forget one blank line!)</span>
+<span class="s2"># Resolves: #123</span>
+<span class="s2"># See also: #456, #789</span>
+<span class="s2">#</span>
+<span class="s2"># More info at: https://chris.beams.io/posts/git-commit/&quot;</span>
+
+<span class="c1"># Every line that begin with &quot;#&quot; will be forgotten when committed</span>
+<span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$PREPARE_COMMIT_MSG</span><span class="s2">&quot;</span> &gt; <span class="nv">$1</span>
+</pre></div>
+
+
+<p>(If you are on Linux run <code>chmod +x prepare-commit-msg</code> to make the file executable)</p>
+<p>If you now try to make a commit (<code>git commit</code> or <code>git commit -S</code>) this will come always up and your input will result in the commit message.</p>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>If you would run <code>git commit -m "test"</code> The commit message results in the commented text!
+This needs to be fixed before it can be used without pain!</p>
+</div>
+<h3 id="safety-checks-before-a-commit">(Safety-)Checks before a commit<a class="headerlink" href="#safety-checks-before-a-commit" title="Permanent link">&para;</a></h3>
+<p>With the Git hook file <code>pre-commit</code> you can make safety checks before the commit is made.
+The pre-commit script is executed every time you run <code>git commit</code> before Git asks the developer for a commit message or generates a commit object.</p>
+<p>This is really useful when you do not to push code that fails a test for example.</p>
+<p>The only thing you need to do is exit the script with <code>exit 0</code> if all tests resulted in no failures else return <code>exit 1</code> and the commit will not be made.</p>
+<div class="codehilite"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="c1"># Run tests</span>
+npm run <span class="nb">test</span>
+
+<span class="c1"># If no error (test ran successful) exit with 0 and go on with commit process</span>
+<span class="nb">exit</span> <span class="m">0</span>
+</pre></div>
+
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This example is used by the maintainer of this repository to only let commits through that at least pass all tests.</p>
+</div>
+<h3 id="update-documentation-after-any-commit">Update documentation after any commit<a class="headerlink" href="#update-documentation-after-any-commit" title="Permanent link">&para;</a></h3>
+<p>You can use the Git hook file <code>post-commit</code> to execute a custom script after a commit is made.</p>
+<p>A useful example could be to update to documentation:</p>
+<div class="codehilite"><pre><span></span><span class="ch">#!/bin/sh</span>
+
+<span class="c1"># Create documentation</span>
+npm run docs
+
+<span class="c1"># Move documentation to custom place</span>
+rm -r ../IliasBuddyDesktopDocs/*
+cp -r ./docs/site/* ../IliasBuddyDesktopDocs/
+</pre></div>
+
+
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>This example is used by the maintainer of this repository to automatically update the documentation.</p>
 </div>
                 
                   
@@ -520,7 +695,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../contribute/" title="Contribute" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../other-what-is-this-source-code/" title="What is this source code" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -529,19 +704,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Contribute
+                What is this source code
               </span>
             </div>
           </a>
         
         
-          <a href="../about/" title="About" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../other-set-env-variables/" title="Set env variables" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                About
+                Set env variables
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
