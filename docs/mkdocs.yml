@@ -17,6 +17,7 @@ nav:
     - Breakpoints: debug-breakpoints.md
 - Other:
     - What is this source code: other-what-is-this-source-code.md
+    - Git hooks: other-git-hooks.md
     - Set env variables: other-set-env-variables.md
 - Contribute: contribute.md
 - FAQ: faq.md

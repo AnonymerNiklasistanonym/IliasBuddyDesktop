@@ -5,7 +5,7 @@ export namespace IliasBuddyApi {
      * @param newEntries The new entries from the latest feed to the current
      * cached ones
      */
-    export function NewEntriesFoundCallback(newEntries: Entry[]): void;
+    export type NewEntriesFoundCallback = (newEntries: Entry[]) => void;
 
     // TODO Use only this entry interface in the whole project to minimize code
     // and centralize the important types in this document
