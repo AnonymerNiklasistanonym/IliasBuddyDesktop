@@ -11,18 +11,6 @@ const log = require('electron-log')
  */
 class IliasBuddyApi {
   /**
-   * Creates an instance of IliasBuddyApi
-   * @param {string} url Private Ilias RSS feed url
-   * @param {string} userName Private Ilias RSS feed username
-   * @param {string} password Private Ilias RSS feed password
-   * @param {import('../API/IliasBuddyTypes').IliasBuddyApi
-   * .NewEntriesFoundCallback} newEntriesFoundCallback
-   */
-  constructor (url, userName, password, newEntriesFoundCallback) {
-    this.manageEntries = new ManageEntries(url, userName, password,
-      newEntriesFoundCallback)
-  }
-  /**
    * Get the already cached entries
    */
   static getCache () {
@@ -47,6 +35,18 @@ class IliasBuddyApi {
    */
   static renderEntriesHtml (entries) {
     return entries.map(RendererEntries.render.bind(RendererEntries))
+  }
+  /**
+   * Creates an instance of IliasBuddyApi
+   * @param {string} url Private Ilias RSS feed url
+   * @param {string} userName Private Ilias RSS feed username
+   * @param {string} password Private Ilias RSS feed password
+   * @param {import('../API/IliasBuddyTypes').IliasBuddyApi
+   * .NewEntriesFoundCallback} newEntriesFoundCallback
+   */
+  constructor (url, userName, password, newEntriesFoundCallback) {
+    this.manageEntries = new ManageEntries(url, userName, password,
+      newEntriesFoundCallback)
   }
   /**
    * Get the current feed entries

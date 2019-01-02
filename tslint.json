@@ -22,21 +22,25 @@
         "align": [true, "parameters", "statements"],
         "completed-docs": true,
         "jsdoc-format": true,
-        "member-ordering": [true, { "order": [
-            "public-static-field",
-            "protected-static-field",
-            "private-static-field",
-            "public-instance-field",
-            "protected-instance-field",
-            "private-instance-field",
-            "constructor",
-            "public-static-method",
-            "protected-static-method",
-            "private-static-method",
-            "public-instance-method",
-            "protected-instance-method",
-            "private-instance-method"]
-            }]
+        "member-ordering": [true, {
+            "order": [
+              "public-static-field",
+              "public-static-method",
+              "public-instance-field",
+              "public-constructor",
+              "public-instance-method",
+              "protected-static-field",
+              "protected-static-method",
+              "protected-instance-field",
+              "protected-constructor",
+              "protected-instance-method",
+              "private-static-field",
+              "private-static-method",
+              "private-instance-field",
+              "private-constructor",
+              "private-instance-method"
+            ]
+          }]
     },
     "rules": {
         "no-namespace": false,

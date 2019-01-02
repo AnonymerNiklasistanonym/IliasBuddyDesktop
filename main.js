@@ -841,7 +841,7 @@ ipcMain
       event.sender.send('main-process-to-renderer-message',
         'Hello from main.js to index.js')
     })
-  .on('get-cache',
+  .on('get-cache-request',
     /**
      * When the renderer process asks for the cached Ilias entries send it to
      * him

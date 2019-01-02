@@ -450,7 +450,7 @@ ipcRenderer
 /* =====  Content  ====== */
 
 // Initially request cached entries
-ipcRenderer.send('get-cache')
+ipcRenderer.send('get-cache-request')
 
 // Request settings for settings page
 ipcRenderer.send('getSettings')
@@ -496,7 +496,7 @@ document.addEventListener('keydown', e => {
       default:
         // Do nothing else
     }
-    e.preventDefault()
+    // e.preventDefault()
     return
   }
   // Catch other key combinations
@@ -514,6 +514,7 @@ document.addEventListener('keydown', e => {
         : gMainWindow.webContents.openDevTools()
       break
     case 37: // <-  - Screen switch left
+      // Check if search bar is focused
       switch (gWindowManager.getCurrentWindow()) {
         case 'links':
           gWindowManager.showWindow('saved')
@@ -528,7 +529,9 @@ document.addEventListener('keydown', e => {
     case 39: // -> - Screen switch right
       switch (gWindowManager.getCurrentWindow()) {
         case 'main':
-          gWindowManager.showWindow('saved')
+          if (!gSearchManagerIliasEntries.searchBarIsFocused) {
+            gWindowManager.showWindow('saved')
+          }
           break
         case 'saved':
           gWindowManager.showWindow('links')

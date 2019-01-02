@@ -65,7 +65,7 @@ div#title-bar>div#title-bar-title {
     float: left;
     font-family: 'Local Roboto';
     font-size: calc(var(--title-bar-height) / 2);
-    padding: calc(var(--title-bar-height) / 4 - 1px);
+    padding: calc(var(--title-bar-height) / 4 - 4px);
 }
 
 div#title-bar>div#title-bar-actions {

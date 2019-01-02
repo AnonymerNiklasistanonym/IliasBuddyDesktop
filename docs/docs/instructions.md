@@ -11,9 +11,6 @@ On this screen all the Ilias entries from the current feed and cached can be fou
 
 You can search them, read them, save them for later.
 
-!!! note
-    Search option is coming soon
-
 ### Saved
 
 On this screen all the saved Ilias entries can be found.
@@ -49,16 +46,15 @@ Also there is a button to check for a newer version.
 The search bars in this project are custom written which is why they support the following features:
 
 - You can add keywords to further specify what you want:
-  - Example: `bears`
-  - Example: `red bears`
-  - Example: `cool red bears`
+    - `bears`
+    - `red bears`
+    - `cool red bears`
 - You can search for short sentences to further specify what you want:
-  - Example: `bears`
-  - Example: `red bears "his name was unbearable funny"`
-  - Example: `"bees hate him" cool bears`
+    - `red bears "his name was unbearable funny"`
+    - `"bees hate him" cool bears`
 - You can even search directly any metadata to further specify what you want:
-  - Example: `name:"native title bar"` (on the settings screen)
-  - Example: `description:"feed" title:"cron job"` (on the settings screen)
+    - `name:"native title bar"` (on the settings screen)
+    - `description:feed title:"cron job"` (on the settings screen)
 
 !!! note
     The search bars are currently implemented to ignore any case.
@@ -77,3 +73,7 @@ The search bars in this project are custom written which is why they support the
 By pressing `Ctrl` + `Alt` + `I` the app will if it runs in the background be shown and focused or if it runs in the foreground be hidden.
 
 This shortcut is configurable.
+
+### Focus search bar keyboard shortcut
+
+On pages that contain a search bar you can directly focus the bar by pressing `Ctrl` + `F`.

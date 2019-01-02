@@ -24,13 +24,14 @@ function loadCacheFile () {
   if (FileManager.fileExistsSyncAppData(gCacheFilePath)) {
     return JSON.parse(FileManager.readFileSyncAppData(gCacheFilePath)
       .toString())
-  } else {
-    // Return empty array if there is no cache file
-    return []
   }
+  // Return empty array if there is no cache file
+  return []
 }
 
-// Load cached entries into variable
+/**
+ * Cached Ilias entries
+ */
 let cachedEntries = loadCacheFile()
 
 /**
@@ -38,6 +39,23 @@ let cachedEntries = loadCacheFile()
  * new entries evaluating and cache management
  */
 class IliasBuddyManageEntriesApi {
+  /**
+   * Get the already cached entries
+   */
+  static getCachedEntries () {
+    return cachedEntries
+  }
+  /**
+   * Test if a connection with a `200` response can be established
+   * @param {string} url Private Ilias feed URL
+   * @param {string} userName Private Ilias feed user name for authentication
+   * @param {string} password Private Ilias feed password for authentication
+   * @returns {Promise<void>}
+   */
+  static testConnection (url, userName, password) {
+    log.debug('ManageEntries > test connection')
+    return FetchEntries.testConnection(url, userName, password)
+  }
   /**
    * Creates an instance of IliasBuddyFetchEntriesApi
    * @param {string} url Private Ilias RSS feed url
@@ -56,23 +74,6 @@ class IliasBuddyManageEntriesApi {
      */
     this.currentEntries = cachedEntries
     this.newEntriesFoundCallback = newEntriesFoundCallback
-  }
-  /**
-   * Get the already cached entries
-   */
-  static getCachedEntries () {
-    return cachedEntries
-  }
-  /**
-   * Test if a connection with a `200` response can be established
-   * @param {string} url Private Ilias feed URL
-   * @param {string} userName Private Ilias feed user name for authentication
-   * @param {string} password Private Ilias feed password for authentication
-   * @returns {Promise<void>}
-   */
-  static testConnection (url, userName, password) {
-    log.debug('ManageEntries > test connection')
-    return FetchEntries.testConnection(url, userName, password)
   }
   /**
    * Check if in a list of fetched entries new entries can be found

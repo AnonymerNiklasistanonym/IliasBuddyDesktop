@@ -14,17 +14,6 @@ const RawEntryParser = require('../PARSER/RawEntryParserApi')
  */
 class IliasBuddyFetchEntriesApi {
   /**
-   * Creates an instance of IliasBuddyFetchEntriesApi
-   * @param {string} url Private Ilias RSS feed url
-   * @param {string} userName Private Ilias RSS feed username
-   * @param {string} password Private Ilias RSS feed password
-   */
-  constructor (url, userName, password) {
-    this.url = url
-    this.userName = userName
-    this.password = password
-  }
-  /**
    * Test if a successful connection can be established
    * @param {string} url Private Ilias RSS feed url
    * @param {string} userName Private Ilias RSS feed username
@@ -71,6 +60,17 @@ class IliasBuddyFetchEntriesApi {
           })
       )
     )
+  }
+  /**
+   * Creates an instance of IliasBuddyFetchEntriesApi
+   * @param {string} url Private Ilias RSS feed url
+   * @param {string} userName Private Ilias RSS feed username
+   * @param {string} password Private Ilias RSS feed password
+   */
+  constructor (url, userName, password) {
+    this.url = url
+    this.userName = userName
+    this.password = password
   }
   /**
    * Get the current entries "Raw" which means parsed as JSON but not modified
