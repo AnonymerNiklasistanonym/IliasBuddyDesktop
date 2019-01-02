@@ -120,6 +120,22 @@ const gSearchManagerIliasEntries = new SearchManager(
   ])
 // TODO Implement search manager better, this is just a prototype
 gSearchManagerIliasEntries.search('')
+const gSearchManagerSettings = new SearchManager(
+  document.getElementById('settings_entries-search'),
+  document.getElementById('settings_entries'), [
+    {
+      name: 'name',
+      // tslint:disable-next-line: max-line-length
+      querySelector: 'div.settings-info-container > p.settings-info-container-name'
+    },
+    {
+      name: 'description',
+      // tslint:disable-next-line: max-line-length
+      querySelector: 'div.settings-info-container > p.settings-info-container-description'
+    }
+  ])
+// TODO Implement search manager better, this is just a prototype
+gSearchManagerSettings.search('')
 
 /* =====  Global functions  ====== */
 

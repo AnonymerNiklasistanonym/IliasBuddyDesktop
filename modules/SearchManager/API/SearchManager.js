@@ -21,6 +21,9 @@ class SearchManager {
       this.search(this.input.value)
     })
   }
+  /**
+   * Display all list elements (show all hidden ones by executing this method)
+   */
   showAllElements () {
     const children = this.list.children
     for (let i = 0; i < children.length; i++) {
@@ -28,13 +31,14 @@ class SearchManager {
     }
   }
   /**
-   * Do a search which automatically hides not results and sorts them
-   * accordingly
+   * Do a search which automatically hides list elements that aren't matches
    * @param {string} query
    * @example search('')
-   * @example search(' ')
    * @example search('searchEverywhere')
-   * @example search('searchEverywhere searchEverywhere  ')
+   * @example search('  searchEverywhere  searchEverywhere  ')
+   * @example search('"search everywhere" searchEverywhere')
+   * @example search('"search everywhere" description:searchDescription')
+   * @example search('title:"search only metadata title text content"')
    */
   // tslint:disable-next-line: cyclomatic-complexity
   search (query) {
@@ -46,25 +50,30 @@ class SearchManager {
     }
     // Find all queries
     let m
+    /**
+     * @type {{ id: string; query: string; }[]}
+     */
     const regexMatches = []
-    // TODO Regex needs to optimized to recognize description:"Content"
-    // TODO To easily search specific sections of the list entries
+    // (?:\s*?|^\s*)(?:"(.+?)"|"?(\S+?))(?:(?=\s)|(?=$))
+    // Group 02: searchEverywhere (This will be the found keywords)
+    // Group 01: "search everywhere" (This will be the found keywords)
     // tslint:disable-next-line: max-line-length
-    const regularExpression = /(?:\s*?|^\s*)(?:"(.+?)"|"?(\S+?))(?:(?=\s)|(?=$))/g
+    const regularExpression = /(?:\s*?|^\s*)(?:(\w*):)?(?:"(.+?)"|"?(\S+?))(?:(?=\s)|(?=$))/g
     do {
       m = regularExpression.exec(query)
       if (m) {
-        // Group 02: searchEverywhere (This will be the found keywords)
-        // Group 01: "search everywhere" (This will be the found keywords)
-        regexMatches.push(m[1] !== undefined ? m[1] : m[2])
+        // Group 01: description: (This will be the found keyword)
+        // Group 02: "search everywhere" (This will be the found keyword)
+        // Group 03: searchEverywhere (This will be the found keyword)
+        regexMatches.push({
+          id: m[1],
+          query: m[2] !== undefined ? m[2] : m[3]
+        })
       }
     } while (m)
 
-    console.log(regexMatches)
-
     const queries = regexMatches
     if (queries.length === 0) {
-      log.debug('Search query was not empty, but only spaces')
       this.showAllElements()
       return
     }
@@ -84,12 +93,25 @@ class SearchManager {
         dataList.push({ name: dataFormat.name, data })
       }
       // Iterate over data and check if search should display this element
-      const display = queries.filter(queryElement =>
-        dataList.filter(dataElement => {
+      const display = queries.filter(queryElement => {
+        // Check if a specific property is wanted
+        if (queryElement.id !== undefined) {
+          // Check if the data list has this property
+          const indexD = dataList.findIndex(a => a.name === queryElement.id)
+          if (indexD > -1) {
+            const elementData = dataList[indexD].data.toUpperCase()
+            const queryString = queryElement.query.toUpperCase()
+            return elementData.includes(queryString)
+          }
+          // If not ignore it
+        }
+        // Else check all properties for at least one match
+        return dataList.filter(dataElement => {
           const elementData = dataElement.data.toUpperCase()
-          const queryString = queryElement.toUpperCase()
+          const queryString = queryElement.query.toUpperCase()
           return elementData.includes(queryString)
-        }).length > 0).length === queries.length
+        }).length > 0
+      }).length === queries.length
       // Hide/Show list element
       if (display) {
         listElement.classList.remove('search-hide')
