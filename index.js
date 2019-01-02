@@ -483,6 +483,23 @@ document.getElementById('check-for-updates')
 // Keyboard input listener
 // tslint:disable-next-line: cyclomatic-complexity
 document.addEventListener('keydown', e => {
+  // Catch search bar focused
+  if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+    // Check the page
+    switch (gWindowManager.getCurrentWindow()) {
+      case 'main':
+        gSearchManagerIliasEntries.focusSearchBar()
+        break
+      case 'settings':
+        gSearchManagerSettings.focusSearchBar()
+        break
+      default:
+        // Do nothing else
+    }
+    e.preventDefault()
+    return
+  }
+  // Catch other key combinations
   switch (e.which) {
     case 122: // F11 - Fullscreen
       gMainWindow.setFullScreen(!gMainWindow.isFullScreen())

@@ -22,6 +22,12 @@ class SearchManager {
     })
   }
   /**
+   * Focus the search bar
+   */
+  focusSearchBar () {
+    this.input.focus()
+  }
+  /**
    * Display all list elements (show all hidden ones by executing this method)
    */
   showAllElements () {
