@@ -153,6 +153,7 @@
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gmainwindow" class="tsd-kind-icon">g<wbr>Main<wbr>Window</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gonline" class="tsd-kind-icon">g<wbr>Online</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gsearchmanageriliasentries" class="tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Ilias<wbr>Entries</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gsearchmanagersettings" class="tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Settings</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gsettingspopuptoggled" class="tsd-kind-icon">g<wbr>Settings<wbr>Popup<wbr>Toggled</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gtitlebar" class="tsd-kind-icon">g<wbr>Title<wbr>Bar</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#gversioncheckpending" class="tsd-kind-icon">g<wbr>Version<wbr>Check<wbr>Pending</a></li>
@@ -661,10 +662,20 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
 					<a name="gsearchmanageriliasentries" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> g<wbr>Search<wbr>Manager<wbr>Ilias<wbr>Entries</h3>
-					<div class="tsd-signature tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Ilias<wbr>Entries<span class="tsd-signature-symbol">:</span> <a href="classes/searchmanager.html" class="tsd-signature-type">SearchManager</a><span class="tsd-signature-symbol"> =&nbsp;new SearchManager(document.getElementById(&#x27;ilias-entries-search&#x27;),document.getElementById(&#x27;ilias-entries&#x27;),[{ name: &#x27;description&#x27;, querySelector: &#x27;div.ilias-entry-description&#x27; }])</span></div>
+					<div class="tsd-signature tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Ilias<wbr>Entries<span class="tsd-signature-symbol">:</span> <a href="classes/searchmanager.html" class="tsd-signature-type">SearchManager</a><span class="tsd-signature-symbol"> =&nbsp;new SearchManager(document.getElementById(&#x27;ilias-entries-search&#x27;),document.getElementById(&#x27;ilias-entries&#x27;), [{ name: &#x27;description&#x27;, querySelector: &#x27;div.ilias-entry-description&#x27; },{ name: &#x27;forum&#x27;, querySelector: &#x27;p.ilias-entry-forum&#x27; },{ name: &#x27;title&#x27;, querySelector: &#x27;p.ilias-entry-title&#x27; },{ name: &#x27;fileName&#x27;, querySelector: &#x27;p.ilias-entry-file-name&#x27; },{name: &#x27;courseDirectory&#x27;,querySelector: &#x27;p.ilias-entry-course-directory&#x27;},{ name: &#x27;date&#x27;, querySelector: &#x27;div.container-link-date &gt; p&#x27; },{ name: &#x27;description&#x27;, querySelector: &#x27;div.ilias-entry-description&#x27; },{ name: &#x27;course&#x27;, querySelector: &#x27;p.ilias-entry-course&#x27; }])</span></div>
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in index.js:106</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="gsearchmanagersettings" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> g<wbr>Search<wbr>Manager<wbr>Settings</h3>
+					<div class="tsd-signature tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Settings<span class="tsd-signature-symbol">:</span> <a href="classes/searchmanager.html" class="tsd-signature-type">SearchManager</a><span class="tsd-signature-symbol"> =&nbsp;new SearchManager(document.getElementById(&#x27;settings_entries-search&#x27;),document.getElementById(&#x27;settings_entries&#x27;), [{name: &#x27;name&#x27;,// tslint:disable-next-line: max-line-lengthquerySelector: &#x27;div.settings-info-container &gt; p.settings-info-container-name&#x27;},{name: &#x27;description&#x27;,// tslint:disable-next-line: max-line-lengthquerySelector: &#x27;div.settings-info-container &gt; p.settings-info-container-description&#x27;}])</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in index.js:123</li>
 						</ul>
 					</aside>
 				</section>
@@ -822,6 +833,7 @@
 							<li>Defined in modules/IliasBuddy/FETCH/FetchEntriesApi.js:6</li>
 							<li>Defined in modules/IliasBuddy/MANAGER/ManageEntriesApi.js:5</li>
 							<li>Defined in modules/IliasBuddy/API/IliasBuddyApi.js:5</li>
+							<li>Defined in modules/SearchManager/API/SearchManager.js:1</li>
 							<li>Defined in js/onlineState.js:14</li>
 							<li>Defined in index.js:13</li>
 							<li>Defined in main.js:20</li>
@@ -925,7 +937,7 @@
 					<div class="tsd-signature tsd-kind-icon">run<wbr>Them<wbr>Never<wbr>Only<wbr>Callbacks<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in index.js:275</li>
+							<li>Defined in index.js:302</li>
 						</ul>
 					</aside>
 				</section>
@@ -1078,7 +1090,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:154</li>
+									<li>Defined in index.js:181</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1381,7 +1393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:188</li>
+									<li>Defined in index.js:215</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1435,7 +1447,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:269</li>
+									<li>Defined in index.js:296</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1522,7 +1534,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:177</li>
+									<li>Defined in index.js:204</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1633,7 +1645,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:256</li>
+									<li>Defined in index.js:283</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1665,7 +1677,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:232</li>
+									<li>Defined in index.js:259</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1936,7 +1948,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:243</li>
+									<li>Defined in index.js:270</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1971,7 +1983,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:202</li>
+									<li>Defined in index.js:229</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2054,7 +2066,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in index.js:119</li>
+									<li>Defined in index.js:146</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2352,6 +2364,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#gsearchmanageriliasentries" class="tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Ilias<wbr>Entries</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#gsearchmanagersettings" class="tsd-kind-icon">g<wbr>Search<wbr>Manager<wbr>Settings</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#gsettingspopuptoggled" class="tsd-kind-icon">g<wbr>Settings<wbr>Popup<wbr>Toggled</a>
