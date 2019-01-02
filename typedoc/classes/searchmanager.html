@@ -92,11 +92,19 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#searchbarisfocused" class="tsd-kind-icon">search<wbr>Bar<wbr>IsFocused</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="searchmanager.html#searchqueryexpression" class="tsd-kind-icon">search<wbr>Query<wbr>Expression</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#focussearchbar" class="tsd-kind-icon">focus<wbr>Search<wbr>Bar</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#search" class="tsd-kind-icon">search</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-not-exported"><a href="searchmanager.html#showallelements" class="tsd-kind-icon">show<wbr>All<wbr>Elements</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported"><a href="searchmanager.html#getsearchqueryexpressionresults" class="tsd-kind-icon">get<wbr>Search<wbr>Query<wbr>Expression<wbr>Results</a></li>
 							</ul>
 						</section>
 					</div>
@@ -108,13 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Search<wbr>Manager<span class="tsd-signature-symbol">(</span>inputElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLInputElement</span>, listElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLUListElement</span>, listElementFormat<span class="tsd-signature-symbol">?: </span><a href="../interfaces/searchmanagerlistformat.html" class="tsd-signature-type">SearchManagerListFormat</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="searchmanager.html" class="tsd-signature-type">SearchManager</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Search<wbr>Manager<span class="tsd-signature-symbol">(</span>inputElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLInputElement</span>, listElement<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLUListElement</span>, listElementFormat<span class="tsd-signature-symbol">?: </span><a href="../interfaces/searchmanagerlistformat.html" class="tsd-signature-type">SearchManagerListFormat</a><span class="tsd-signature-symbol">[]</span>, options<span class="tsd-signature-symbol">: </span><a href="../interfaces/searchmanageroptions.html" class="tsd-signature-type">SearchManagerOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="searchmanager.html" class="tsd-signature-type">SearchManager</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/SearchManager/API/SearchManager.js:6</li>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:73</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -133,8 +141,84 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> listElementFormat: <a href="../interfaces/searchmanagerlistformat.html" class="tsd-signature-type">SearchManagerListFormat</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
 								</li>
+								<li>
+									<h5>options: <a href="../interfaces/searchmanageroptions.html" class="tsd-signature-type">SearchManagerOptions</a></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="searchmanager.html" class="tsd-signature-type">SearchManager</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-not-exported">
+					<a name="searchbarisfocused" class="tsd-anchor"></a>
+					<h3>search<wbr>Bar<wbr>IsFocused</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> searchBarIsFocused<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:15</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get if the search bar is focused</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+					<a name="searchqueryexpression" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> search<wbr>Query<wbr>Expression</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> searchQueryExpression<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:39</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Regular expression for the search query</p>
+									<ul>
+										<li><strong>Group 01</strong> (<code>[1]</code>): The group contains either undefined or metadata key<ul>
+												<li><code>key:keyword</code> = <code>key</code></li>
+												<li><code>key:&quot;key word&quot;</code> = <code>key</code></li>
+												<li><code>keyword</code> = <code>undefined</code></li>
+												<li><code>&quot;key word&quot;</code> = <code>undefined</code></li>
+											</ul>
+										</li>
+										<li><strong>Group 02</strong> (<code>[2]</code>): The group contains either undefined or the keyword
+											contained in two quotation marks (<code>&quot;...&quot;</code>) and separated by two
+											whitespaces (or the begin/end of the string)<ul>
+												<li><code>key:keyword</code> = <code>undefined</code></li>
+												<li><code>key:&quot;key word&quot;</code> = <code>key word</code></li>
+												<li><code>keyword</code> = <code>undefined</code></li>
+												<li><code>&quot;key word&quot;</code> = <code>key word</code></li>
+											</ul>
+										</li>
+										<li><strong>Group 03</strong> (<code>[3]</code>): The group contains either undefined or a keyword
+											separated by two whitespaces (or the begin/end of the string)<ul>
+												<li><code>key:keyword</code> = <code>keyword</code></li>
+												<li><code>key:&quot;key word&quot;</code> = <code>undefined</code></li>
+												<li><code>keyword</code> = <code>keyword</code></li>
+												<li><code>&quot;key word&quot;</code> = <code>undefined</code></li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">RegExp</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -151,7 +235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/SearchManager/API/SearchManager.js:27</li>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:99</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -173,7 +257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/SearchManager/API/SearchManager.js:50</li>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:122</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -221,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/SearchManager/API/SearchManager.js:33</li>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:105</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,6 +314,34 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+					<a name="getsearchqueryexpressionresults" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> get<wbr>Search<wbr>Query<wbr>Expression<wbr>Results</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Search<wbr>Query<wbr>Expression<wbr>Results<span class="tsd-signature-symbol">(</span>searchQuery<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/searchmanagerparsedquery.html" class="tsd-signature-type">SearchManagerParsedQuery</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:47</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the parsed search query results</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>searchQuery: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/searchmanagerparsedquery.html" class="tsd-signature-type">SearchManagerParsedQuery</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -253,6 +365,12 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
 								<a href="searchmanager.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-not-exported">
+								<a href="searchmanager.html#searchbarisfocused" class="tsd-kind-icon">search<wbr>Bar<wbr>IsFocused</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+								<a href="searchmanager.html#searchqueryexpression" class="tsd-kind-icon">search<wbr>Query<wbr>Expression</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 								<a href="searchmanager.html#focussearchbar" class="tsd-kind-icon">focus<wbr>Search<wbr>Bar</a>
 							</li>
@@ -261,6 +379,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
 								<a href="searchmanager.html#showallelements" class="tsd-kind-icon">show<wbr>All<wbr>Elements</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
+								<a href="searchmanager.html#getsearchqueryexpressionresults" class="tsd-kind-icon">get<wbr>Search<wbr>Query<wbr>Expression<wbr>Results</a>
 							</li>
 						</ul>
 					</li>
