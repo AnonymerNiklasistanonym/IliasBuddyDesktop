@@ -105,8 +105,19 @@ const gTitleBar = new TitleBarWin10({
 
 const gSearchManagerIliasEntries = new SearchManager(
   document.getElementById('ilias-entries-search'),
-  document.getElementById('ilias-entries'),
-  [{ name: 'description', querySelector: 'div.ilias-entry-description' }])
+  document.getElementById('ilias-entries'), [
+    { name: 'description', querySelector: 'div.ilias-entry-description' },
+    { name: 'forum', querySelector: 'p.ilias-entry-forum' },
+    { name: 'title', querySelector: 'p.ilias-entry-title' },
+    { name: 'fileName', querySelector: 'p.ilias-entry-file-name' },
+    {
+      name: 'courseDirectory',
+      querySelector: 'p.ilias-entry-course-directory'
+    },
+    { name: 'date', querySelector: 'div.container-link-date > p' },
+    { name: 'description', querySelector: 'div.ilias-entry-description' },
+    { name: 'course', querySelector: 'p.ilias-entry-course' }
+  ])
 // TODO Implement search manager better, this is just a prototype
 gSearchManagerIliasEntries.search('')
 

@@ -22,6 +22,7 @@ Link to uncompiled doc files: [`docs/docs/`](docs/docs/)
   - [Breakpoints](docs/docs/debug-breakpoints.md)
 - Other
   - [What is this source code](docs/docs/other-what-is-this-source-code.md)
+  - [Git hooks](docs/docs/other-git-hooks)
   - [Set env variables](docs/docs/other-set-env-variables.md)
 - [Contribute](docs/docs/contribute.md)
 - [FAQ](docs/docs/faq.md)

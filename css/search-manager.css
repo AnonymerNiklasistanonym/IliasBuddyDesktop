@@ -1,3 +1,15 @@
 .search-hide {
     display: none;
 }
+
+div.search-bar > input {
+    /* TODO This needs to be fixed to really be cross device/responsive */
+    width: 96%;
+    padding: 1rem 1rem;
+}
+
+div.search-bar {
+    max-width: 800px;
+    width: 100%;
+    margin: 1rem auto 0 auto;
+}
