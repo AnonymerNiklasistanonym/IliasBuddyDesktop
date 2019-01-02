@@ -150,26 +150,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in modules/SearchManager/API/SearchManager.js:43</li>
+									<li>Defined in modules/SearchManager/API/SearchManager.js:44</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Do a search which automatically hides not results and sorts them
-									accordingly</p>
+									<p>Do a search which automatically hides list elements that aren&#39;t matches</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>example</dt>
 									<dd><p>search(&#39;&#39;)</p>
 									</dd>
 									<dt>example</dt>
-									<dd><p>search(&#39; &#39;)</p>
-									</dd>
-									<dt>example</dt>
 									<dd><p>search(&#39;searchEverywhere&#39;)</p>
 									</dd>
 									<dt>example</dt>
-									<dd><p>search(&#39;searchEverywhere searchEverywhere  &#39;)</p>
+									<dd><p>search(&#39;  searchEverywhere  searchEverywhere  &#39;)</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>search(&#39;&quot;search everywhere&quot; searchEverywhere&#39;)</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>search(&#39;&quot;search everywhere&quot; description:searchDescription&#39;)</p>
+									</dd>
+									<dt>example</dt>
+									<dd><p>search(&#39;title:&quot;search only metadata title text content&quot;&#39;)</p>
 									</dd>
 								</dl>
 							</div>
