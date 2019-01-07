@@ -16,6 +16,7 @@ cd docs/
 ./clean.sh
 cd ../
 
+rm -rf env
 rm -rf dist
 rm -rf node_modules
 rm -rf package-lock.json

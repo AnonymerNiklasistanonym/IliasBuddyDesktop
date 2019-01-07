@@ -21,3 +21,7 @@ A private Ilias RSS feed client written in Electron.
 ## Source Code Documentation
 
 [Find the source code documentation here](typedoc/globals.html)
+
+## Source Code TODOs
+
+[Open TODOs and FIXMEs](open-todos.md)

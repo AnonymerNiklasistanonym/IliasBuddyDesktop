@@ -250,10 +250,9 @@ const setSettingsElement = (documentId, type, value) => {
   }
 }
 
-// TODO
 /**
- * TODO
- * Save entry (change later link to guid or let it be)
+ * TODO Think about changing the link to guid or let it be.
+ * Save entry
  * @param {string} link
  */
 function save (link) {
@@ -269,8 +268,6 @@ function save (link) {
  */
 function setSettings (infoObject, value) {
   // Ask the main process to set the setting
-  // FIXME
-  // TODO Determine with switch case and infoObject.documentId the current value
   // to remove inline JS
   ipcRenderer.send('settings-set', { ...infoObject, value })
 }

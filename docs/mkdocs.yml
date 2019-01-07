@@ -21,6 +21,7 @@ nav:
     - Set env variables: other-set-env-variables.md
     - Python virtualenv: other-python-virtualenv.md
 - Contribute: contribute.md
+- Open TODOs: open-todos.md
 - FAQ: faq.md
 - About: about.md
 - Source Code Documentation: typedoc/globals.html

@@ -21,9 +21,9 @@
     "typedocOptions": {
       "ignoreCompilerErrors": true,
       "mode": "file",
-      "out": "./site/typedoc",
+      "out": "./docs/site/typedoc",
       "name": "Ilias Buddy Desktop",
-      "readme": "./DOCS_README_TYPEDOC.md",
+      "readme": "./docs/DOCS_README_TYPEDOC.md",
       "verbose": true
     }
   }

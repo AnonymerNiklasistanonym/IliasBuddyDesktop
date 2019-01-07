@@ -42,6 +42,8 @@ To further customize it you can even configure it in the vscode `settings.json` 
 ...
 ```
 
+You can now also check this page: [Open TODOs](open-todos.md)
+
 ## Test code before contribution (or to help)
 
 To test you code style or check for obvious errors you can just run
