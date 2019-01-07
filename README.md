@@ -16,7 +16,7 @@ Link to uncompiled doc files: [`docs/docs/`](docs/docs/)
 - [Instructions](docs/docs/instructions.md)
 - Build
   - [App](docs/docs/build-app.md)
-  - [Documentation](docs/docs/build-documentation.md)
+  - [Documentation](docs/docs/build-docs.md)
 - Debug
   - [Logs](docs/docs/debug-logs.md)
   - [Breakpoints](docs/docs/debug-breakpoints.md)
