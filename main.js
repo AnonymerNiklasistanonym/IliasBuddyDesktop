@@ -575,7 +575,7 @@ function createWindow () {
     const systemTray = new Tray(nativeImage.createFromPath(iconPath))
     systemTray.setToolTip('IliasBuddy')
     systemTray.setContextMenu(Menu.buildFromTemplate([
-      { click: function () {
+      { click: () => {
         if (gMainWindow.isVisible()) {
           gMainWindow.focus()
         } else {
@@ -583,7 +583,7 @@ function createWindow () {
         }
       },
       label: 'Show App' },
-      { click: function () {
+      { click: () => {
         app.quit()
       },
       label: 'Quit' }
@@ -617,8 +617,8 @@ function createWindow () {
   // window event listener
   gMainWindow
     .on('ready-to-show', () => {
-      log.debugMain('.on(\'ready-to-show\'')
-      setupAfterWindowHasLoaded()
+      // log.debugMain('.on(\'ready-to-show\'')
+      // setupAfterWindowHasLoaded()
     })
     .on('close', () => {
       // Save settings before closing
@@ -647,7 +647,7 @@ function createWindow () {
       }
     })
 
-  setupAfterWindowHasLoaded()
+  // setupAfterWindowHasLoaded()
 }
 
 /**

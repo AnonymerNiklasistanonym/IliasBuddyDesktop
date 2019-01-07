@@ -116,7 +116,13 @@ class IliasBuddyFetchEntriesApi {
         .then(entries => {
           // Double check if currently any entries are even available
           if (entries.rss.channel.item !== undefined) {
-            return entries.rss.channel.item.map(RawEntryParser.parseRawEntry)
+            // FIXME Check if there is only one entry or an array of entries!
+            if (Array.isArray(entries.rss.channel.item)) {
+              return entries.rss.channel.item.map(RawEntryParser.parseRawEntry)
+            } else {
+              log.debug('Item tag contains not an array of elements! (Hint for debugging)')
+              return [RawEntryParser.parseRawEntry(entries.rss.channel.item)]
+            }
           } else {
             // Log it but don't display an error, because these things can
             // happen

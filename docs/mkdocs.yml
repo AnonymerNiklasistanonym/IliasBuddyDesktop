@@ -22,6 +22,7 @@ nav:
 - Contribute: contribute.md
 - FAQ: faq.md
 - About: about.md
+- Source Code Documentation: typedoc/globals.html
 
 # Configuration
 theme:
