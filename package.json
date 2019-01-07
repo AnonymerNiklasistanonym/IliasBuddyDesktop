@@ -22,11 +22,11 @@
     "@types/auto-launch": "^5.0.0",
     "@types/node-cron": "^2.0.0",
     "@types/node-notifier": "0.0.28",
-    "electron": "^4.0.0",
+    "electron": "^4.0.1",
     "electron-builder": "^20.38.4",
     "standard": "^12.0.1",
     "tslint": "^5.12.0",
-    "typedoc": "^0.13.0",
+    "typedoc": "^0.14.0",
     "typescript": "^3.2.2"
   },
   "dependencies": {

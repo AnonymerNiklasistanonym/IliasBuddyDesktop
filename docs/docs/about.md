@@ -23,9 +23,9 @@
 
 ### Developer dependencies
 
-- [`electron`](https://github.com/electron/electron#readme): 4.0.0 <br> The electron framework
+- [`electron`](https://github.com/electron/electron#readme): 4.0.1 <br> The electron framework
 - [`electron-builder`](https://github.com/electron-userland/electron-builder): 20.38.4 <br> Export electron apps to different OSes
 - [`standard`](https://standardjs.com): 12.0.1 <br> JavaScript code style linter and fixer for more readable code
 - [`tslint`](https://palantir.github.io/tslint): 5.12.0 <br> JavaScript/TypeScript code style linter with static analysis
-- [`typedoc`](http://typedoc.org): 0.13.0 <br> Document source code with highlight on the static type system
+- [`typedoc`](http://typedoc.org): 0.14.0 <br> Document source code with highlight on the static type system
 - [`typescript`](https://www.typescriptlang.org/): 3.2.2 <br> The typescript runtime (needed for typedoc, tslint, ...)
