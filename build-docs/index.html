@@ -334,6 +334,26 @@
     Setup
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs" title="Mkdocs" class="md-nav__link">
+    Mkdocs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typedoc" title="TypeDoc" class="md-nav__link">
+    TypeDoc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -462,6 +482,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../other-python-virtualenv/" title="Python virtualenv" class="md-nav__link">
+      Python virtualenv
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -540,6 +572,26 @@
     Setup
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs" title="Mkdocs" class="md-nav__link">
+    Mkdocs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typedoc" title="TypeDoc" class="md-nav__link">
+    TypeDoc
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -571,18 +623,30 @@
                 <h1 id="build-docs">Build Docs<a class="headerlink" href="#build-docs" title="Permanent link">&para;</a></h1>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <p>Run the following commands to make your system fit for the upcoming tasks</p>
-<div class="codehilite"><pre><span></span><span class="c1"># Install mkdocs</span>
-pip install mkdocs
-<span class="c1"># Install the mkdocs material theme</span>
-pip install mkdocs-material
-
-<span class="c1"># Use the markdown extension codehilite for code syntax highlighting</span>
-pip install pygments
-<span class="c1"># Use the markdown extension pymdown for many thinks, like task lists</span>
-pip install pymdown-extensions
+<h3 id="mkdocs">Mkdocs<a class="headerlink" href="#mkdocs" title="Permanent link">&para;</a></h3>
+<div class="admonition hint">
+<p class="admonition-title">Python virtual environment</p>
+<p>You probably want to set this up in an virtual environment: <a href="../other-python-virtualenv/">Check here for further instructions</a></p>
+</div>
+<p>Install all the needed packages in one go:</p>
+<div class="codehilite"><pre><span></span>pip install -r requirements.txt
 </pre></div>
 
 
+<p>Install the needed packages step by step:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># Install mkdocs</span>
+pip install mkdocs -U
+<span class="c1"># Install the mkdocs material theme</span>
+pip install mkdocs-material -U
+
+<span class="c1"># Use the markdown extension codehilite for code syntax highlighting</span>
+pip install pygments -U
+<span class="c1"># Use the markdown extension pymdown for many thinks, like task lists</span>
+pip install pymdown-extensions -U
+</pre></div>
+
+
+<h3 id="typedoc">TypeDoc<a class="headerlink" href="#typedoc" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><span class="c1"># Install typedoc</span>
 npm install -g typedoc
 </pre></div>

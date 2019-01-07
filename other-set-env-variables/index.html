@@ -508,6 +508,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../other-python-virtualenv/" title="Python virtualenv" class="md-nav__link">
+      Python virtualenv
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -665,7 +677,7 @@
 <h3 id="set-variables">Set variables<a class="headerlink" href="#set-variables" title="Permanent link">&para;</a></h3>
 <h4 id="temporary">Temporary<a class="headerlink" href="#temporary" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="nv">$env:TEMPORARY_VAR</span> <span class="p">=</span> <span class="s2">&quot;A temporary test variable&quot;</span>
-<span class="n">echo</span> <span class="nv">$env:TEMPORARY_VAR</span>
+<span class="nb">echo </span><span class="nv">$env:TEMPORARY_VAR</span>
 </pre></div>
 
 
@@ -677,8 +689,8 @@
 <span class="nv">$env:FOREVER_VAR_MACHINE</span> <span class="p">=</span> <span class="no">[System.Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;FOREVER_VAR_MACHINE&quot;</span><span class="p">,</span><span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
 <span class="nv">$env:FOREVER_VAR_USER</span> <span class="p">=</span> <span class="no">[System.Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;FOREVER_VAR_USER&quot;</span><span class="p">,</span><span class="s2">&quot;User&quot;</span><span class="p">)</span>
 <span class="c"># Echo them to the console</span>
-<span class="n">echo</span> <span class="nv">$env:FOREVER_VAR_MACHINE</span>
-<span class="n">echo</span> <span class="nv">$env:FOREVER_VAR_USER</span>
+<span class="nb">echo </span><span class="nv">$env:FOREVER_VAR_MACHINE</span>
+<span class="nb">echo </span><span class="nv">$env:FOREVER_VAR_USER</span>
 </pre></div>
 
 
@@ -688,13 +700,13 @@
 <span class="c"># Update it in the current terminal</span>
 <span class="nv">$env:TEST_VAR_MACHINE</span> <span class="p">=</span> <span class="no">[System.Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;TEST_VAR_MACHINE&quot;</span><span class="p">,</span><span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
 <span class="c"># Echo them to the console</span>
-<span class="n">echo</span> <span class="nv">$env:TEST_VAR_MACHINE</span>
+<span class="nb">echo </span><span class="nv">$env:TEST_VAR_MACHINE</span>
 <span class="c"># Remove variable</span>
 <span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;TEST_VAR_MACHINE&quot;</span><span class="p">,</span> <span class="nv">$null</span><span class="p">,</span> <span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
 <span class="c"># Update it in the current terminal</span>
 <span class="nv">$env:TEST_VAR_MACHINE</span> <span class="p">=</span> <span class="no">[System.Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;TEST_VAR_MACHINE&quot;</span><span class="p">,</span><span class="s2">&quot;Machine&quot;</span><span class="p">)</span>
 <span class="c"># Echo them to the console (Should be empty because the variable doesn&#39;t exist any more)</span>
-<span class="n">echo</span> <span class="nv">$env:TEST_VAR_MACHINE</span>
+<span class="nb">echo </span><span class="nv">$env:TEST_VAR_MACHINE</span>
 </pre></div>
 
 
@@ -747,13 +759,13 @@
           </a>
         
         
-          <a href="../contribute/" title="Contribute" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../other-python-virtualenv/" title="Python virtualenv" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Contribute
+                Python virtualenv
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
