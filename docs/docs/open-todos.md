@@ -46,4 +46,3 @@ In here you can find nearly all currently open FIXME and TODO tags in the code:
 | TODO | add settings option - "no default value as value" | .js | [Link to Renderer.js](https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/master/modules/Settings/RENDERER/Renderer.js#L66) |
 | TODO | HBS test comment + Check to explain certain code - Add helper | .hbs | [Link to templateCronJob.hbs](https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/master/modules/Settings/RENDERER/templates/templateCronJob.hbs#L1) |
 | TODO | Complexity is too high | .js | [Link to TitleBarWin10.js](https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/blob/master/modules/TitleBarWin10/API/TitleBarWin10.js#L85) |
-
