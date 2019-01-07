@@ -19,6 +19,7 @@ nav:
     - What is this source code: other-what-is-this-source-code.md
     - Git hooks: other-git-hooks.md
     - Set env variables: other-set-env-variables.md
+    - Python virtualenv: other-python-virtualenv.md
 - Contribute: contribute.md
 - FAQ: faq.md
 - About: about.md

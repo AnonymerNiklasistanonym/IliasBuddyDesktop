@@ -103,3 +103,6 @@ settings.json
 # ignore documentation builds
 /docs/site
 /docs/typedoc/
+
+# Ignore Python virtual environment
+env/*

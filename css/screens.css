@@ -69,7 +69,8 @@ ul#screens>li.window-manager-screen-full-screen {
     margin-left: 1rem;
 }
 
-.screen-wrapper button:hover {
+.screen-wrapper button:hover,
+.screen-wrapper button:focus {
     transition: .1s ease-out;
     background-color: var(--ilias-button-bg-color-hover);
 }
