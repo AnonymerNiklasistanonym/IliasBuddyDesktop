@@ -345,8 +345,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#typedoc" title="TypeDoc" class="md-nav__link">
-    TypeDoc
+  <a href="#typedoc-and-todo-page" title="TypeDoc and TODO page" class="md-nav__link">
+    TypeDoc and TODO page
   </a>
   
 </li>
@@ -517,6 +517,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../open-todos/" title="Open TODOs" class="md-nav__link">
+      Open TODOs
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../faq/" title="FAQ" class="md-nav__link">
       FAQ
     </a>
@@ -583,8 +595,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#typedoc" title="TypeDoc" class="md-nav__link">
-    TypeDoc
+  <a href="#typedoc-and-todo-page" title="TypeDoc and TODO page" class="md-nav__link">
+    TypeDoc and TODO page
   </a>
   
 </li>
@@ -633,12 +645,11 @@
 </pre></div>
 
 
-<p>Install the needed packages step by step:</p>
+<p>OR install the needed packages step by step:</p>
 <div class="codehilite"><pre><span></span><span class="c1"># Install mkdocs</span>
 pip install mkdocs -U
 <span class="c1"># Install the mkdocs material theme</span>
 pip install mkdocs-material -U
-
 <span class="c1"># Use the markdown extension codehilite for code syntax highlighting</span>
 pip install pygments -U
 <span class="c1"># Use the markdown extension pymdown for many thinks, like task lists</span>
@@ -646,26 +657,15 @@ pip install pymdown-extensions -U
 </pre></div>
 
 
-<h3 id="typedoc">TypeDoc<a class="headerlink" href="#typedoc" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><span class="c1"># Install typedoc</span>
-npm install -g typedoc
+<h3 id="typedoc-and-todo-page">TypeDoc and TODO page<a class="headerlink" href="#typedoc-and-todo-page" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><span class="c1"># Install typedoc/TODO page dependencies via a global npm install</span>
+<span class="c1"># (they are npm dev dependencies)</span>
+npm install
 </pre></div>
 
 
 <h2 id="build">Build<a class="headerlink" href="#build" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><span class="c1"># First go into the docs directory</span>
-<span class="nb">cd</span> docs
-
-<span class="c1"># Then build the mkdocs hierarchy</span>
-<span class="nb">cd</span> mkdocs
-mkdocs build
-<span class="nb">cd</span> ..
-
-<span class="c1"># Then build with typedoc the source code documentation</span>
-typedoc --tsconfig ../tsconfig.json
-
-<span class="c1"># Then copy this documentation into the mkdocs hierarchy</span>
-cp -r typedoc mkdocs/site/typedoc
+<div class="codehilite"><pre><span></span>npm run docs
 </pre></div>
 
 
