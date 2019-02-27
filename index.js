@@ -142,6 +142,7 @@ gSearchManagerSettings.search('')
 /**
  * Toggle popup screens
  * @param {string} popUpScreenId Popup screen id
+ * @throws Error if popUpScreenId is not supported
  */
 function togglePopupScreen (popUpScreenId) {
   log.debugIndex(`togglePopupScreens (popUpScreenId=${popUpScreenId})`)
@@ -225,6 +226,7 @@ function copyToClipboard (url) {
  * .Modifiable.SettingsTypeName} type Settings type
  * @param {import('./modules/Settings/API/SettingsTypes')
  * .Modifiable.SettingsType} value Settings value
+ * @throws Error if type is not supported/valid
  */
 const setSettingsElement = (documentId, type, value) => {
   const element = document.getElementById(documentId)

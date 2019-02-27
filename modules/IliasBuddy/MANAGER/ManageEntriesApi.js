@@ -79,6 +79,7 @@ class IliasBuddyManageEntriesApi {
    * Check if in a list of fetched entries new entries can be found
    * @param {import('../FETCH/FetchEntriesTypes')
    * .IliasBuddyFetchEntries.Entry[]} fetchedEntries
+   * @throws Error if fetchedEntries is undefined or empty
    * @returns {import('../FETCH/FetchEntriesTypes')
    * .IliasBuddyFetchEntries.Entry[]}
    */

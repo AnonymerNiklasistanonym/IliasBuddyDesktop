@@ -21,27 +21,27 @@
     "todo-page": "node ./docs/createTodoPage.js"
   },
   "devDependencies": {
-    "@types/auto-launch": "^5.0.0",
-    "@types/node-cron": "^2.0.0",
+    "@types/auto-launch": "^5.0.1",
+    "@types/node-cron": "^2.0.1",
     "@types/node-notifier": "0.0.28",
-    "electron": "^4.0.1",
-    "electron-builder": "^20.38.4",
-    "leasot": "^7.0.0-rc.7",
+    "electron": "^4.0.6",
+    "electron-builder": "^20.38.5",
+    "leasot": "^7.3.4",
     "standard": "^12.0.1",
-    "tslint": "^5.12.0",
-    "typedoc": "^0.14.0",
-    "typescript": "^3.2.2"
+    "tslint": "^5.13.0",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.3.3333"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
     "compare-versions": "^3.4.0",
-    "cronstrue": "^1.58.0",
-    "electron-log": "^2.2.17",
-    "handlebars": "^4.0.12",
-    "moment": "^2.23.0",
+    "cronstrue": "^1.63.0",
+    "electron-log": "^3.0.1",
+    "handlebars": "^4.1.0",
+    "moment": "^2.24.0",
     "node-cron": "^2.0.3",
-    "node-notifier": "^5.3.0",
-    "xml-js": "^1.6.8"
+    "node-notifier": "^5.4.0",
+    "xml-js": "^1.6.11"
   },
   "bugs": "https://github.com/AnonymerNiklasistanonym/IliasBuddyDesktop/issues",
   "author": {

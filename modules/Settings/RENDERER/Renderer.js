@@ -54,6 +54,7 @@ class Renderer {
    * Render a setting element via compiled handlebars templates
    * @param {import('../API/SettingsTypes')
    * .Modifiable.SettingsObjectMerged} entry
+   * @throws Error if entry.type is not supported/valid
    * @returns {string}
    */
   // tslint:disable-next-line: cyclomatic-complexity
