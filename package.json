@@ -12,6 +12,7 @@
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "build-win": "./node_modules/.bin/electron-builder . --win",
+    "build-lin": "./node_modules/.bin/election-builder . --linux",
     "debug": "./node_modules/.bin/electron --nolazy --inspect-brk=9229 .",
     "docs": "cd docs && sh build.sh",
     "test": "npm run test-standard && npm run test-tslint && node tests/test.js",
