@@ -858,7 +858,7 @@ ipcMain
         convertIliasEntriesForClient(IliasBuddyApi.getCache()))
     })
   .on('getVersion', event => event.sender.send('version', app.getVersion()))
-  .on('getName', event => event.sender.send('name', app.getName()))
+  .on('getName', event => event.sender.send('name', app.name))
   .on('getSettings', event => event.sender.send('settings',
     Settings.getModifiableSettings()))
   .on('settings-set',
