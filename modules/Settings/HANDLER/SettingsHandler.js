@@ -222,7 +222,7 @@ class SettingsHandler {
    * @param {string} urlToCheck Url to be checked
    * @returns {boolean} is valid url
    */
-  isValidURL (urlToCheck) {
+  static isValidURL (urlToCheck) {
     // tslint:disable-next-line:max-line-length
     const res = urlToCheck.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/g)
     return !(res === null)
