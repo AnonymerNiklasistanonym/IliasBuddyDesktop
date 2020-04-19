@@ -50,6 +50,7 @@ class Renderer {
   static render (entry) {
     return this.renderElementHbs(entry)
   }
+
   /**
    * Render a setting element via compiled handlebars templates
    * @param {import('../API/SettingsTypes')

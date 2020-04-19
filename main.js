@@ -11,8 +11,10 @@
 /* =====  Imports  ====== */
 
 // npm modules
-const { app, BrowserWindow, dialog, globalShortcut, ipcMain,
-  Menu, nativeImage, shell, Tray } = require('electron')
+const {
+  app, BrowserWindow, dialog, globalShortcut, ipcMain,
+  Menu, nativeImage, shell, Tray
+} = require('electron')
 const path = require('path')
 const url = require('url')
 const AutoLaunch = require('auto-launch')
@@ -29,7 +31,6 @@ const IliasBuddyApi = require('./modules/IliasBuddy/API/IliasBuddyApi')
 // error, warn, info, verbose, debug, silly
 log.transports.console.level = 'debug'
 log.transports.file.level = 'debug'
-log.transports.rendererConsole.level = 'debug'
 log.debugMain = parameter => log.debug('[main] ' + parameter)
 
 /* =====  Startup checks  ====== */
@@ -63,7 +64,7 @@ let gCronJobProgramUpdate = null
  * Global cron job for feed updates
  * @type {cron.ScheduledTask}
  */
-let gCronJobFeedUpdate = null
+const gCronJobFeedUpdate = null
 /**
  * Global interface to connect to and use the Ilias RSS feed
  * @type {IliasBuddyApi}
@@ -531,7 +532,7 @@ function createWindow () {
     minHeight: settingsMinWindowBounds.height,
     minWidth: settingsMinWindowBounds.width,
     show: false, // do not show the window before content is loaded
-    title: app.getName(),
+    title: app.name,
     titleBarStyle: 'hidden', // macOS: buttons are an overlay
     // Enable node integration in window
     webPreferences: { nodeIntegration: true },
@@ -575,18 +576,22 @@ function createWindow () {
     const systemTray = new Tray(nativeImage.createFromPath(iconPath))
     systemTray.setToolTip('IliasBuddy')
     systemTray.setContextMenu(Menu.buildFromTemplate([
-      { click: () => {
-        if (gMainWindow.isVisible()) {
-          gMainWindow.focus()
-        } else {
-          gMainWindow.show()
-        }
+      {
+        click: () => {
+          if (gMainWindow.isVisible()) {
+            gMainWindow.focus()
+          } else {
+            gMainWindow.show()
+          }
+        },
+        label: 'Show App'
       },
-      label: 'Show App' },
-      { click: () => {
-        app.quit()
-      },
-      label: 'Quit' }
+      {
+        click: () => {
+          app.quit()
+        },
+        label: 'Quit'
+      }
     ]))
     systemTray.on('click', () => {
       if (gMainWindow) {

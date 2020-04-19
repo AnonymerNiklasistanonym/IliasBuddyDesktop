@@ -27,6 +27,7 @@ class RawEntryParser {
   static getRegex01 () {
     return /^\[(.*?)\s>\s(.*)\]\s(.*):\s(.*)$/
   }
+
   /**
    * Groups if match:
    * - 1. Course title
@@ -41,6 +42,7 @@ class RawEntryParser {
   static getRegex02 () {
     return /^\[(.*)\]\s(.*):\s(.*)$/
   }
+
   /**
    * Function that converts raw entries to better ones
    * @param {import('../FETCH/FetchEntriesTypes').IliasPrivateRssFeed
@@ -57,6 +59,7 @@ class RawEntryParser {
       title: rawEntry.title._text
     }
   }
+
   /**
    * Parse a raw entry to an Ilias entry which has all data parsed and analyzed
    * to easily be used

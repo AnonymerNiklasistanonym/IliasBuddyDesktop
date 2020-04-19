@@ -16,6 +16,7 @@ class FileManager {
   static writeFileSyncAppData (filePath, data) {
     return fs.writeFileSync(path.join(userDataPath, filePath), data)
   }
+
   /**
    * Read a file from the "AppData" directory [SYNCHRONOUS]
    * @param {string} filePath
@@ -24,6 +25,7 @@ class FileManager {
   static readFileSyncAppData (filePath) {
     return fs.readFileSync(path.join(userDataPath, filePath))
   }
+
   /**
    * Check if a file exists in the "AppData" directory [SYNCHRONOUS]
    * @param {string} filePath

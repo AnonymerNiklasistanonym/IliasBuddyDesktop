@@ -35,6 +35,7 @@ class Dialogs {
         }
       })
   }
+
   /**
    * Notification with click and timeout listener
    * @param {String} title Title of the toast

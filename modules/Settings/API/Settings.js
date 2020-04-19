@@ -13,6 +13,7 @@ class Settings {
   static getHidden (id) {
     return SettingsHandler.getValue(id, false)
   }
+
   /**
    * Get value of a modifiable setting
    * @param {import('./SettingsTypes').Modifiable.SettingsId} id Unique id
@@ -21,6 +22,7 @@ class Settings {
   static getModifiable (id) {
     return SettingsHandler.getValue(id, true)
   }
+
   /**
    * Get the default value of a modifiable setting
    * @param {import('./SettingsTypes').Modifiable.SettingsId} id Unique id
@@ -29,6 +31,7 @@ class Settings {
   static getModifiableDefault (id) {
     return SettingsHandler.getDefaultValue(id, true)
   }
+
   /**
    * Set hidden setting with id and value
    * @param {import('./SettingsTypes').Hidden.SettingsId} id
@@ -37,6 +40,7 @@ class Settings {
   static setHidden (id, value) {
     SettingsHandler.setModifiableOrHidden(id, value, false)
   }
+
   /**
    * Set modifiable setting with id and value
    * @param {import('./SettingsTypes').Modifiable.SettingsId} id
@@ -45,6 +49,7 @@ class Settings {
   static setModifiable (id, value) {
     SettingsHandler.setModifiableOrHidden(id, value, true)
   }
+
   /**
    * Get all modifiable settings merged with the local values
    * @returns {string[]}
@@ -53,6 +58,7 @@ class Settings {
     return SettingsHandler.getModifiableSettingsWithCurrentValue()
       .map(Renderer.render.bind(Renderer))
   }
+
   /**
    * Get all modifiable settings merged with the local values
    * @param {string} settingId
@@ -64,12 +70,14 @@ class Settings {
       .find(a => a.id === settingId)
     return settingsObject
   }
+
   /**
    * Save settings in local file
    */
   static save () {
     SettingsHandler.save()
   }
+
   /**
    * Type check a setting
    * @param {import('../API/SettingsTypes').Modifiable.SettingsType} value

@@ -16,6 +16,7 @@ class IliasBuddyApi {
   static getCache () {
     return ManageEntries.getCachedEntries()
   }
+
   /**
    * Test if a connection with a `200` response can be established
    * @param {string} url Private Ilias feed URL
@@ -27,6 +28,7 @@ class IliasBuddyApi {
     log.debug('IliasBuddyApi, testConnection')
     return ManageEntries.testConnection(url, userName, password)
   }
+
   /**
    * Get the current Ilias entries as HTML elements
    * @param {import('../PARSER/RawEntryParserTypes')
@@ -36,6 +38,7 @@ class IliasBuddyApi {
   static renderEntriesHtml (entries) {
     return entries.map(RendererEntries.render.bind(RendererEntries))
   }
+
   /**
    * Creates an instance of IliasBuddyApi
    * @param {string} url Private Ilias RSS feed url
@@ -48,6 +51,7 @@ class IliasBuddyApi {
     this.manageEntries = new ManageEntries(url, userName, password,
       newEntriesFoundCallback)
   }
+
   /**
    * Get the current feed entries
    * @param {boolean} [callback=false] Should the set callback be executed

@@ -73,6 +73,7 @@ class Renderer {
       entry.description !== ''
     })
   }
+
   /**
    * Render an Ilias entry via Handlebars templates
    * @param {import('./RendererTypes').RenderEntry} entry

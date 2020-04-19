@@ -19,6 +19,7 @@ class CronJobHelper {
   static cronJobStringIsValid (cronJobString) {
     return nodeCron.validate(cronJobString)
   }
+
   /**
    * Get a human readable explanation string  of a cron job string
    * @param {string} cronJobString Cron job string

@@ -151,7 +151,7 @@
                     "name": "Check for program updates on start"
                 },
                 "type": "toggle",
-                "valueDefault": true
+                "valueDefault": false
             },
             {
                 "id": "checkForUpdatesCronJob",

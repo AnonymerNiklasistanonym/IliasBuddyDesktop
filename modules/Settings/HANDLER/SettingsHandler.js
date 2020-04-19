@@ -48,6 +48,7 @@ class SettingsHandler {
     const defaultValue = this.getDefaultValue(id, modifiable)
     return defaultValue
   }
+
   /**
    * Get the local value of the setting or the default if no local one was found
    * @param {import('../API/SettingsTypes').Hidden.SettingsId |
@@ -67,6 +68,7 @@ class SettingsHandler {
       return undefined
     }
   }
+
   /**
    * Get the local value of the setting or the default if no local one was found
    * @param {{ id: string; }[]} settings
@@ -78,6 +80,7 @@ class SettingsHandler {
       ? settings.find(el => el.id === id)
       : undefined
   }
+
   /**
    * Get the default value of the setting
    * @param {import('../API/SettingsTypes').Hidden.SettingsId |
@@ -92,6 +95,7 @@ class SettingsHandler {
       : this.getSettingsObjectByIdHelper(defaultSettings.settings.hidden, id)
     return foundElement !== undefined ? foundElement.valueDefault : undefined
   }
+
   /**
    * Check if the id is an allowed settings id
    * @param {string} id
@@ -104,6 +108,7 @@ class SettingsHandler {
       : this.getSettingsObjectByIdHelper(defaultSettings.settings.hidden, id)
     ) !== undefined
   }
+
   /**
    * Set hidden or modifiable settings
    * @param {import('../API/SettingsTypes').Hidden.SettingsId |
@@ -142,6 +147,7 @@ class SettingsHandler {
     // 3) Save the updated settings
     this.save()
   }
+
   /**
    * Save the current local settings to a local file
    */
@@ -149,6 +155,7 @@ class SettingsHandler {
     FileManager.writeFileSyncAppData(settingsPaths.local,
       JSON.stringify(localSettings))
   }
+
   /**
    * Get the current modifiable settings with the current local value
    * @returns {import('../API/SettingsTypes').Modifiable.SettingsObjectMerged[]}
@@ -158,6 +165,7 @@ class SettingsHandler {
       ...a, value: this.getValue(a.id, true)
     }))
   }
+
   /**
    * Type check a setting
    * @param {import('../API/SettingsTypes').Modifiable.SettingsType} value
@@ -207,6 +215,7 @@ class SettingsHandler {
         throw Error(`This type is not supported! (${type})`)
     }
   }
+
   /**
    * This tester does not like "user-name:password@..."
    * @author https://www.regextester.com/94502

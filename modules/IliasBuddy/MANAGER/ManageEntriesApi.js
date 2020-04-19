@@ -45,6 +45,7 @@ class IliasBuddyManageEntriesApi {
   static getCachedEntries () {
     return cachedEntries
   }
+
   /**
    * Test if a connection with a `200` response can be established
    * @param {string} url Private Ilias feed URL
@@ -56,6 +57,7 @@ class IliasBuddyManageEntriesApi {
     log.debug('ManageEntries > test connection')
     return FetchEntries.testConnection(url, userName, password)
   }
+
   /**
    * Creates an instance of IliasBuddyFetchEntriesApi
    * @param {string} url Private Ilias RSS feed url
@@ -75,6 +77,7 @@ class IliasBuddyManageEntriesApi {
     this.currentEntries = cachedEntries
     this.newEntriesFoundCallback = newEntriesFoundCallback
   }
+
   /**
    * Check if in a list of fetched entries new entries can be found
    * @param {import('../FETCH/FetchEntriesTypes')
@@ -150,6 +153,7 @@ class IliasBuddyManageEntriesApi {
     // Also return all new entries
     return newEntries
   }
+
   /**
    * Get the current feed entries
    * @param {boolean} [callback=false] Should the set callback be executed
@@ -180,6 +184,7 @@ class IliasBuddyManageEntriesApi {
         }
       }).catch(reject))
   }
+
   /**
    * Save all files (cache + new entries) in a file
    */

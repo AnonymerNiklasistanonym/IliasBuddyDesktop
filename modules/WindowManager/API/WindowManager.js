@@ -26,6 +26,7 @@ class WindowManager {
     this.fullScreen = false
     this.removeOpenPopUpWindow = false
   }
+
   /**
    * Toggle full screen of GUI (adds `window-manager-screen-full-screen` class
    * tag)
@@ -45,6 +46,7 @@ class WindowManager {
         .classList.remove('window-manager-screen-full-screen'))
     }
   }
+
   /**
    * Toggle title bar (adds `window-manager-title-bar-screen` class tag)
    * @param {boolean} [showTitleBar] True if it should be shown
@@ -63,6 +65,7 @@ class WindowManager {
         .classList.remove('window-manager-title-bar-screen'))
     }
   }
+
   /**
    * Get the name of the current window
    * @returns {string}
@@ -70,6 +73,7 @@ class WindowManager {
   getCurrentWindow () {
     return this.openWindowsStack[this.openWindowsStack.length - 1]
   }
+
   /**
    * Get the stack of open windows
    * @returns {string[]}
@@ -84,6 +88,7 @@ class WindowManager {
     if (id === undefined) { throw Error('Window id was undefined') }
     return this.registeredWindows.findIndex(a => a.id === id)
   }
+
   /**
    * Show a window
    * @param {string} showNewWindowId
@@ -136,6 +141,7 @@ class WindowManager {
     // Add window to open window stack
     this.openWindowsStack.push(showNewWindowId)
   }
+
   /**
    * Show the previous opened window or do nothing when only one window is open
    * @param {import('./WindowManagerTypes').WindowManager
@@ -148,6 +154,7 @@ class WindowManager {
       this.showWindow(this.openWindowsStack[prevWinInd], options)
     }
   }
+
   /**
    * Register a window
    * @param {import('./WindowManagerTypes').WindowManager.Window} window
@@ -171,6 +178,7 @@ class WindowManager {
     // Register window
     this.registeredWindows.push(window)
   }
+
   /**
    * Hide a window [GUI-DOM]
    * @param {string} documentId
@@ -184,6 +192,7 @@ class WindowManager {
     windowObject
       .classList.add('window-manager-screen', 'window-manager-screen-hide')
   }
+
   /**
    * Show a window [GUI-DOM]
    * @param {string} documentId

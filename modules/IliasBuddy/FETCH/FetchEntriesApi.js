@@ -61,6 +61,7 @@ class IliasBuddyFetchEntriesApi {
       )
     )
   }
+
   /**
    * Creates an instance of IliasBuddyFetchEntriesApi
    * @param {string} url Private Ilias RSS feed url
@@ -72,6 +73,7 @@ class IliasBuddyFetchEntriesApi {
     this.userName = userName
     this.password = password
   }
+
   /**
    * Get the current entries "Raw" which means parsed as JSON but not modified
    * in any way
@@ -105,6 +107,7 @@ class IliasBuddyFetchEntriesApi {
       .end()
     )
   }
+
   /**
    * Get the current Ilias entries
    * @returns {Promise<import('../PARSER/RawEntryParserTypes')

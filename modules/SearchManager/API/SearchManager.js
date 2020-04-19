@@ -15,6 +15,7 @@ class SearchManager {
   get searchBarIsFocused () {
     return this.input === document.activeElement
   }
+
   /**
    * Regular expression for the search query
    * - **Group 01** (`[1]`): The group contains either undefined or metadata key
@@ -39,6 +40,7 @@ class SearchManager {
   static get searchQueryExpression () {
     return /(?:\s*?|^\s*)(?:(\w*):)?(?:"(.+?)"|"?(\S+?))(?:(?=\s)|(?=$))/g
   }
+
   /**
    * Get the parsed search query results
    * @param {string} searchQuery
@@ -71,6 +73,7 @@ class SearchManager {
     } while (regexMatch !== null)
     return regexMatches
   }
+
   /**
    * Creates an instance of Search manager
    * @param {HTMLInputElement} inputElement
@@ -93,12 +96,14 @@ class SearchManager {
       this.search(this.input.value)
     })
   }
+
   /**
    * Focus the search bar
    */
   focusSearchBar () {
     this.input.focus()
   }
+
   /**
    * Display all list elements (show all hidden ones by executing this method)
    */
@@ -108,6 +113,7 @@ class SearchManager {
       children[i].classList.remove(this.options.customHideWindowTag)
     }
   }
+
   /**
    * Do a search which automatically hides list elements that aren't matches
    * @param {string} query

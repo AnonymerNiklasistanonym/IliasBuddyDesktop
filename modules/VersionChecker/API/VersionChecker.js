@@ -56,6 +56,7 @@ class VersionChecker {
         .on('close', () => { resolve(jsonObject) }).end()
     })
   }
+
   /**
    * Check if a tag is newer than the old tag
    * @param {string} oldTag The old version tag

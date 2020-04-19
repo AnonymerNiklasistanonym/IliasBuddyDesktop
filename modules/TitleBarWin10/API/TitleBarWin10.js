@@ -27,6 +27,7 @@ class TitleBarWin10 {
     this.resizeActionId = 'title-bar-action-resize'
     this.closeActionId = 'title-bar-action-close'
   }
+
   /**
    * Add a action to the title bar (like close, minimize, ...)
    * @param {import('./TitleBarWin10Types').TitleBarWin10.OptionAction} action
@@ -62,6 +63,7 @@ class TitleBarWin10 {
     }
     return actionElement
   }
+
   /**
    * Add a menu entry to the title bar (Like File, Edit, Help, ...)
    * @param {import('./TitleBarWin10Types').TitleBarWin10.OptionMenu} menu
@@ -82,6 +84,7 @@ class TitleBarWin10 {
     }
     return menuElement
   }
+
   // TODO Complexity is too high
   /**
    * Add the generated title bar to the given HTML DIV element
@@ -167,6 +170,7 @@ class TitleBarWin10 {
       ? this.options.defaultCallbacks : undefined)
     this.electronWindowListener()
   }
+
   /**
    * Remove title bar from the initial set HTML DIV element
    * @param {HTMLDivElement} titleBarDiv
@@ -177,6 +181,7 @@ class TitleBarWin10 {
       titleBarDiv.removeChild(titleBarDiv.firstChild)
     }
   }
+
   /**
    * Set default callbacks (close, minimize, ...)
    * @param {import('./TitleBarWin10Types').TitleBarWin10
@@ -242,6 +247,7 @@ class TitleBarWin10 {
       }
     })
   }
+
   /**
    * Setup listener to electron window actions
    */
