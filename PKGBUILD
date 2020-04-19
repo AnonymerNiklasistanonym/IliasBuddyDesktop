@@ -28,6 +28,7 @@ package() {
   install -D index.html "$pkgdir/opt/$pkgname/"
   install -D main.js "$pkgdir/opt/$pkgname/"
   install -D default_settings.json "$pkgdir/opt/$pkgname/"
+  install -D package.json "$pkgdir/opt/$pkgname/"
 
   cp images/favicon/favicon.svg "$pkgname.svg"
   install -Dm 644 "$pkgname.svg" "$pkgdir/opt/$pkgname/"
@@ -35,7 +36,7 @@ package() {
   echo -e "\
 #!/usr/bin/env bash\n\
 cd \"/opt/$pkgname\"\n\
-electron main.js \$@\n" > "$pkgname"
+electron . \$@\n" > "$pkgname"
 
   install -Dd "$pkgdir/usr/bin"
   install -Dm 777 "$pkgname" "$pkgdir/usr/bin"
