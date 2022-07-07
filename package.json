@@ -39,7 +39,7 @@
     "cronstrue": "^1.93.0",
     "electron-log": "^4.1.1",
     "handlebars": "^4.7.6",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-cron": "^2.0.3",
     "node-notifier": "^7.0.0",
     "xml-js": "^1.6.11"
